@@ -4,18 +4,18 @@
 </script>
 
 <section class="relative">
-	<header class="mb-10 text-center" use:reveal>
-		<p class="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-leveling-blue-light/70">
+	<header class="mb-8 text-center sm:mb-10" use:reveal>
+		<p class="mb-2 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-leveling-blue-light/70 sm:text-xs sm:tracking-[0.35em]">
 			Accès rapide
 		</p>
 		<h2 class="section-title">Explorez l'événement</h2>
-		<p class="mx-auto mt-4 max-w-2xl text-sm text-zinc-400 md:text-base">
+		<p class="mx-auto mt-3 max-w-2xl px-1 text-sm text-zinc-400 sm:mt-4 md:text-base">
 			Règles, indices, objectifs TikTok, déroulé et récompenses — tout ce dont vous avez besoin pour
 			rejoindre l'enquête collective.
 		</p>
 	</header>
 
-	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+	<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
 		{#each NAV_LINKS as link, index (link.href)}
 			<a
 				href={link.href}

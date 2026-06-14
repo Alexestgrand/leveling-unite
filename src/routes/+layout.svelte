@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '../app.css';
 	import BackgroundBubbles from '$lib/components/BackgroundBubbles.svelte';
-	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();
 </script>
@@ -12,7 +11,9 @@
 		name="description"
 		content="Tableau de bord officiel de l'événement communautaire Leveling: Unite – The Fragments."
 	/>
-	<link rel="icon" href={favicon} />
+	<meta name="theme-color" content="#09090b" />
+	<link rel="icon" href="/logo.ico" sizes="any" />
+	<link rel="apple-touch-icon" href="/logo.ico" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
@@ -21,7 +22,7 @@
 	/>
 </svelte:head>
 
-<div class="relative min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+<div class="relative min-h-screen overflow-x-hidden bg-zinc-950 text-zinc-100 antialiased">
 	<BackgroundBubbles />
 	<div class="relative z-10">
 		{@render children()}

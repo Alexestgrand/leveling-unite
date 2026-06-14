@@ -8,19 +8,19 @@
 
 <Hero />
 
-<main class="page-container space-y-20 md:space-y-28">
+<main class="page-container space-y-12 sm:space-y-20 md:space-y-28">
 	<section class="relative">
 		<Timeline />
 	</section>
 
-	<section class="relative border-t border-leveling-blue/10 pt-20 md:pt-28">
+	<section class="relative border-t border-leveling-blue/10 pt-12 sm:pt-20 md:pt-28">
 		<NavGrid />
 	</section>
 
-	<footer class="border-t border-leveling-blue/10 pt-12 text-center" use:reveal>
-		<p class="font-display text-xs uppercase tracking-[0.3em] text-zinc-600">
+	<footer class="border-t border-leveling-blue/10 pb-6 pt-8 text-center sm:pt-12" use:reveal>
+		<p class="font-display text-[0.65rem] uppercase tracking-[0.15em] text-zinc-600 sm:text-xs sm:tracking-[0.3em]">
 			{EVENT.title} — {EVENT.subtitle}
 		</p>
-		<p class="mt-2 text-sm text-zinc-500">{EVENT.tagline}</p>
+		<p class="mx-auto mt-2 max-w-md px-2 text-sm leading-relaxed text-zinc-500">{EVENT.tagline}</p>
 	</footer>
 </main>

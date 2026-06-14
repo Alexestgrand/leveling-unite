@@ -41,36 +41,31 @@
 		></div>
 
 		<div
-			class="absolute inset-x-0 bottom-0 h-48 bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent"
+			class="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent sm:h-48"
 		></div>
 	</div>
 
-	<div class="page-container relative z-10 pt-8 pb-12 md:pt-12 md:pb-20">
+	<div class="page-container relative z-10 pb-10 pt-6 sm:pb-12 sm:pt-8 md:pb-20 md:pt-12">
 		<div class="relative mx-auto max-w-4xl text-center">
 			<p
-				class="hero-enter mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-leveling-blue-light md:text-base"
+				class="hero-enter mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-leveling-blue-light sm:mb-4 sm:text-sm sm:tracking-[0.35em] md:text-base"
 			>
 				Événement communautaire
 			</p>
 
 			<div class="hero-title-wrap hero-enter hero-enter-delay-1" aria-label={EVENT.title}>
 				<div class="hero-title-line">
-					<h1 class="m-0 leading-none">
-						<span class="hero-brand-logo">
-							<img
-								src="/leveling-title.png"
-								alt=""
-								class="hero-brand-logo__img"
-								fetchpriority="high"
-							/>
-							<span class="sr-only">{titleMain}</span>
-						</span>
+					<h1
+						class="text-glitch-hero m-0 text-[clamp(2rem,11vw,5rem)] uppercase"
+						data-text={titleMain}
+					>
+						{titleMain}
 					</h1>
 				</div>
 
 				<div class="hero-title-line">
 					<h1
-						class="text-glitch-hero m-0 text-[clamp(2.5rem,9vw,5.25rem)] uppercase"
+						class="text-glitch-hero m-0 text-[clamp(1.65rem,8.5vw,4rem)] uppercase"
 						data-text={titleSecondary}
 					>
 						<span class="hero-title-colon" aria-hidden="true">:</span>
@@ -80,38 +75,51 @@
 			</div>
 
 			<p
-				class="hero-enter hero-enter-delay-2 mt-4 font-display text-xl font-semibold tracking-[0.2em] text-zinc-400 sm:text-2xl md:text-3xl"
+				class="hero-enter hero-enter-delay-2 mt-3 font-display text-base font-semibold tracking-[0.08em] text-zinc-400 sm:mt-4 sm:text-xl sm:tracking-[0.2em] md:text-3xl"
 			>
 				{EVENT.subtitle}
 			</p>
 
-			<p class="hero-enter hero-enter-delay-3 mx-auto mt-4 max-w-xl text-base text-zinc-400 md:text-lg">
+			<p
+				class="hero-enter hero-enter-delay-3 mx-auto mt-3 max-w-xl px-1 text-sm leading-relaxed text-zinc-400 sm:mt-4 sm:text-base md:text-lg"
+			>
 				{EVENT.tagline}
 			</p>
 
-			<div class="mx-auto mt-12 max-w-2xl" use:reveal={{ delay: 200 }}>
+			<div class="mx-auto mt-8 max-w-2xl sm:mt-12" use:reveal={{ delay: 200 }}>
 				{#if remaining.expired}
-					<div class="card-glass px-6 py-10">
-						<p class="font-display text-2xl font-bold uppercase tracking-widest text-leveling-blue md:text-3xl">
+					<div class="card-glass px-4 py-8 sm:px-6 sm:py-10">
+						<p
+							class="font-display text-xl font-bold uppercase tracking-widest text-leveling-blue sm:text-2xl md:text-3xl"
+						>
 							Événement terminé
 						</p>
 					</div>
 				{:else}
-					<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-6">
+					<div class="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3 md:gap-6">
 						{#each units as unit, index}
-							<div class="card-glass px-3 py-5 md:px-4 md:py-6" use:reveal={{ delay: 280 + index * 80 }}>
+							<div
+								class="card-glass px-2 py-4 sm:px-3 sm:py-5 md:px-4 md:py-6"
+								use:reveal={{ delay: 280 + index * 80 }}
+							>
 								{#if unit.key === 'seconds'}
 									{#key tickKey}
-										<p class="count-tick font-display text-3xl font-bold tabular-nums text-leveling-blue sm:text-4xl md:text-5xl">
+										<p
+											class="count-tick font-display text-2xl font-bold tabular-nums text-leveling-blue sm:text-3xl md:text-5xl"
+										>
 											{padTime(remaining[unit.key])}
 										</p>
 									{/key}
 								{:else}
-									<p class="font-display text-3xl font-bold tabular-nums text-leveling-blue sm:text-4xl md:text-5xl">
+									<p
+										class="font-display text-2xl font-bold tabular-nums text-leveling-blue sm:text-3xl md:text-5xl"
+									>
 										{padTime(remaining[unit.key])}
 									</p>
 								{/if}
-								<p class="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 md:text-sm">
+								<p
+									class="mt-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-zinc-500 sm:mt-2 sm:text-xs sm:tracking-[0.2em] md:text-sm"
+								>
 									{unit.label}
 								</p>
 							</div>
@@ -119,7 +127,7 @@
 					</div>
 				{/if}
 
-				<p class="mt-8 text-sm text-zinc-500 md:text-base">
+				<p class="mt-6 px-1 text-xs leading-relaxed text-zinc-500 sm:mt-8 sm:text-sm md:text-base">
 					Fin de l'événement — {EVENT.endDateLabel}
 				</p>
 			</div>

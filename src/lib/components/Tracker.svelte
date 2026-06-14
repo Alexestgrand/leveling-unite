@@ -11,8 +11,8 @@
 	}
 </script>
 
-<section class="card-glass px-6 py-10 md:px-8" use:reveal>
-	<div class="mb-8 flex flex-wrap gap-2">
+<section class="card-glass px-4 py-8 sm:px-6 sm:py-10 md:px-8" use:reveal>
+	<div class="mb-6 flex flex-wrap gap-2 sm:mb-8">
 		{#each hashtags as tag}
 			<span
 				class="rounded-full border border-leveling-blue/30 bg-leveling-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-leveling-blue-light transition-transform duration-300 hover:scale-105 active:scale-95"
@@ -22,14 +22,14 @@
 		{/each}
 	</div>
 
-	<div class="mb-3 flex items-end justify-between gap-4">
+	<div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
 		<div>
-			<p class="font-display text-3xl font-bold tabular-nums text-leveling-blue md:text-4xl">
+			<p class="font-display text-2xl font-bold tabular-nums text-leveling-blue sm:text-3xl md:text-4xl">
 				{formatViews(currentViews)}
 			</p>
 			<p class="text-xs uppercase tracking-wider text-zinc-500">vues cumulées</p>
 		</div>
-		<div class="text-right">
+		<div class="sm:text-right">
 			<p class="font-display text-lg font-semibold tabular-nums text-zinc-400 md:text-xl">
 				{formatViews(goal)}
 			</p>

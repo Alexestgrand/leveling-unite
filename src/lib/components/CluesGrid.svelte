@@ -5,8 +5,8 @@
 	const unlockedCount = CLUES.filter((c) => c.unlocked).length;
 </script>
 
-<section class="card-glass px-6 py-10 md:px-8" use:reveal>
-	<header class="mb-8 flex flex-wrap items-end justify-between gap-4">
+<section class="card-glass px-4 py-8 sm:px-6 sm:py-10 md:px-8" use:reveal>
+	<header class="mb-6 flex flex-wrap items-end justify-between gap-3 sm:mb-8 sm:gap-4">
 		<div>
 			<p class="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-leveling-blue-light/70">
 				Fragments du système
@@ -18,10 +18,10 @@
 		</p>
 	</header>
 
-	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+	<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
 		{#each CLUES as clue, index (clue.id)}
 			<article
-				class="relative overflow-hidden rounded-xl border p-5 transition-all duration-500 md:p-6 {clue.unlocked
+				class="relative overflow-hidden rounded-xl border p-4 transition-all duration-500 sm:p-5 md:p-6 {clue.unlocked
 					? 'border-leveling-blue/30 bg-leveling-blue/5 glow-neon'
 					: 'border-zinc-800 bg-zinc-900/40'}"
 				use:reveal={{ delay: index * 60 }}

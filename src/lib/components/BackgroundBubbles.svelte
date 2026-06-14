@@ -17,7 +17,7 @@
 	];
 </script>
 
-<div class="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
+<div class="pointer-events-none fixed inset-0 overflow-hidden max-sm:scale-[0.85] max-sm:origin-top" aria-hidden="true">
 	<div class="absolute inset-0 bg-zinc-950"></div>
 
 	<div

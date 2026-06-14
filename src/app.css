@@ -15,10 +15,14 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		-webkit-text-size-adjust: 100%;
+		overflow-x: hidden;
 	}
 
 	body {
 		font-family: var(--font-body);
+		overflow-x: hidden;
+		min-width: 0;
 	}
 }
 
@@ -34,13 +38,33 @@
 			border-color 0.4s var(--ease-smooth);
 	}
 
-	.card-glass:hover {
-		transform: translateY(-4px);
-		border-color: rgba(0, 153, 255, 0.28);
-		box-shadow:
-			0 16px 40px rgba(0, 0, 0, 0.45),
-			0 0 0 1px rgba(0, 153, 255, 0.08),
-			0 8px 32px rgba(0, 153, 255, 0.06);
+	@media (hover: hover) and (pointer: fine) {
+		.card-glass:hover {
+			transform: translateY(-4px);
+			border-color: rgba(0, 153, 255, 0.28);
+			box-shadow:
+				0 16px 40px rgba(0, 0, 0, 0.45),
+				0 0 0 1px rgba(0, 153, 255, 0.08),
+				0 8px 32px rgba(0, 153, 255, 0.06);
+		}
+
+		.nav-card:hover {
+			@apply border-leveling-blue/45 bg-leveling-blue/5;
+			transform: translateY(-6px) scale(1.015);
+			box-shadow:
+				0 20px 50px rgba(0, 0, 0, 0.5),
+				0 0 0 1px rgba(0, 153, 255, 0.12),
+				0 12px 40px rgba(0, 153, 255, 0.1);
+		}
+
+		.nav-card:hover .nav-card-icon {
+			transform: translateY(-2px) scale(1.05);
+		}
+
+		.content-block:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 12px 36px rgba(0, 0, 0, 0.38);
+		}
 	}
 
 	.card-glass:active {
@@ -49,11 +73,15 @@
 	}
 
 	.section-title {
-		@apply font-display text-xl font-bold uppercase tracking-widest text-leveling-blue md:text-2xl;
+		@apply font-display text-lg font-bold uppercase tracking-widest text-leveling-blue sm:text-xl md:text-2xl;
 	}
 
 	.page-container {
-		@apply relative mx-auto max-w-6xl px-4 pb-24 pt-8 md:px-8 md:pt-12;
+		@apply relative mx-auto w-full max-w-6xl px-4 pb-20 pt-6 sm:px-5 sm:pb-24 sm:pt-8 md:px-8 md:pt-12;
+		padding-top: max(1.5rem, env(safe-area-inset-top));
+		padding-bottom: max(5rem, env(safe-area-inset-bottom));
+		padding-left: max(1rem, env(safe-area-inset-left));
+		padding-right: max(1rem, env(safe-area-inset-right));
 	}
 
 	.glow-neon {
@@ -70,7 +98,7 @@
 	}
 
 	.nav-card {
-		@apply relative flex flex-col overflow-hidden rounded-2xl border border-leveling-blue/20 bg-zinc-900/40 p-6 backdrop-blur-md md:p-8;
+		@apply relative flex min-h-[44px] flex-col overflow-hidden rounded-2xl border border-leveling-blue/20 bg-zinc-900/40 p-4 backdrop-blur-md sm:p-6 md:p-8;
 		box-shadow:
 			0 6px 28px rgba(0, 0, 0, 0.4),
 			0 1px 0 rgba(255, 255, 255, 0.03) inset;
@@ -81,22 +109,13 @@
 		transform-style: preserve-3d;
 	}
 
-	.nav-card:hover {
-		@apply border-leveling-blue/45 bg-leveling-blue/5;
-		transform: translateY(-6px) scale(1.015);
-		box-shadow:
-			0 20px 50px rgba(0, 0, 0, 0.5),
-			0 0 0 1px rgba(0, 153, 255, 0.12),
-			0 12px 40px rgba(0, 153, 255, 0.1);
-	}
-
 	.nav-card:active {
 		transform: translateY(-3px) scale(0.99);
 		transition-duration: 0.12s;
 	}
 
 	.nav-card-icon {
-		@apply mb-4 flex size-12 items-center justify-center rounded-xl border border-leveling-blue/30 bg-leveling-blue/10 text-leveling-blue-light;
+		@apply mb-3 flex size-11 items-center justify-center rounded-xl border border-leveling-blue/30 bg-leveling-blue/10 text-leveling-blue-light sm:mb-4 sm:size-12;
 		transition:
 			transform 0.4s var(--ease-smooth),
 			border-color 0.4s var(--ease-smooth),
@@ -104,22 +123,13 @@
 			box-shadow 0.4s var(--ease-smooth);
 	}
 
-	.nav-card:hover .nav-card-icon {
-		transform: translateY(-2px) scale(1.05);
-	}
-
 	.content-block {
-		@apply space-y-4 rounded-xl border border-leveling-blue/15 bg-zinc-900/50 p-6 backdrop-blur-md md:p-8;
+		@apply space-y-4 rounded-xl border border-leveling-blue/15 bg-zinc-900/50 p-4 backdrop-blur-md sm:p-6 md:p-8;
 		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 		transition:
 			transform 0.4s var(--ease-smooth),
 			box-shadow 0.4s var(--ease-smooth),
 			border-color 0.4s var(--ease-smooth);
-	}
-
-	.content-block:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 12px 36px rgba(0, 0, 0, 0.38);
 	}
 
 	.content-block h3 {
@@ -136,7 +146,7 @@
 	}
 
 	.back-link {
-		@apply inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-leveling-blue-light/80;
+		@apply inline-flex min-h-11 items-center gap-2 py-1 text-sm font-semibold uppercase tracking-wider text-leveling-blue-light/80;
 		transition:
 			color 0.3s var(--ease-smooth),
 			transform 0.3s var(--ease-smooth),
@@ -190,9 +200,11 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.15em;
+		gap: 0.1em;
 		margin-inline: auto;
+		width: 100%;
 		max-width: 100%;
+		padding-inline: 0.25rem;
 		padding-block: 0.5rem;
 	}
 
@@ -200,69 +212,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		line-height: 1;
-	}
-
-	.hero-title-colon {
-		margin-right: 0.12em;
-		color: var(--color-neon-blue);
-		font-weight: 400;
-		text-shadow:
-			0 0 12px rgba(0, 212, 255, 0.9),
-			0 0 28px rgba(0, 153, 255, 0.5);
-	}
-
-	.hero-brand-logo {
-		position: relative;
-		display: inline-block;
-		line-height: 0;
-		filter:
-			drop-shadow(0 0 24px rgba(0, 212, 255, 0.35))
-			drop-shadow(0 0 56px rgba(0, 153, 255, 0.2));
-	}
-
-	.hero-brand-logo__img {
-		display: block;
-		height: clamp(3.25rem, 14vw, 6.75rem);
-		width: auto;
-		max-width: min(96vw, 820px);
-		animation: glitch-logo-shake 4.5s infinite steps(1);
-		filter:
-			brightness(0) saturate(100%)
-			invert(74%) sepia(68%) saturate(3500%) hue-rotate(166deg) brightness(1.12)
-			drop-shadow(0 0 6px #00f0ff)
-			drop-shadow(0 0 18px #00d4ff)
-			drop-shadow(0 0 36px rgba(0, 153, 255, 0.95))
-			drop-shadow(0 0 64px rgba(0, 153, 255, 0.65))
-			drop-shadow(0 0 96px rgba(0, 153, 255, 0.35));
-	}
-
-	.hero-brand-logo::before,
-	.hero-brand-logo::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: url('/leveling-title.png') center / contain no-repeat;
-		pointer-events: none;
-		opacity: 0;
-	}
-
-	.hero-brand-logo::before {
-		left: -5px;
-		filter:
-			brightness(0) saturate(100%)
-			invert(74%) sepia(68%) saturate(3500%) hue-rotate(166deg) brightness(1.12)
-			drop-shadow(0 0 12px #00f0ff);
-		animation: glitch-logo 4.5s infinite;
-	}
-
-	.hero-brand-logo::after {
-		left: 5px;
-		filter:
-			brightness(0) saturate(100%)
-			invert(55%) sepia(95%) saturate(5000%) hue-rotate(186deg) brightness(1.15)
-			drop-shadow(0 0 12px #0099ff);
-		animation: glitch-logo 4.5s infinite 0.08s;
+		line-height: 1.05;
+		max-width: 100%;
 	}
 
 	.text-glitch-hero {
@@ -270,9 +221,10 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
+		max-width: 100%;
 		font-family: var(--font-hero);
 		font-weight: 400;
-		letter-spacing: 0.06em;
+		letter-spacing: 0.04em;
 		color: var(--color-neon-blue);
 		animation: glitch-logo-shake 4.5s infinite steps(1);
 		text-shadow:
@@ -280,6 +232,12 @@
 			0 0 20px rgba(0, 212, 255, 0.9),
 			0 0 40px rgba(0, 153, 255, 0.65),
 			0 0 64px rgba(0, 153, 255, 0.35);
+	}
+
+	@media (min-width: 640px) {
+		.text-glitch-hero {
+			letter-spacing: 0.06em;
+		}
 	}
 
 	.text-glitch-hero::before,
@@ -305,6 +263,15 @@
 		color: var(--color-leveling-blue);
 		text-shadow: 4px 0 var(--color-leveling-blue), -4px 0 #00f0ff;
 		animation: glitch-hero 4.5s infinite 0.08s;
+	}
+
+	.hero-title-colon {
+		margin-right: 0.12em;
+		color: var(--color-neon-blue);
+		font-weight: 400;
+		text-shadow:
+			0 0 12px rgba(0, 212, 255, 0.9),
+			0 0 28px rgba(0, 153, 255, 0.5);
 	}
 
 	.hero-bg-float {
@@ -407,39 +374,6 @@
 	}
 	95% {
 		clip-path: inset(20% 0 40% 0);
-	}
-}
-
-@keyframes glitch-logo {
-	0%,
-	82%,
-	100% {
-		opacity: 0;
-		transform: translate(0);
-		clip-path: inset(0 0 100% 0);
-	}
-	83% {
-		opacity: 0.9;
-		transform: translate(-7px, 1px);
-		clip-path: inset(8% 0 68% 0);
-	}
-	84% {
-		opacity: 0.75;
-		transform: translate(7px, -1px);
-		clip-path: inset(68% 0 8% 0);
-	}
-	85% {
-		opacity: 0.85;
-		transform: translate(-5px, 0);
-		clip-path: inset(38% 0 38% 0);
-	}
-	86% {
-		opacity: 0.7;
-		transform: translate(6px, 2px);
-		clip-path: inset(0 0 82% 0);
-	}
-	87% {
-		opacity: 0;
 	}
 }
 
@@ -546,4 +480,23 @@
 
 .hero-enter-delay-3 {
 	animation-delay: 0.36s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-enter,
+	.text-glitch,
+	.text-glitch-hero,
+	.bubble,
+	.bubble-ring,
+	.count-tick,
+	.hero-bg-float {
+		animation: none !important;
+	}
+
+	.nav-card,
+	.card-glass,
+	.content-block,
+	.back-link {
+		transition-duration: 0.01ms !important;
+	}
 }
