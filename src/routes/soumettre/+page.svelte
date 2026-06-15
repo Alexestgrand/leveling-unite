@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import PageShell from '$lib/components/PageShell.svelte';
+	import PortalLoading from '$lib/components/PortalLoading.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import {
 		API_COLD_START_MESSAGE,
@@ -173,36 +174,35 @@
 	title="Soumettre la phrase"
 	subtitle="Testez la phrase reconstituée par votre camp. Deux essais par 24 heures."
 >
-	{#if showColdStartNotice && viewState !== 'loading'}
+	{#if showColdStartNotice && viewState !== 'loading' && viewState !== 'unavailable'}
 		<p class="mb-4 text-center text-sm leading-relaxed text-zinc-500" role="status">
 			{API_COLD_START_MESSAGE}
 		</p>
 	{/if}
 
 	{#if viewState === 'loading'}
-		<div class="surface-card hud-panel clip-corners p-8 text-center" use:reveal>
-			<p class="text-sm text-zinc-400">Chargement de votre session…</p>
+		<div use:reveal>
+			<PortalLoading title="Connexion au portail…" />
 		</div>
 	{:else if viewState === 'unavailable'}
-		<div
-			class="surface-card hud-panel clip-corners glow-border border-amber-500/30 p-6 sm:p-8"
-			use:reveal
-			role="alert"
-		>
-			<h2 class="font-display text-lg font-bold text-amber-300">Service indisponible</h2>
-			<p class="mt-3 text-sm leading-relaxed text-zinc-400">
-				{#if !isApiConfigured()}
-					L'API de validation n'est pas configurée (<code class="text-zinc-300">PUBLIC_API_URL</code>).
-				{:else}
-					Impossible de joindre le serveur de validation. Vérifiez que l'API est démarrée et réessayez.
-					{#if showColdStartNotice}
-						<span class="mt-2 block">{API_COLD_START_MESSAGE}</span>
+		<div class="space-y-4" use:reveal>
+			<PortalLoading title="Le portail se synchronise…" />
+			<div
+				class="surface-card hud-panel clip-corners glow-border border-amber-500/30 p-6 sm:p-8"
+				role="alert"
+			>
+				<h2 class="font-display text-lg font-bold text-amber-300">Service indisponible</h2>
+				<p class="mt-3 text-sm leading-relaxed text-zinc-400">
+					{#if !isApiConfigured()}
+						L'API de validation n'est pas configurée (<code class="text-zinc-300">PUBLIC_API_URL</code>).
+					{:else}
+						Impossible de joindre le serveur de validation pour le moment. Réessayez dans quelques instants.
 					{/if}
-				{/if}
-			</p>
-			<button type="button" class="btn-pill btn-pill--primary mt-6" onclick={loadSession}>
-				Réessayer
-			</button>
+				</p>
+				<button type="button" class="btn-pill btn-pill--primary mt-6" onclick={loadSession}>
+					Réessayer
+				</button>
+			</div>
 		</div>
 	{:else if viewState === 'guest'}
 		<div class="surface-card hud-panel clip-corners glow-border p-6 sm:p-8" use:reveal>
@@ -270,6 +270,9 @@
 		</div>
 	{:else}
 		<div class="space-y-4 sm:space-y-6">
+			{#if submitting}
+				<PortalLoading title="Vérification de la phrase…" />
+			{:else}
 			<div class="surface-card hud-panel clip-corners glow-border p-5 sm:p-6" use:reveal>
 				<div class="flex flex-wrap items-center justify-between gap-4">
 					<div>
@@ -346,6 +349,7 @@
 					</button>
 				</div>
 			</form>
+			{/if}
 		</div>
 	{/if}
 </PageShell>

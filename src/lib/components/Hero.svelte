@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import {
 		EVENT,
 		MAX_SUBMIT_ATTEMPTS,
@@ -30,9 +31,14 @@
 		{ href: '/concept', label: 'Concept' }
 	] as const;
 
+	const CTA_DURATION_MS = 1400;
+
 	let remaining = $state<TimeRemaining>(getTimeRemaining(EVENT.endDate));
 	let tickKey = $state(0);
 	let apiHealth = $state<ApiHealthStatus | null>(null);
+	let ctaProgress = $state(0);
+	let ctaLaunching = $state(false);
+	let ctaComplete = $state(false);
 
 	const apiReady = isApiConfigured();
 	const showColdStartNotice = $derived(apiReady && apiHealth !== null && apiHealth !== 'ok');
@@ -51,6 +57,34 @@
 			apiHealth = await fetchApiHealth();
 		}
 	});
+
+	function launchSubmit() {
+		if (ctaLaunching) return;
+
+		ctaLaunching = true;
+		ctaComplete = false;
+		ctaProgress = 0;
+
+		const startedAt = performance.now();
+
+		function tick(now: number) {
+			const elapsed = now - startedAt;
+			const progress = Math.min(elapsed / CTA_DURATION_MS, 1);
+			ctaProgress = progress * 100;
+
+			if (progress < 1) {
+				requestAnimationFrame(tick);
+				return;
+			}
+
+			ctaComplete = true;
+			window.setTimeout(() => {
+				goto('/soumettre');
+			}, 380);
+		}
+
+		requestAnimationFrame(tick);
+	}
 </script>
 
 <section class="hero ambient-bg">
@@ -98,27 +132,39 @@
 			</div>
 
 			<div class="hero__cta-wrap hero-fade hero-fade-4" use:reveal={{ delay: 180 }}>
-				<a
-					href="/soumettre"
+				<button
+					type="button"
 					class="hero__cta-discord clip-corner-sm glow-cta"
+					class:hero__cta-discord--launching={ctaLaunching}
+					class:hero__cta-discord--complete={ctaComplete}
 					title="Tester une phrase de 15 mots"
+					disabled={ctaLaunching}
+					aria-busy={ctaLaunching}
+					onclick={launchSubmit}
 				>
-					<svg
-						class="hero__cta-discord-icon"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
+					<span
+						class="hero__cta-progress"
+						style="width: {ctaProgress}%"
 						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-						/>
-					</svg>
-					Tester une phrase
-				</a>
+					></span>
+					<span class="hero__cta-label">
+						<svg
+							class="hero__cta-discord-icon"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							aria-hidden="true"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+							/>
+						</svg>
+						{ctaComplete ? 'Portail ouvert' : ctaLaunching ? 'Synchronisation…' : 'Tester une phrase'}
+					</span>
+				</button>
 				<p class="hero__cta-hint">
 					{MAX_SUBMIT_ATTEMPTS} tentatives par {RATE_LIMIT_WINDOW_HOURS} h — 15 mots exactement
 				</p>

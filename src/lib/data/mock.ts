@@ -56,7 +56,8 @@ export const EVENT = {
 	endDate: new Date('2026-06-29T23:59:00+02:00'),
 	endDateLabel: '29 juin 2026',
 	duration: '20 jours (4 vagues de 5 fragments)',
-	discordLabel: 'Serveur Discord Leveling'
+	discordLabel: 'Serveur Discord Leveling',
+	discordUrl: 'https://discord.gg/kNnVZWhfCe'
 };
 
 export const ENIGMA_SUMMARY = {
@@ -186,6 +187,25 @@ export const TIKTOK_TRACKER = {
 		}
 	] satisfies Milestone[]
 };
+
+export const TIKTOK_ACCOUNT = {
+	handle: '@leveling.event',
+	url: 'https://www.tiktok.com/@leveling.event?_r=1&_t=ZN-97Edzoo61hu',
+	label: 'Compte officiel Leveling Event'
+} as const;
+
+export const SOLO_LEVELING_FACTS = [
+	'Ahjin est le nom inversé de Jin Ah, la sœur de Sung Jin-Woo — un clin d’œil caché dans la série.',
+	'Sung Jin-Woo était surnommé « l’homme le plus faible » avant que le Système ne le choisisse.',
+	'Le Système n’apparaît qu’à Sung Jin-Woo : aucun autre chasseur ne voit ses quêtes.',
+	'Igris est le premier soldat de l’ombre extrait par Jin-Woo, issu du temple de Cartenon.',
+	'Beru, roi des fourmis, devient l’un des lieutenants les plus redoutés de l’armée d’ombres.',
+	'La double donjon de Jeju Island marque un tournant où la menace dépasse les rangs nationaux.',
+	'Les Monarques des ombres et Ashborn sont au cœur du lore des pouvoirs ultimes de la série.',
+	'Jin-Woo peut stocker des objets dans une dimension d’inventaire grâce au Système.',
+	'La ligue des chasseurs classe les donjons de E à S — chaque rang change la donne en combat.',
+	'Cha Hae-In est l’une des rares personnes à percevoir l’aura unique de Sung Jin-Woo.'
+] as const;
 
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
 export const PUBLIC_INDICES: PublicIndex[] = [];

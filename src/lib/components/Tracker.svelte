@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
-	import { TIKTOK_TRACKER } from '$lib/data/mock';
+	import { TIKTOK_TRACKER, TIKTOK_ACCOUNT } from '$lib/data/mock';
 	import { formatViews, milestonePercent } from '$lib/utils/format';
 
 	const { currentViews, goal, milestones, hashtags } = TIKTOK_TRACKER;
@@ -29,11 +29,31 @@
 		</div>
 	</div>
 
-	<div class="mb-6 flex flex-wrap gap-2">
+	<div class="mb-6 flex flex-wrap items-center gap-3">
 		{#each hashtags as tag}
 			<span class="tracker__hashtag">{tag}</span>
 		{/each}
 	</div>
+
+	<a
+		href={TIKTOK_ACCOUNT.url}
+		target="_blank"
+		rel="noopener noreferrer"
+		class="tracker__account clip-corner-sm"
+	>
+		<svg class="tracker__account-icon size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+			<path
+				d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"
+			/>
+		</svg>
+		<span>
+			<span class="tracker__account-label">{TIKTOK_ACCOUNT.label}</span>
+			<span class="tracker__account-handle">{TIKTOK_ACCOUNT.handle}</span>
+		</span>
+		<svg class="size-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+		</svg>
+	</a>
 
 	<div class="tracker__bar-wrap">
 		<div
