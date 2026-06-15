@@ -204,8 +204,12 @@ export const SOLO_LEVELING_FACTS = [
 	'Les Monarques des ombres et Ashborn sont au cœur du lore des pouvoirs ultimes de la série.',
 	'Jin-Woo peut stocker des objets dans une dimension d’inventaire grâce au Système.',
 	'La ligue des chasseurs classe les donjons de E à S — chaque rang change la donne en combat.',
-	'Cha Hae-In est l’une des rares personnes à percevoir l’aura unique de Sung Jin-Woo.'
+	'Cha Hae-In est l’une des rares personnes à percevoir l’aura unique de Sung Jin-Woo.',
+	'Un easter egg est caché quelque part sur ce site — saurez-vous le trouver ?'
 ] as const;
+
+export const SUBMIT_FOOTNOTE =
+	"pas la peine de tricher avec plusieurs compte famé y'a 15000 milliards de possibiité 🥀 littérelement" as const;
 
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
 export const PUBLIC_INDICES: PublicIndex[] = [];

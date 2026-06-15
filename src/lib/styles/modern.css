@@ -467,6 +467,15 @@
 	color: #fff;
 }
 
+.hero-title-wrap--portal {
+	gap: 0.35rem;
+	margin-bottom: 0.15rem;
+}
+
+.hero-title-wrap--portal + .hero__subtitle-portal {
+	margin-top: 0.65rem;
+}
+
 .hero__subtitle-portal {
 	margin: 0.5rem 0 0;
 	font-family: var(--font-display);

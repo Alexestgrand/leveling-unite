@@ -31,6 +31,8 @@
 		{ href: '/concept', label: 'Concept' }
 	] as const;
 
+	const [titleMain, titleSecondary] = EVENT.title.split(':').map((part) => part.trim());
+
 	const CTA_DURATION_MS = 1400;
 
 	let remaining = $state<TimeRemaining>(getTimeRemaining(EVENT.endDate));
@@ -98,7 +100,30 @@
 			</p>
 
 			<header class="hero-fade hero-fade-2" use:reveal={{ delay: 60 }}>
-				<h1 class="hero__title-portal">{EVENT.title}</h1>
+				<div class="hero-title-wrap hero-title-wrap--portal" aria-label={EVENT.title}>
+					<div class="hero-title-line">
+						<h1 class="m-0 leading-none">
+							<span class="hero-brand-logo">
+								<img
+									src="/leveling-title.png"
+									alt=""
+									class="hero-brand-logo__img"
+									fetchpriority="high"
+								/>
+								<span class="sr-only">{titleMain}</span>
+							</span>
+						</h1>
+					</div>
+					<div class="hero-title-line">
+						<h1
+							class="text-glitch-hero m-0 text-[clamp(1.65rem,8.5vw,4rem)] uppercase"
+							data-text={titleSecondary}
+						>
+							<span class="hero-title-colon" aria-hidden="true">:</span>
+							{titleSecondary}
+						</h1>
+					</div>
+				</div>
 				<p class="hero__subtitle-portal text-accent-cyan">{EVENT.subtitle}</p>
 				<p class="hero__tagline-portal">{EVENT.tagline}</p>
 			</header>

@@ -16,7 +16,8 @@
 	import {
 		EXPECTED_PHRASE_WORDS,
 		MAX_SUBMIT_ATTEMPTS,
-		SUBMIT_CRITERIA
+		SUBMIT_CRITERIA,
+		SUBMIT_FOOTNOTE
 	} from '$lib/data/mock';
 
 	type ViewState = 'loading' | 'unavailable' | 'guest' | 'ready' | 'success' | 'already_won' | 'rate_limited';
@@ -352,4 +353,6 @@
 			{/if}
 		</div>
 	{/if}
+
+	<p class="submit-footnote" use:reveal={{ delay: 120 }}>{SUBMIT_FOOTNOTE}</p>
 </PageShell>
