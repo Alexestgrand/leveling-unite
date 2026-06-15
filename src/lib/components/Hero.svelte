@@ -7,8 +7,9 @@
 	const [titleMain, titleSecondary] = EVENT.title.split(':').map((part) => part.trim());
 
 	const quickLinks = [
+		{ href: '/soumettre', label: 'Soumettre', desc: 'Phrase finale', primary: true },
 		{ href: '/regles', label: 'Les règles', desc: 'Entraide & fair-play' },
-		{ href: '/indices', label: 'Les indices', desc: 'Fragments débloqués', primary: true },
+		{ href: '/indices', label: 'Les indices', desc: 'Fragments débloqués' },
 		{ href: '/objectif-tiktok', label: 'TikTok', desc: 'Objectif communautaire' }
 	];
 

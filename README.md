@@ -39,4 +39,25 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
+## Soumission de phrase (API externe)
+
+Variable d'environnement :
+
+```env
+PUBLIC_API_URL=http://localhost:8080
+```
+
+En production Vercel : `PUBLIC_API_URL=https://api.ton-domaine.com`
+
+L'API doit autoriser `https://leveling-unite.vercel.app` dans `ALLOWED_ORIGINS`.
+
+### Tests manuels
+
+1. Sans `PUBLIC_API_URL` → page `/soumettre` affiche « Service indisponible »
+2. Clic Discord → redirect API → callback → `/auth/success` → `/soumettre` avec username
+3. Phrase fausse → `INVALID` + essais décrémentés
+4. 3ᵉ essai → `RATE_LIMITED`
+5. Phrase correcte → `VALID` + formulaire bloqué
+6. Déconnexion → retour état non connecté
+
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

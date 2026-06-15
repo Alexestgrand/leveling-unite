@@ -59,8 +59,19 @@ export const HEADER_NAV = [
 	{ href: '/indices', label: 'Indices' },
 	{ href: '/objectif-tiktok', label: 'TikTok' },
 	{ href: '/deroule', label: 'Déroulé' },
-	{ href: '/recompenses', label: 'Récompenses' }
+	{ href: '/recompenses', label: 'Récompenses' },
+	{ href: '/soumettre', label: 'Soumettre' }
 ] as const;
+
+/** Critères affichés sur la page de soumission (connexion Discord). */
+export const SUBMIT_CRITERIA = [
+	'Compte Discord créé depuis au moins 5 jours.',
+	'Maximum 2 soumissions par 24 heures.',
+	'Chaque essai compte, quelle que soit la réponse.'
+] as const;
+
+export const EXPECTED_PHRASE_WORDS = 15;
+export const MAX_SUBMIT_ATTEMPTS = 2;
 
 export const PARTICIPATION_STEPS = [
 	{
