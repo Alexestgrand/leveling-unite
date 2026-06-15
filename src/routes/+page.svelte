@@ -9,7 +9,7 @@
 
 <Hero />
 
-<main class="page-container space-y-12 sm:space-y-20 md:space-y-28">
+<main class="page-container space-y-10 pt-8 sm:space-y-20 sm:pt-14 md:space-y-28">
 	<section class="relative">
 		<InvestigationDashboard />
 	</section>
