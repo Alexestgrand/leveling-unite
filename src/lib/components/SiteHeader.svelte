@@ -4,7 +4,7 @@
 
 	let menuOpen = $state(false);
 
-	const currentPhase = PHASES[CURRENT_PHASE_INDEX];
+	const currentPhase = CURRENT_PHASE_INDEX >= 0 ? PHASES[CURRENT_PHASE_INDEX] : null;
 
 	function isActive(href: string, pathname: string): boolean {
 		return href === '/' ? pathname === '/' : pathname.startsWith(href);
@@ -38,10 +38,10 @@
 		</nav>
 
 		<div class="site-header__actions">
-			<span class="site-header__phase" title={currentPhase.name}>
+			<span class="site-header__phase" title={currentPhase?.name ?? 'Événement à venir'}>
 				<span class="site-header__phase-dot" aria-hidden="true"></span>
-				<span class="hidden sm:inline">{currentPhase.name}</span>
-				<span class="sm:hidden">P{CURRENT_PHASE_INDEX + 1}</span>
+				<span class="hidden sm:inline">{currentPhase?.name ?? 'À venir'}</span>
+				<span class="sm:hidden">{currentPhase ? `P${CURRENT_PHASE_INDEX + 1}` : '—'}</span>
 			</span>
 
 			<button

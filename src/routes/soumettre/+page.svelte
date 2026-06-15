@@ -171,7 +171,7 @@
 <PageShell
 	sectionLabel="Soumission"
 	title="Soumettre la phrase"
-	subtitle="Connectez-vous avec Discord, puis envoyez la phrase reconstituée. Deux essais par 24 heures."
+	subtitle="Testez la phrase reconstituée par votre camp. Deux essais par 24 heures."
 >
 	{#if showColdStartNotice && viewState !== 'loading'}
 		<p class="mb-4 text-center text-sm leading-relaxed text-zinc-500" role="status">
@@ -206,9 +206,9 @@
 		</div>
 	{:else if viewState === 'guest'}
 		<div class="surface-card hud-panel clip-corners glow-border p-6 sm:p-8" use:reveal>
-			<h2 class="font-display text-lg font-bold text-white">Connexion requise</h2>
+			<h2 class="font-display text-lg font-bold text-white">Identification requise</h2>
 			<p class="mt-2 text-sm text-zinc-400">
-				Authentifiez-vous avec Discord pour soumettre la phrase reconstituée par votre camp.
+				Pour tester une phrase, identifiez-vous afin que votre camp et vos tentatives soient enregistrés.
 			</p>
 
 			<ul class="mt-6 space-y-2 text-sm text-zinc-300">
@@ -222,7 +222,7 @@
 
 			<div class="mt-8 flex flex-wrap gap-3">
 				<button type="button" class="btn-pill btn-pill--primary" onclick={connectDiscord}>
-					Se connecter avec Discord
+					Tester une phrase
 				</button>
 				<a href="/regles" class="btn-pill">Lire les règles</a>
 			</div>

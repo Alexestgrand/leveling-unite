@@ -1,6 +1,11 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
-	import { REWARDS } from '$lib/data/mock';
+	import {
+		REWARDS,
+		MEMBERS_REWARD_TOTAL,
+		MEMBERS_REWARD_NAMED,
+		MEMBERS_REWARD_GIVEAWAY
+	} from '$lib/data/mock';
 
 	const accentStyles = [
 		'reward-card--members',
@@ -14,31 +19,36 @@
 <PageShell
 	sectionLabel="Enjeux"
 	title="Récompenses"
-	subtitle="Deux camps s'affrontent, mais l'expérience collective reste au centre. Voici ce qui est en jeu selon l'issue de l'événement."
+	subtitle="Staff Leveling vs Communauté Leveling : voici ce qui est en jeu selon le camp victorieux."
 >
 	<div class="content-block hud-panel clip-corners glow-border border-leveling-blue/40 glow-neon">
-		<h3>Répartition en cas de victoire des Membres</h3>
+		<h3>Si la Communauté gagne</h3>
 		<p class="text-zinc-400">
-			Si les Membres gagnent, les 10 récompenses sont réparties ainsi :
+			Lot total : {MEMBERS_REWARD_TOTAL.hunterPass} Hunter Pass + {MEMBERS_REWARD_TOTAL.nitro} Nitro
+			(1 mois chacun). Répartition :
 		</p>
 		<div class="reward-split mt-5">
+			{#each MEMBERS_REWARD_NAMED as reward}
+				<div class="reward-split__item">
+					<span class="reward-split__count">{reward.nitro}N + {reward.hunterPass}HP</span>
+					<span class="reward-split__label">{reward.role}</span>
+				</div>
+			{/each}
 			<div class="reward-split__item">
-				<span class="reward-split__count">5</span>
-				<span class="reward-split__label">Nitro — plus impliqués</span>
-			</div>
-			<div class="reward-split__item">
-				<span class="reward-split__count">5</span>
-				<span class="reward-split__label">Nitro — giveaway</span>
-			</div>
-			<div class="reward-split__item">
-				<span class="reward-split__count">5</span>
-				<span class="reward-split__label">Hunter Pass — plus impliqués</span>
-			</div>
-			<div class="reward-split__item">
-				<span class="reward-split__count">5</span>
-				<span class="reward-split__label">Hunter Pass — giveaway</span>
+				<span class="reward-split__count"
+					>{MEMBERS_REWARD_GIVEAWAY.nitro}N + {MEMBERS_REWARD_GIVEAWAY.hunterPass}HP</span
+				>
+				<span class="reward-split__label">Giveaway (actifs)</span>
 			</div>
 		</div>
+		<ul class="mt-5 space-y-3 text-sm text-zinc-400">
+			{#each MEMBERS_REWARD_NAMED as reward}
+				<li>
+					<span class="font-semibold text-leveling-blue-light">{reward.role}</span> —
+					{reward.description}
+				</li>
+			{/each}
+		</ul>
 	</div>
 
 	<div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
@@ -72,9 +82,10 @@
 	<div class="content-block hud-panel clip-corners">
 		<h3>Ce que Leveling: Unite récompense</h3>
 		<p>
-			Contrairement à un événement classique, Leveling: Unite ne récompense ni le niveau, ni la
-			rapidité, ni la performance individuelle. Il récompense la coopération, l'intelligence
-			collective, la créativité, l'engagement et la curiosité.
+			L'événement valorise la coopération, l'intelligence collective et l'engagement — pas le niveau
+			ni la vitesse individuelle. Le Finder est récompensé automatiquement ; les meilleurs
+			Fragmenté et Enquêteur sont choisis par vote du camp parmi une shortlist proposée par
+			l'organisateur.
 		</p>
 		<p class="mt-4 italic text-leveling-blue-light/80">
 			« Tu étais là pendant Leveling: Unite ? Quand tout le serveur s'est transformé en gigantesque

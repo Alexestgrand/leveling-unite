@@ -8,7 +8,6 @@
 	import {
 		API_COLD_START_MESSAGE,
 		fetchApiHealth,
-		getDiscordLoginUrl,
 		isApiConfigured,
 		type ApiHealthStatus
 	} from '$lib/api/validate';
@@ -36,10 +35,6 @@
 	let apiHealth = $state<ApiHealthStatus | null>(null);
 
 	const apiReady = isApiConfigured();
-	const discordHref = apiReady ? getDiscordLoginUrl() : '/soumettre';
-	const discordTitle = apiReady
-		? 'Connexion Discord'
-		: 'API non configurée — redirection vers la page de soumission';
 	const showColdStartNotice = $derived(apiReady && apiHealth !== null && apiHealth !== 'ok');
 
 	$effect(() => {
@@ -104,24 +99,28 @@
 
 			<div class="hero__cta-wrap hero-fade hero-fade-4" use:reveal={{ delay: 180 }}>
 				<a
-					href={discordHref}
+					href="/soumettre"
 					class="hero__cta-discord clip-corner-sm glow-cta"
-					title={discordTitle}
+					title="Tester une phrase de 15 mots"
 				>
 					<svg
 						class="hero__cta-discord-icon"
 						viewBox="0 0 24 24"
-						fill="currentColor"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
 						aria-hidden="true"
 					>
 						<path
-							d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
 						/>
 					</svg>
-					Se connecter avec Discord
+					Tester une phrase
 				</a>
 				<p class="hero__cta-hint">
-					{MAX_SUBMIT_ATTEMPTS} tentatives par {RATE_LIMIT_WINDOW_HOURS} h après connexion
+					{MAX_SUBMIT_ATTEMPTS} tentatives par {RATE_LIMIT_WINDOW_HOURS} h — 15 mots exactement
 				</p>
 				{#if showColdStartNotice}
 					<p class="hero__api-notice" role="status">{API_COLD_START_MESSAGE}</p>

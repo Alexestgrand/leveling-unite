@@ -1,21 +1,36 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
-	import { CAMPS, ROLES } from '$lib/data/mock';
+	import { CAMPS, ROLES, CONCEPT_INTRO, ORGANIZER_ROLE, ENIGMA_SUMMARY } from '$lib/data/mock';
 </script>
 
 <PageShell
 	sectionLabel="Univers"
 	title="Concept & Rôles"
-	subtitle="Une phrase secrète fragmentée, deux camps, et une communauté entière mobilisée pour la reconstituer."
+	subtitle="Une phrase de 15 mots, quatre vagues — Staff Leveling contre Communauté Leveling."
 >
 	<div class="content-block hud-panel clip-corners glow-border">
-		<h3>Le concept</h3>
-		<p>
-			Une phrase secrète est fragmentée en plusieurs parties, distribuées progressivement à des
-			participants sélectionnés. Aucun participant ne possède suffisamment d'informations pour
-			résoudre l'énigme seul — la résolution nécessite des échanges, des théories, de la coopération,
-			des vérifications et de la logique.
-		</p>
+		<h3>L'énigme</h3>
+		{#each CONCEPT_INTRO as paragraph, index}
+			<p class:mt-4={index > 0}>{paragraph}</p>
+		{/each}
+	</div>
+
+	<div class="content-block hud-panel clip-corners border-leveling-blue/25">
+		<h3>En chiffres</h3>
+		<ul>
+			<li><strong>{ENIGMA_SUMMARY.phraseWords} mots</strong> dans la phrase finale à soumettre sur le site.</li>
+			<li>
+				<strong>{ENIGMA_SUMMARY.waveCount} vagues</strong> de {ENIGMA_SUMMARY.fragmentsPerWave} énigmes,
+				une vague tous les {ENIGMA_SUMMARY.waveDurationDays} jours.
+			</li>
+			<li>
+				<strong>{ENIGMA_SUMMARY.fragmentsPerWave} Fragmentés</strong> désignés par camp à chaque vague.
+			</li>
+			<li>
+				<strong>{ENIGMA_SUMMARY.submitAttempts} soumissions</strong> maximum par
+				{ENIGMA_SUMMARY.submitWindowHours} h pour tenter la phrase complète.
+			</li>
+		</ul>
 	</div>
 
 	<div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
@@ -49,5 +64,15 @@
 				</ul>
 			</div>
 		{/each}
+	</div>
+
+	<div class="content-block hud-panel clip-corners glow-border border-leveling-blue/30">
+		<h3>{ORGANIZER_ROLE.title}</h3>
+		<p>{ORGANIZER_ROLE.description}</p>
+		<ul class="mt-4">
+			{#each ORGANIZER_ROLE.items as item}
+				<li>{item}</li>
+			{/each}
+		</ul>
 	</div>
 </PageShell>

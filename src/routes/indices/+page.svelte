@@ -4,9 +4,9 @@
 </script>
 
 <PageShell
-	sectionLabel="Fragments"
+	sectionLabel="Indices"
 	title="Indices"
-	subtitle="Les fragments débloqués par la progression collective. Les cartes verrouillées restent scellées jusqu'au prochain palier."
+	subtitle="Indices publiés via les annonces officielles et les paliers TikTok atteints. Les nouvelles transmissions apparaîtront ici."
 >
 	<CluesGrid />
 </PageShell>

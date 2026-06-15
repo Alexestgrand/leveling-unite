@@ -2,7 +2,7 @@
 	import { reveal } from '$lib/actions/reveal';
 	import SectionIntro from '$lib/components/SectionIntro.svelte';
 	import {
-		CLUES,
+		PUBLIC_INDICES,
 		PHASES,
 		CURRENT_PHASE_INDEX,
 		TIKTOK_TRACKER,
@@ -10,27 +10,26 @@
 	} from '$lib/data/mock';
 	import { formatViews, milestonePercent } from '$lib/utils/format';
 
-	const unlockedCount = CLUES.filter((c) => c.unlocked).length;
-	const latestClue = [...CLUES].reverse().find((c) => c.unlocked);
-	const currentPhase = PHASES[CURRENT_PHASE_INDEX];
+	const latestIndex = PUBLIC_INDICES.length > 0 ? PUBLIC_INDICES[PUBLIC_INDICES.length - 1] : null;
+	const currentPhase = CURRENT_PHASE_INDEX >= 0 ? PHASES[CURRENT_PHASE_INDEX] : null;
 	const tiktokProgress = milestonePercent(TIKTOK_TRACKER.currentViews, TIKTOK_TRACKER.goal);
-	const fragmentsProgress = (unlockedCount / CLUES.length) * 100;
-	const phaseProgress = ((CURRENT_PHASE_INDEX + 1) / PHASES.length) * 100;
+	const phaseProgress =
+		CURRENT_PHASE_INDEX >= 0 ? ((CURRENT_PHASE_INDEX + 1) / PHASES.length) * 100 : 0;
 
 	const stats = [
 		{
-			label: 'Phase active',
-			value: currentPhase.name,
-			sub: `${currentPhase.share} des fragments distribués`,
+			label: 'Vague active',
+			value: currentPhase?.name ?? 'À venir',
+			sub: currentPhase ? `${currentPhase.share} cette semaine` : 'Lancement prochain',
 			progress: phaseProgress,
 			href: '/deroule',
 			link: 'Voir le déroulé'
 		},
 		{
-			label: 'Fragments',
-			value: `${unlockedCount} / ${CLUES.length}`,
-			sub: 'indices débloqués',
-			progress: fragmentsProgress,
+			label: 'Indices publiés',
+			value: String(PUBLIC_INDICES.length),
+			sub: 'annonces & TikTok',
+			progress: Math.min((PUBLIC_INDICES.length / 12) * 100, 100),
 			href: '/indices',
 			link: 'Explorer les indices'
 		},
@@ -57,7 +56,7 @@
 	<SectionIntro
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
-		description="En un coup d'œil : la phase en cours, les fragments trouvés, l'objectif TikTok et les dernières annonces. Cliquez sur une carte pour approfondir."
+		description="En un coup d'œil : la vague en cours, les indices publiés, l'objectif TikTok et les dernières annonces."
 		href="/concept"
 		linkLabel="Comprendre le concept"
 	/>
@@ -81,13 +80,13 @@
 		{/each}
 	</div>
 
-	{#if latestClue}
+	{#if latestIndex}
 		<div class="surface-card surface-card--accent latest-clue p-4 sm:p-5 mt-5 sm:mt-6" use:reveal={{ delay: 300 }}>
 			<div class="latest-clue__header">
-				<span class="latest-clue__badge">Dernier fragment débloqué</span>
-				<span class="font-display text-xs font-bold text-leveling-blue-light">{latestClue.label}</span>
+				<span class="latest-clue__badge">Dernier indice publié</span>
+				<span class="font-display text-xs font-bold text-leveling-blue-light">{latestIndex.title}</span>
 			</div>
-			<p class="latest-clue__content">{latestClue.content}</p>
+			<p class="latest-clue__content">{latestIndex.content}</p>
 			<a href="/indices" class="section-intro__link">
 				Voir tous les indices
 				<svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

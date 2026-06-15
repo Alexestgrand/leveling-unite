@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Déroulement"
 	title="Déroulé"
-	subtitle="L'événement se déroule sur {EVENT.duration}. Quatre phases progressivement révèlent les fragments jusqu'à la résolution finale."
+	subtitle="L'événement dure {EVENT.duration}. Chaque vague désigne 5 Fragmentés et débloque 5 fragments vers la phrase de 15 mots."
 >
 	<div class="relative space-y-0">
 		{#each PHASES as phase, index (phase.id)}
