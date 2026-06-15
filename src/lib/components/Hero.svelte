@@ -6,6 +6,12 @@
 
 	const [titleMain, titleSecondary] = EVENT.title.split(':').map((part) => part.trim());
 
+	const quickLinks = [
+		{ href: '/regles', label: 'Les règles', desc: 'Entraide & fair-play' },
+		{ href: '/indices', label: 'Les indices', desc: 'Fragments débloqués', primary: true },
+		{ href: '/objectif-tiktok', label: 'TikTok', desc: 'Objectif communautaire' }
+	];
+
 	const units = [
 		{ key: 'days', label: 'Jours' },
 		{ key: 'hours', label: 'Heures' },
@@ -30,106 +36,68 @@
 	});
 </script>
 
-<section class="relative overflow-hidden border-b border-leveling-blue/10">
-	<div class="pointer-events-none absolute inset-0" aria-hidden="true">
-		<div
-			class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,153,255,0.18),transparent_58%)]"
-		></div>
+<section class="hero">
+	<div class="hero__glow" aria-hidden="true"></div>
 
-		<div
-			class="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_80%,rgba(0,119,204,0.12),transparent_45%)]"
-		></div>
-
-		<div
-			class="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent sm:h-48"
-		></div>
-	</div>
-
-	<div class="page-container relative z-10 pb-10 pt-6 sm:pb-12 sm:pt-8 md:pb-20 md:pt-12">
-		<div class="relative mx-auto max-w-4xl text-center">
-			<p
-				class="hero-enter mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-leveling-blue-light sm:mb-4 sm:text-sm sm:tracking-[0.35em] md:text-base"
-			>
-				Événement communautaire
+	<div class="page-container hero__inner">
+		<div class="hero__content">
+			<p class="hero__badge hero-fade hero-fade-1">
+				<span class="hero__badge-dot" aria-hidden="true"></span>
+				Événement communautaire en cours
 			</p>
 
-			<div class="hero-title-wrap hero-enter hero-enter-delay-1" aria-label={EVENT.title}>
-				<div class="hero-title-line">
-					<h1
-						class="text-glitch-hero m-0 text-[clamp(2rem,11vw,5rem)] uppercase"
-						data-text={titleMain}
-					>
-						{titleMain}
-					</h1>
+			<h1 class="hero__title hero-fade hero-fade-2" aria-label={EVENT.title}>
+				<span class="hero__title-main">{titleMain}</span>
+				<span class="hero__title-sub">
+					<span class="hero__title-colon" aria-hidden="true">:</span>
+					{titleSecondary}
+				</span>
+			</h1>
+
+			<p class="hero__pitch hero-fade hero-fade-3">
+				<strong>Enquête collective sur Discord.</strong>
+				Reconstituez une phrase secrète fragmentée — personne ne peut gagner seul.
+			</p>
+
+			<p class="hero__tagline hero-fade hero-fade-4">{EVENT.tagline}</p>
+
+			<nav class="hero__actions hero-fade hero-fade-5" aria-label="Accès rapide">
+				{#each quickLinks as link}
+					<a href={link.href} class="btn-pill" class:btn-pill--primary={link.primary}>
+						<span class="btn-pill__label">{link.label}</span>
+						<span class="btn-pill__hint">{link.desc}</span>
+					</a>
+				{/each}
+			</nav>
+
+			<div class="hero__countdown hero-fade hero-fade-6" use:reveal={{ delay: 200 }}>
+				<div class="hero__countdown-head">
+					<p class="hero__countdown-title">Temps restant</p>
+					<p class="hero__countdown-date">Fin — {EVENT.endDateLabel}</p>
 				</div>
 
-				<div class="hero-title-line">
-					<h1
-						class="text-glitch-hero m-0 text-[clamp(1.65rem,8.5vw,4rem)] uppercase"
-						data-text={titleSecondary}
-					>
-						<span class="hero-title-colon" aria-hidden="true">:</span>
-						{titleSecondary}
-					</h1>
-				</div>
-			</div>
-
-			<p
-				class="hero-enter hero-enter-delay-2 mt-3 font-display text-base font-semibold tracking-[0.08em] text-zinc-400 sm:mt-4 sm:text-xl sm:tracking-[0.2em] md:text-3xl"
-			>
-				{EVENT.subtitle}
-			</p>
-
-			<p
-				class="hero-enter hero-enter-delay-3 mx-auto mt-3 max-w-xl px-1 text-sm leading-relaxed text-zinc-400 sm:mt-4 sm:text-base md:text-lg"
-			>
-				{EVENT.tagline}
-			</p>
-
-			<div class="mx-auto mt-8 max-w-2xl sm:mt-12" use:reveal={{ delay: 200 }}>
 				{#if remaining.expired}
-					<div class="card-glass px-4 py-8 sm:px-6 sm:py-10">
-						<p
-							class="font-display text-xl font-bold uppercase tracking-widest text-leveling-blue sm:text-2xl md:text-3xl"
-						>
+					<div class="surface-card hero__expired">
+						<p class="font-display text-xl font-bold text-leveling-blue sm:text-2xl">
 							Événement terminé
 						</p>
 					</div>
 				{:else}
-					<div class="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3 md:gap-6">
+					<div class="hero__countdown-grid">
 						{#each units as unit, index}
-							<div
-								class="card-glass px-2 py-4 sm:px-3 sm:py-5 md:px-4 md:py-6"
-								use:reveal={{ delay: 280 + index * 80 }}
-							>
+							<div class="countdown-unit" use:reveal={{ delay: 260 + index * 70 }}>
 								{#if unit.key === 'seconds'}
 									{#key tickKey}
-										<p
-											class="count-tick font-display text-2xl font-bold tabular-nums text-leveling-blue sm:text-3xl md:text-5xl"
-										>
-											{padTime(remaining[unit.key])}
-										</p>
+										<p class="countdown-unit__value count-tick">{padTime(remaining[unit.key])}</p>
 									{/key}
 								{:else}
-									<p
-										class="font-display text-2xl font-bold tabular-nums text-leveling-blue sm:text-3xl md:text-5xl"
-									>
-										{padTime(remaining[unit.key])}
-									</p>
+									<p class="countdown-unit__value">{padTime(remaining[unit.key])}</p>
 								{/if}
-								<p
-									class="mt-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-zinc-500 sm:mt-2 sm:text-xs sm:tracking-[0.2em] md:text-sm"
-								>
-									{unit.label}
-								</p>
+								<p class="countdown-unit__label">{unit.label}</p>
 							</div>
 						{/each}
 					</div>
 				{/if}
-
-				<p class="mt-6 px-1 text-xs leading-relaxed text-zinc-500 sm:mt-8 sm:text-sm md:text-base">
-					Fin de l'événement — {EVENT.endDateLabel}
-				</p>
 			</div>
 		</div>
 	</div>

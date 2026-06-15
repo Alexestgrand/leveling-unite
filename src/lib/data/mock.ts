@@ -24,7 +24,8 @@ export interface NavLink {
 	href: string;
 	title: string;
 	description: string;
-	icon: string;
+	icon: 'rules' | 'clues' | 'tiktok' | 'schedule' | 'rewards' | 'concept';
+	featured?: boolean;
 }
 
 export interface Phase {
@@ -46,45 +47,76 @@ export const EVENT = {
 	tagline: 'Aucun joueur ne peut gagner seul. Toute la communauté doit collaborer.',
 	endDate: new Date('2026-06-29T23:59:00+02:00'),
 	endDateLabel: '29 juin 2026',
-	duration: '3 semaines'
+	duration: '3 semaines',
+	discordLabel: 'Serveur Discord Leveling'
 };
+
+/** Index 0-based de la phase en cours */
+export const CURRENT_PHASE_INDEX = 1;
+
+export const HEADER_NAV = [
+	{ href: '/regles', label: 'Règles' },
+	{ href: '/indices', label: 'Indices' },
+	{ href: '/objectif-tiktok', label: 'TikTok' },
+	{ href: '/deroule', label: 'Déroulé' },
+	{ href: '/recompenses', label: 'Récompenses' }
+] as const;
+
+export const PARTICIPATION_STEPS = [
+	{
+		step: '01',
+		title: 'Rejoignez le serveur',
+		description: 'Intégrez la communauté Discord Leveling et consultez les salons dédiés à l’événement.'
+	},
+	{
+		step: '02',
+		title: 'Lisez les règles',
+		description: 'Comprenez l’entraide collective, la confidentialité des fragments et le cadre de l’enquête.'
+	},
+	{
+		step: '03',
+		title: 'Contribuez à l’enquête',
+		description: 'Partagez vos hypothèses, aidez les objectifs TikTok et suivez les transmissions du staff.'
+	}
+] as const;
 
 export const NAV_LINKS: NavLink[] = [
 	{
 		href: '/regles',
 		title: 'Règles',
 		description: 'Fair-play, confidentialité des fragments et cadre de l’événement.',
-		icon: '§'
+		icon: 'rules'
 	},
 	{
 		href: '/indices',
 		title: 'Indices',
 		description: 'Fragments débloqués par la communauté. Les verrouillés restent scellés.',
-		icon: '◈'
+		icon: 'clues',
+		featured: true
 	},
 	{
 		href: '/objectif-tiktok',
 		title: 'Objectif TikTok',
 		description: 'Suivez la progression collective et les paliers de vues à débloquer.',
-		icon: '▲'
+		icon: 'tiktok'
 	},
 	{
 		href: '/deroule',
 		title: 'Déroulé',
 		description: 'Les 4 phases de l’événement, de l’Éveil à la Résolution.',
-		icon: '◉'
+		icon: 'schedule'
 	},
 	{
 		href: '/recompenses',
 		title: 'Récompenses',
 		description: 'Victoire des Membres, du Staff ou échec total — ce qui est en jeu.',
-		icon: '★'
+		icon: 'rewards'
 	},
 	{
 		href: '/concept',
 		title: 'Concept & Rôles',
 		description: 'Fragmentés, Enquêteurs, les deux camps et la phrase secrète.',
-		icon: '⬡'
+		icon: 'concept'
 	}
 ];
 
@@ -184,42 +216,84 @@ export const CLUES: Clue[] = [
 	}
 ];
 
+export const COLLABORATION_RULES = [
+	'L’événement est une enquête collective : personne ne possède assez d’informations pour résoudre l’énigme seul.',
+	'Chaque participant contribue à l’avancement de son camp — Fragmentés comme Enquêteurs.',
+	'Les Enquêteurs partagent leurs hypothèses, recoupent les indices publics et s’entraident dans les salons dédiés.',
+	'Les Fragmentés restent actifs et joignables : ils participent aux échanges, orientent l’enquête et répondent aux sollicitations de leur camp.',
+	'Poser des questions, proposer des pistes et construire sur les idées des autres est encouragé — c’est le cœur de l’événement.'
+];
+
+export const CONFIDENTIALITY_RULES = [
+	'Les mots et fragments reçus en message privé restent confidentiels : pas de copier-coller, pas de citation mot pour mot, pas de capture d’écran partagée.',
+	'Un Fragmenté peut aider sans trahir son fragment : confirmer ou infirmer une piste, donner un indice indirect, reformuler sans révéler le mot exact.',
+	'Confidentialité et entraide ne s’opposent pas — la règle protège l’équité du jeu pendant que la communauté avance ensemble.'
+];
+
 export const RULES = [
-	'Interdiction de partager des captures d’écran des messages privés contenant les fragments.',
-	'Respect du fair-play et du règlement général du serveur.',
-	'Discussions et théories encouragées dans les salons dédiés.',
+	'Respect du fair-play, de l’entraide et du règlement général du serveur.',
 	'Les décisions finales concernant l’événement reviennent à l’organisateur.'
 ];
 
 export const PARTICIPATION_CRITERIA = [
-	'Ancienneté minimale : 15 jours sur le serveur.',
+	'Compte Discord créé depuis au moins 5 jours (vérifié automatiquement à la connexion).',
 	'Absence de multi-comptes.',
-	'Respect du règlement général.',
 	'Sélection aléatoire parmi les profils éligibles pour le rôle de Fragmenté.',
-	'Des remplaçants secrets seront également désignés.'
+	'Engagement actif attendu : participer aux échanges du camp et répondre aux sollicitations sous 24 heures.',
+	'Des remplaçants secrets seront désignés pour garantir la continuité de l’enquête.'
 ];
 
 export const INACTIVITY_RULES = [
-	'Inactivité de 48 heures sans réponse aux sollicitations.',
-	'Blocage manifeste de la progression de l’événement.',
-	'Le fragment sera redistribué à un remplaçant pour ne pas ralentir le camp.'
+	'Absence de réponse pendant 24 heures aux sollicitations du staff ou des participants de son camp.',
+	'Blocage manifeste de la progression collective (refus répété de participer aux échanges).',
+	'Le fragment est redistribué à un remplaçant afin de ne pas pénaliser le reste du camp.'
+];
+
+export const CHEATING_CASES = [
+	{
+		title: 'Fuite de fragments',
+		description:
+			'Partager en public (salons, DM, réseaux sociaux) un mot, fragment ou indice reçu en message privé, ou publier une capture d’écran de ces messages.'
+	},
+	{
+		title: 'Multi-comptes et usurpation',
+		description:
+			'Utiliser plusieurs comptes pour obtenir plusieurs rôles Fragmenté, se faire passer pour un autre participant ou manipuler la sélection des remplaçants.'
+	},
+	{
+		title: 'Collusion inter-camps',
+		description:
+			'Transmettre volontairement des informations à l’autre camp (Membres ↔ Staff) ou coordonner une triche entre participants pour fausser l’enquête.'
+	},
+	{
+		title: 'Exploitation et contournement',
+		description:
+			'Utiliser des bots, scripts, fuites externes ou toute méthode visant à obtenir la phrase secrète sans jouer le jeu collectif prévu par l’événement.'
+	},
+	{
+		title: 'Obstruction volontaire',
+		description:
+			'Diffuser de fausses informations en connaissance de cause, saboter les échanges du camp ou ignorer délibérément les sollicitations pour freiner la progression collective.'
+	}
 ];
 
 export const SANCTIONS = [
 	{
 		title: 'Triche d’un Membre',
 		items: [
-			'Exclusion immédiate de l’événement.',
-			'Remplacement par un remplaçant.',
-			'Retrait d’une récompense du lot des Membres (priorité : un Hunter Pass).'
+			'Exclusion immédiate et définitive de l’événement.',
+			'Remplacement par un remplaçant désigné à l’avance.',
+			'Retrait d’une récompense du lot des Membres (priorité : un Hunter Pass).',
+			'En cas de fuite majeure, le staff peut annuler les indices compromis et rééquilibrer la partie.'
 		]
 	},
 	{
 		title: 'Triche d’un membre du Staff',
 		items: [
-			'Exclusion immédiate.',
-			'Remplacement.',
-			'Réduction de 100 € de l’enveloppe communautaire prévue.'
+			'Exclusion immédiate de l’événement et retrait des responsabilités liées à la partie.',
+			'Remplacement par un autre membre du staff.',
+			'Réduction de 100 € de l’enveloppe communautaire prévue en cas de victoire du Staff.',
+			'Le staff ne peut ni recevoir de fragment ni influencer directement la résolution de l’énigme.'
 		]
 	}
 ];
@@ -260,9 +334,12 @@ export const REWARDS: RewardOutcome[] = [
 		id: 'members-win',
 		title: 'Victoire des Membres',
 		items: [
-			'10 abonnements Discord Nitro (1 mois).',
-			'10 Hunter Pass (1 mois).',
-			'Récompenses distribuées aux participants les plus impliqués.'
+			'10 récompenses au total : 5 Nitro (1 mois) + 5 Hunter Pass (1 mois).',
+			'5 Nitro attribués aux participants les plus impliqués (engagement, contributions utiles à l’enquête).',
+			'5 Nitro distribués via giveaway parmi les participants éligibles.',
+			'5 Hunter Pass attribués aux participants les plus impliqués.',
+			'5 Hunter Pass distribués via giveaway parmi les participants éligibles.',
+			'Seuls les membres ayant participé activement à l’événement sont éligibles aux tirages.'
 		]
 	},
 	{
@@ -289,7 +366,6 @@ export const FINAL_REVEAL = [
 	'Un salon secret sera débloqué à la résolution de l’énigme.',
 	'Message exclusif du créateur de Leveling.',
 	'Modalités de récupération des récompenses.',
-	'Annonce surprise ou teaser.',
 	'Rôle Discord exclusif lié à cette édition.'
 ];
 

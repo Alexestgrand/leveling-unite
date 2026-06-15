@@ -1,36 +1,41 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
-	import { EVENT, PHASES, FINAL_REVEAL } from '$lib/data/mock';
+	import { EVENT, PHASES, FINAL_REVEAL, CURRENT_PHASE_INDEX } from '$lib/data/mock';
 </script>
 
 <PageShell
+	sectionLabel="Déroulement"
 	title="Déroulé"
 	subtitle="L'événement se déroule sur {EVENT.duration}. Quatre phases progressivement révèlent les fragments jusqu'à la résolution finale."
 >
 	<div class="relative space-y-0">
 		{#each PHASES as phase, index (phase.id)}
-			<div class="relative flex gap-6 pb-10 last:pb-0">
+			{@const isActive = index === CURRENT_PHASE_INDEX}
+			{@const isPast = index < CURRENT_PHASE_INDEX}
+			<div
+				class="phase-step relative flex gap-4 pb-10 last:pb-0 sm:gap-6"
+				class:phase-step--active={isActive}
+				class:phase-step--past={isPast}
+			>
 				{#if index < PHASES.length - 1}
-					<div
-						class="absolute left-[23px] top-12 h-[calc(100%-2rem)] w-0.5 bg-gradient-to-b from-leveling-blue/50 to-leveling-blue/10"
-						aria-hidden="true"
-					></div>
+					<div class="phase-step__line" aria-hidden="true"></div>
 				{/if}
 
-				<div
-					class="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-leveling-blue bg-zinc-950 font-display text-sm font-bold text-leveling-blue-light glow-neon"
-				>
+				<div class="phase-step__badge">
 					{index + 1}
 				</div>
 
-				<div class="content-block flex-1">
+				<div class="content-block hud-panel clip-corners flex-1">
 					<div class="mb-2 flex flex-wrap items-center gap-3">
 						<h3>{phase.name}</h3>
-						<span
-							class="rounded border border-leveling-blue/30 bg-leveling-blue/10 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-leveling-blue-light"
-						>
-							{phase.share} des fragments
-						</span>
+						<span class="phase-step__share">{phase.share} des fragments</span>
+						{#if isActive}
+							<span class="phase-step__status">En cours</span>
+						{:else if isPast}
+							<span class="phase-step__status phase-step__status--done">Terminée</span>
+						{:else}
+							<span class="phase-step__status phase-step__status--upcoming">À venir</span>
+						{/if}
 					</div>
 					<p>{phase.description}</p>
 				</div>
@@ -38,7 +43,7 @@
 		{/each}
 	</div>
 
-	<div class="content-block mt-6 border-leveling-blue/30 glow-neon">
+	<div class="content-block hud-panel clip-corners glow-border mt-6 border-leveling-blue/30 glow-neon">
 		<h3>Révélation finale</h3>
 		<p class="text-zinc-400">
 			La résolution de l'énigme doit constituer un véritable moment fort pour toute la communauté.

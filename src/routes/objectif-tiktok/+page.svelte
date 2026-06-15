@@ -4,6 +4,7 @@
 </script>
 
 <PageShell
+	sectionLabel="Progression"
 	title="Objectif TikTok"
 	subtitle="Les vidéos publiées avec les hashtags officiels alimentent un objectif collectif. Chaque palier débloque une aide pour toute la communauté."
 >

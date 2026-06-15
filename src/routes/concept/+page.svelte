@@ -4,10 +4,11 @@
 </script>
 
 <PageShell
+	sectionLabel="Univers"
 	title="Concept & Rôles"
 	subtitle="Une phrase secrète fragmentée, deux camps, et une communauté entière mobilisée pour la reconstituer."
 >
-	<div class="content-block">
+	<div class="content-block hud-panel clip-corners glow-border">
 		<h3>Le concept</h3>
 		<p>
 			Une phrase secrète est fragmentée en plusieurs parties, distribuées progressivement à des
@@ -17,24 +18,36 @@
 		</p>
 	</div>
 
-	<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-		{#each CAMPS as camp}
-			<div class="content-block">
-				<h3>{camp.name}</h3>
-				<p>{camp.description}</p>
+	<div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+		{#each CAMPS as camp, index}
+			<div
+				class="camp-card hud-panel clip-corners"
+				class:camp-card--members={index === 0}
+				class:camp-card--staff={index === 1}
+			>
+				<span class="camp-card__tag">{index === 0 ? 'Camp A' : 'Camp B'}</span>
+				<h3 class="camp-card__title">{camp.name}</h3>
+				<p class="camp-card__desc">{camp.description}</p>
 			</div>
 		{/each}
 	</div>
 
-	{#each ROLES as role}
-		<div class="content-block">
-			<h3>{role.title}</h3>
-			<p>{role.description}</p>
-			<ul class="mt-4">
-				{#each role.items as item}
-					<li>{item}</li>
-				{/each}
-			</ul>
-		</div>
-	{/each}
+	<div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+		{#each ROLES as role, index}
+			<div class="content-block hud-panel clip-corners role-card">
+				<div class="role-card__head">
+					<span class="role-card__icon" aria-hidden="true">
+						{index === 0 ? '◆' : '◇'}
+					</span>
+					<h3>{role.title}</h3>
+				</div>
+				<p>{role.description}</p>
+				<ul class="mt-4">
+					{#each role.items as item}
+						<li>{item}</li>
+					{/each}
+				</ul>
+			</div>
+		{/each}
+	</div>
 </PageShell>
