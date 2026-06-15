@@ -72,6 +72,7 @@ export const SUBMIT_CRITERIA = [
 
 export const EXPECTED_PHRASE_WORDS = 15;
 export const MAX_SUBMIT_ATTEMPTS = 2;
+export const RATE_LIMIT_WINDOW_HOURS = 24;
 
 export const PARTICIPATION_STEPS = [
 	{

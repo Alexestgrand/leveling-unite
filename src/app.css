@@ -2,6 +2,8 @@
 @import './lib/styles/modern.css';
 
 @theme {
+	--color-accent-cyan: #46c8ff;
+	--color-bg-system: #05060a;
 	--color-leveling-blue: #3b9eff;
 	--color-leveling-blue-light: #6eb8ff;
 	--color-leveling-blue-dark: #1a7fd4;

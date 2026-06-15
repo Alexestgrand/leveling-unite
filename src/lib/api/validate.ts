@@ -3,7 +3,14 @@ import type { AuthMeResponse, ValidateResponse } from '$lib/types/validate';
 
 const API_URL = PUBLIC_API_URL?.trim() ?? '';
 
+const HEALTH_TIMEOUT_MS = 8000;
+const HEALTH_SLOW_MS = 3000;
+
+export type ApiHealthStatus = 'ok' | 'slow' | 'error';
 export type AuthMeResult = AuthMeResponse | null | 'error';
+
+export const API_COLD_START_MESSAGE =
+	'Le portail peut mettre quelques secondes à s\'ouvrir — réessayez si la connexion échoue.';
 
 export function isApiConfigured(): boolean {
 	return API_URL.length > 0;
@@ -12,6 +19,28 @@ export function isApiConfigured(): boolean {
 /** Redirect URL for Discord OAuth — must be a full navigation, not fetch (cookie set on callback). */
 export function getDiscordLoginUrl(): string {
 	return `${API_URL}/auth/discord`;
+}
+
+export async function fetchApiHealth(): Promise<ApiHealthStatus> {
+	if (!isApiConfigured()) return 'error';
+
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), HEALTH_TIMEOUT_MS);
+	const startedAt = Date.now();
+
+	try {
+		const res = await fetch(`${API_URL}/health`, { signal: controller.signal });
+		const elapsed = Date.now() - startedAt;
+
+		if (!res.ok) return 'error';
+		if (elapsed > HEALTH_SLOW_MS) return 'slow';
+		return 'ok';
+	} catch {
+		if (Date.now() - startedAt >= HEALTH_SLOW_MS) return 'slow';
+		return 'error';
+	} finally {
+		clearTimeout(timeoutId);
+	}
 }
 
 export async function fetchAuthMe(): Promise<AuthMeResult> {

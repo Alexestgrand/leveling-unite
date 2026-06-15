@@ -7,8 +7,12 @@
 		children: Snippet;
 	}
 
-	let { title, open: initialOpen = false, children }: Props = $props();
-	let expanded = $state(initialOpen);
+	let { title, open = false, children }: Props = $props();
+	let expanded = $state(false);
+
+	$effect(() => {
+		expanded = open;
+	});
 </script>
 
 <div class="accordion__item" class:accordion__item--open={expanded}>

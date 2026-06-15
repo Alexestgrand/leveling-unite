@@ -3,6 +3,8 @@
 	import PageShell from '$lib/components/PageShell.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import {
+		API_COLD_START_MESSAGE,
+		fetchApiHealth,
 		fetchAuthMe,
 		getDiscordLoginUrl,
 		isApiConfigured,
@@ -28,6 +30,7 @@
 	let submitting = $state(false);
 	let statusMessage = $state('');
 	let statusTone = $state<'neutral' | 'error' | 'success'>('neutral');
+	let showColdStartNotice = $state(false);
 
 	const wordCount = $derived(countWords(phrase));
 	const remainingAttempts = $derived(user?.remaining_attempts ?? 0);
@@ -42,16 +45,27 @@
 		viewState = 'loading';
 		statusMessage = '';
 		statusTone = 'neutral';
+		showColdStartNotice = false;
 
 		if (!isApiConfigured()) {
 			viewState = 'unavailable';
 			return;
 		}
 
+		const health = await fetchApiHealth();
+		if (health !== 'ok') {
+			showColdStartNotice = true;
+		}
+
 		try {
 			const me = await fetchAuthMe();
 
 			if (me === 'error') {
+				if (health !== 'ok') {
+					user = null;
+					viewState = 'guest';
+					return;
+				}
 				viewState = 'unavailable';
 				return;
 			}
@@ -159,6 +173,12 @@
 	title="Soumettre la phrase"
 	subtitle="Connectez-vous avec Discord, puis envoyez la phrase reconstituée. Deux essais par 24 heures."
 >
+	{#if showColdStartNotice && viewState !== 'loading'}
+		<p class="mb-4 text-center text-sm leading-relaxed text-zinc-500" role="status">
+			{API_COLD_START_MESSAGE}
+		</p>
+	{/if}
+
 	{#if viewState === 'loading'}
 		<div class="surface-card hud-panel clip-corners p-8 text-center" use:reveal>
 			<p class="text-sm text-zinc-400">Chargement de votre session…</p>
@@ -175,6 +195,9 @@
 					L'API de validation n'est pas configurée (<code class="text-zinc-300">PUBLIC_API_URL</code>).
 				{:else}
 					Impossible de joindre le serveur de validation. Vérifiez que l'API est démarrée et réessayez.
+					{#if showColdStartNotice}
+						<span class="mt-2 block">{API_COLD_START_MESSAGE}</span>
+					{/if}
 				{/if}
 			</p>
 			<button type="button" class="btn-pill btn-pill--primary mt-6" onclick={loadSession}>

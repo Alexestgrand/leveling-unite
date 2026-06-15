@@ -1,5 +1,10 @@
 /* ── Modern DA — fond, surfaces, hero, sections ── */
 
+:root {
+	--accent-cyan: #46c8ff;
+	--bg-system: #05060a;
+}
+
 .app-shell {
 	background: #080a10;
 }
@@ -314,95 +319,6 @@
 	text-align: center;
 }
 
-.hero__badge {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	padding: 0.4rem 0.9rem;
-	border: 1px solid rgba(59, 158, 255, 0.25);
-	border-radius: 9999px;
-	background: rgba(59, 158, 255, 0.08);
-	font-size: 0.72rem;
-	font-weight: 600;
-	color: var(--color-leveling-blue-light);
-}
-
-.hero__badge-dot {
-	width: 0.4rem;
-	height: 0.4rem;
-	border-radius: 50%;
-	background: #4ade80;
-	box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
-	animation: pulse-dot 2s ease-in-out infinite;
-}
-
-.hero__title {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 0.1rem;
-	margin-top: 1.25rem;
-	line-height: 1;
-}
-
-.hero__title-main {
-	font-family: var(--font-hero);
-	font-size: clamp(3rem, 14vw, 6.5rem);
-	font-weight: 400;
-	letter-spacing: 0.04em;
-	background: linear-gradient(135deg, #ffffff 0%, var(--color-neon-blue) 45%, var(--color-leveling-blue) 100%);
-	background-size: 200% auto;
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: transparent;
-	animation: gradient-flow 6s linear infinite;
-}
-
-@keyframes gradient-flow {
-	to {
-		background-position: 200% center;
-	}
-}
-
-.hero__title-sub {
-	font-family: var(--font-hero);
-	font-size: clamp(2rem, 9vw, 4.5rem);
-	font-weight: 400;
-	letter-spacing: 0.08em;
-	color: var(--color-leveling-blue-light);
-}
-
-.hero__title-colon {
-	margin-right: 0.1em;
-	color: var(--color-neon-blue);
-}
-
-.hero__pitch {
-	margin-top: 1.25rem;
-	font-size: clamp(1rem, 2.5vw, 1.15rem);
-	line-height: 1.6;
-	color: rgba(212, 218, 230, 0.95);
-}
-
-.hero__pitch strong {
-	color: white;
-	font-weight: 600;
-}
-
-.hero__tagline {
-	margin-top: 0.65rem;
-	font-size: 0.9rem;
-	color: rgba(148, 156, 176, 0.95);
-}
-
-.hero__actions {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 0.65rem;
-	margin-top: 1.75rem;
-}
-
 .btn-pill {
 	display: flex;
 	flex-direction: column;
@@ -475,49 +391,6 @@
 	color: rgba(113, 122, 142, 0.95);
 }
 
-.hero__countdown-grid {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 0.65rem;
-}
-
-@media (min-width: 640px) {
-	.hero__countdown-grid {
-		grid-template-columns: repeat(4, 1fr);
-		gap: 0.85rem;
-	}
-}
-
-.countdown-unit {
-	padding: 1rem 0.5rem;
-	border-radius: 1rem;
-	background: rgba(255, 255, 255, 0.03);
-	border: 1px solid rgba(255, 255, 255, 0.06);
-	transition: transform 0.4s var(--ease-spring);
-}
-
-.countdown-unit:hover {
-	transform: translateY(-2px);
-	border-color: rgba(59, 158, 255, 0.2);
-}
-
-.countdown-unit__value {
-	font-family: var(--font-display);
-	font-size: clamp(1.75rem, 6vw, 2.75rem);
-	font-weight: 700;
-	color: var(--color-leveling-blue-light);
-	line-height: 1;
-}
-
-.countdown-unit__label {
-	margin-top: 0.4rem;
-	font-size: 0.65rem;
-	font-weight: 600;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	color: rgba(113, 122, 142, 0.95);
-}
-
 .hero-fade {
 	animation: hero-fade-up 0.9s var(--ease-smooth) both;
 }
@@ -527,7 +400,6 @@
 .hero-fade-3 { animation-delay: 0.2s; }
 .hero-fade-4 { animation-delay: 0.28s; }
 .hero-fade-5 { animation-delay: 0.36s; }
-.hero-fade-6 { animation-delay: 0.44s; }
 
 @keyframes hero-fade-up {
 	from {
@@ -537,6 +409,228 @@
 	to {
 		opacity: 1;
 		transform: translateY(0);
+	}
+}
+
+/* Hero — portal refonte (CTA Discord dominant) */
+.hero.ambient-bg {
+	padding-bottom: 1rem;
+}
+
+.hero__inner--portal {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.hero__content--portal {
+	max-width: 48rem;
+}
+
+.hero__portal-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+	padding: 0.35rem 0.75rem;
+	border: 1px solid rgba(70, 200, 255, 0.22);
+	background: rgba(70, 200, 255, 0.06);
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	color: var(--color-accent-cyan);
+}
+
+.hero__title-portal {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: clamp(1.75rem, 5vw, 2.375rem);
+	font-weight: 800;
+	line-height: 1.1;
+	letter-spacing: 0.04em;
+	color: #fff;
+}
+
+.hero__subtitle-portal {
+	margin: 0.35rem 0 0;
+	font-family: var(--font-display);
+	font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	opacity: 0.88;
+}
+
+.hero__tagline-portal {
+	margin: 0.4rem 0 0;
+	font-size: clamp(0.85rem, 2vw, 0.95rem);
+	line-height: 1.5;
+	color: rgba(161, 170, 190, 0.95);
+}
+
+.hero__countdown--portal {
+	margin-top: 0.65rem;
+	padding: 0.75rem 0.9rem;
+}
+
+.hero__countdown-grid--portal {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+	.hero__countdown-grid--portal {
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.65rem;
+	}
+}
+
+.hero__countdown-cell {
+	padding: 0.65rem 0.4rem;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.hero__countdown-value {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: clamp(1.35rem, 4.5vw, 2rem);
+	font-weight: 700;
+	line-height: 1;
+	color: var(--accent-cyan);
+}
+
+.hero__countdown-label {
+	margin: 0.3rem 0 0;
+	font-size: 0.6rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: rgba(113, 122, 142, 0.95);
+}
+
+.hero__expired-portal {
+	padding: 1rem;
+}
+
+.hero__expired-text {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: var(--accent-cyan);
+}
+
+.hero__cta-wrap {
+	width: 100%;
+	max-width: 26rem;
+	margin-top: 0.65rem;
+	margin-inline: auto;
+}
+
+.hero__cta-discord {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.55rem;
+	width: 100%;
+	min-height: 50px;
+	padding: 0.8rem 1.5rem;
+	border: none;
+	background: var(--color-accent-cyan);
+	color: var(--color-bg-system);
+	font-size: 1.05rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-decoration: none;
+	transition:
+		transform 0.25s var(--ease-smooth),
+		filter 0.25s;
+}
+
+.hero__cta-discord-icon {
+	flex-shrink: 0;
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+.hero__cta-discord:hover {
+	transform: translateY(-2px);
+	filter: brightness(1.08);
+}
+
+.hero__cta-discord:focus-visible {
+	outline: 2px solid var(--accent-cyan);
+	outline-offset: 3px;
+}
+
+.hero__cta-hint {
+	margin: 0.4rem 0 0;
+	font-size: 0.75rem;
+	color: rgb(113 113 122);
+}
+
+.hero__api-notice {
+	margin: 0.5rem 0 0;
+	font-size: 0.72rem;
+	line-height: 1.45;
+	color: rgba(161, 170, 190, 0.9);
+}
+
+.hero__secondary-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.35rem 0.5rem;
+	width: 100%;
+	margin-top: 0.6rem;
+	padding-top: 0.6rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.hero__secondary-link {
+	font-size: 0.8rem;
+	opacity: 0.7;
+	color: rgba(212, 218, 230, 0.9);
+	text-decoration: none;
+	transition: opacity 0.2s;
+}
+
+.hero__secondary-link:hover {
+	opacity: 1;
+	color: var(--accent-cyan);
+}
+
+.hero__secondary-sep {
+	font-size: 0.75rem;
+	opacity: 0.35;
+	color: rgba(161, 170, 190, 0.8);
+	user-select: none;
+}
+
+@media (min-width: 1024px) and (max-height: 820px) {
+	.hero__inner--portal {
+		padding-top: 0.35rem;
+		padding-bottom: 0.35rem;
+	}
+
+	.hero__portal-badge {
+		margin-bottom: 0.35rem;
+	}
+
+	.hero__countdown--portal {
+		margin-top: 0.5rem;
+		padding: 0.6rem 0.75rem;
+	}
+
+	.hero__cta-wrap {
+		margin-top: 0.5rem;
+	}
+
+	.hero__secondary-links {
+		margin-top: 0.45rem;
+		padding-top: 0.45rem;
 	}
 }
 
@@ -833,16 +927,103 @@
 	border-color: rgba(59, 158, 255, 0.35) !important;
 }
 
+/* Clip corners — top-left + bottom-right only (distinct from .clip-corners in app.css) */
+.clip-corner-sm {
+	clip-path: polygon(
+		8px 0,
+		100% 0,
+		100% calc(100% - 8px),
+		calc(100% - 8px) 100%,
+		0 100%,
+		0 8px
+	);
+}
+
+.clip-corner-lg {
+	clip-path: polygon(
+		16px 0,
+		100% 0,
+		100% calc(100% - 16px),
+		calc(100% - 16px) 100%,
+		0 100%,
+		0 16px
+	);
+}
+
+/* Glow border reinforcement (cumulative with app.css ::before rules) */
+.glow-border {
+	box-shadow:
+		0 0 24px rgba(70, 200, 255, 0.25),
+		inset 0 0 18px rgba(70, 200, 255, 0.06);
+}
+
+.glow-cta {
+	animation: glow-cta-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-cta-pulse {
+	0%,
+	100% {
+		box-shadow:
+			0 0 16px rgba(70, 200, 255, 0.22),
+			inset 0 0 18px rgba(70, 200, 255, 0.06);
+	}
+	50% {
+		box-shadow:
+			0 0 36px rgba(70, 200, 255, 0.45),
+			inset 0 0 20px rgba(70, 200, 255, 0.1);
+	}
+}
+
+.glow-pulse {
+	animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+	0%,
+	100% {
+		box-shadow: 0 0 16px rgba(70, 200, 255, 0.2);
+	}
+	50% {
+		box-shadow: 0 0 36px rgba(70, 200, 255, 0.45);
+	}
+}
+
+.ambient-bg {
+	background-color: var(--bg-system);
+	background-image:
+		radial-gradient(ellipse 70% 50% at 20% 20%, rgba(70, 200, 255, 0.1), transparent 55%),
+		radial-gradient(ellipse 60% 45% at 85% 75%, rgba(123, 97, 255, 0.08), transparent 50%);
+}
+
+.hero__portal-dot {
+	animation: portal-dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes portal-dot-pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.3;
+	}
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
 	.ambient__mesh,
 	.ambient__orb,
 	.ambient__beam,
 	.hero__glow,
-	.hero__title-main,
 	.hero-fade,
-	.section-eyebrow__dot,
-	.hero__badge-dot {
+	.section-eyebrow__dot {
+		animation: none !important;
+	}
+
+	.glow-pulse,
+	.glow-cta,
+	.hero__portal-dot {
 		animation: none !important;
 	}
 

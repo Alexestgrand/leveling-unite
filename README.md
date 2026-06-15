@@ -1,63 +1,65 @@
-# sv
+# Leveling: Unite – The Fragments
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Site officiel de l'événement communautaire **Leveling: Unite** — tableau de bord, règles, indices, et soumission de la phrase secrète.
 
-## Creating a project
+**Production :** https://leveling-unite.vercel.app  
+**Soumettre une phrase :** https://leveling-unite.vercel.app/soumettre  
+**API (séparée) :** https://leveling-validate-api.onrender.com
 
-If you're seeing this, you've probably already done this step. Congrats!
+---
 
-```sh
-# create a new project
-npx sv create my-app
-```
+## Documentation complète
 
-To recreate this project with the same configuration:
+→ **[PROJECT.md](./PROJECT.md)** — architecture, déploiement, API, règles, dépannage.
 
-```sh
-# recreate this project
-npx sv@0.16.1 create --template minimal --types ts --no-install .
-```
+---
 
-## Developing
+## Démarrage rapide
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+```bash
+cp .env.example .env
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-## Soumission de phrase (API externe)
-
-Variable d'environnement :
+Variable requise :
 
 ```env
 PUBLIC_API_URL=http://localhost:8080
 ```
 
-En production Vercel : `PUBLIC_API_URL=https://api.ton-domaine.com`
+L'API Go doit tourner en parallèle (`leveling-validate-api`, voir son README).
 
-L'API doit autoriser `https://leveling-unite.vercel.app` dans `ALLOWED_ORIGINS`.
+---
 
-### Tests manuels
+## Scripts
 
-1. Sans `PUBLIC_API_URL` → page `/soumettre` affiche « Service indisponible »
-2. Clic Discord → redirect API → callback → `/auth/success` → `/soumettre` avec username
-3. Phrase fausse → `INVALID` + essais décrémentés
-4. 3ᵉ essai → `RATE_LIMITED`
-5. Phrase correcte → `VALID` + formulaire bloqué
-6. Déconnexion → retour état non connecté
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Dev server (port 5173) |
+| `npm run build` | Build statique → `build/` |
+| `npm run check` | Vérification TypeScript / Svelte |
+| `npm run preview` | Preview du build |
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+---
+
+## Stack
+
+SvelteKit 5 · Svelte 5 · Tailwind v4 · TypeScript · adapter-static · Vercel
+
+---
+
+## Structure
+
+```
+src/
+├── routes/          # Pages (accueil, règles, indices, soumettre, auth…)
+├── lib/
+│   ├── data/mock.ts # Contenu événement (éditer ici)
+│   ├── api/         # Client API validation
+│   ├── components/  # UI
+│   └── styles/      # modern.css
+└── app.css
+```
+
+Contenu événement : **`src/lib/data/mock.ts`**
