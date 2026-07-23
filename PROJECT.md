@@ -378,6 +378,16 @@ Réponse :
 
 Utilisé par Render comme health check.
 
+#### GET `/stats` *(public, sans auth)*
+
+Compteurs agrégés pour le dashboard live (polling ~8 s côté front) :
+
+```json
+{ "total_attempts": 1234, "unique_testers": 890 }
+```
+
+Mis à jour à chaque `POST /validate` qui consomme un essai (`INCR stats:total_attempts` + `SADD stats:testers`).
+
 #### GET `/auth/discord`
 
 - Génère un `state` CSRF (cookie `oauth_state`, 10 min)
@@ -441,6 +451,8 @@ Appliquée identiquement à la soumission et à `SECRET_PHRASE` :
 |-----|------|-----|-------------|
 | `attempts:{discord_user_id}` | INCR | 24 h depuis 1er essai | Compteur soumissions |
 | `winner:{discord_user_id}` | SET "1" | Permanent | Bloque re-soumission après victoire |
+| `stats:total_attempts` | INCR | Permanent | Total d’essais (public) |
+| `stats:testers` | SET | Permanent | Set des user_id ayant testé (unique) |
 
 Fenêtre : **fixe depuis le premier essai** (pas glissante par requête individuelle).
 

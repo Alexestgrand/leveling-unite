@@ -1,10 +1,11 @@
 import { PUBLIC_API_URL } from '$env/static/public';
-import type { AuthMeResponse, ValidateResponse } from '$lib/types/validate';
+import type { AuthMeResponse, SubmissionStats, ValidateResponse } from '$lib/types/validate';
 
 const API_URL = PUBLIC_API_URL?.trim() ?? '';
 
 const HEALTH_TIMEOUT_MS = 8000;
 const HEALTH_SLOW_MS = 3000;
+const STATS_TIMEOUT_MS = 5000;
 
 export type ApiHealthStatus = 'ok' | 'slow' | 'error';
 export type AuthMeResult = AuthMeResponse | null | 'error';
@@ -38,6 +39,27 @@ export async function fetchApiHealth(): Promise<ApiHealthStatus> {
 	} catch {
 		if (Date.now() - startedAt >= HEALTH_SLOW_MS) return 'slow';
 		return 'error';
+	} finally {
+		clearTimeout(timeoutId);
+	}
+}
+
+export async function fetchSubmissionStats(): Promise<SubmissionStats | null> {
+	if (!isApiConfigured()) return null;
+
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), STATS_TIMEOUT_MS);
+
+	try {
+		const res = await fetch(`${API_URL}/stats`, { signal: controller.signal });
+		if (!res.ok) return null;
+		const data = (await res.json()) as SubmissionStats;
+		return {
+			total_attempts: Number(data.total_attempts) || 0,
+			unique_testers: Number(data.unique_testers) || 0
+		};
+	} catch {
+		return null;
 	} finally {
 		clearTimeout(timeoutId);
 	}

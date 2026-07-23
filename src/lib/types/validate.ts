@@ -21,3 +21,8 @@ export interface AuthMeResponse {
 	remaining_attempts: number;
 	already_won?: boolean;
 }
+
+export interface SubmissionStats {
+	total_attempts: number;
+	unique_testers: number;
+}

@@ -7,6 +7,7 @@
 		API_COLD_START_MESSAGE,
 		fetchApiHealth,
 		fetchAuthMe,
+		fetchSubmissionStats,
 		getDiscordLoginUrl,
 		isApiConfigured,
 		logout,
@@ -19,8 +20,11 @@
 		SUBMIT_CRITERIA,
 		SUBMIT_FOOTNOTE
 	} from '$lib/data/mock';
+	import { formatViews } from '$lib/utils/format';
 
 	type ViewState = 'loading' | 'unavailable' | 'guest' | 'ready' | 'success' | 'already_won' | 'rate_limited';
+
+	const STATS_POLL_MS = 8000;
 
 	function countWords(text: string): number {
 		return text.trim().split(/\s+/).filter(Boolean).length;
@@ -33,6 +37,8 @@
 	let statusMessage = $state('');
 	let statusTone = $state<'neutral' | 'error' | 'success'>('neutral');
 	let showColdStartNotice = $state(false);
+	let uniqueTesters = $state<number | null>(null);
+	let totalAttempts = $state<number | null>(null);
 
 	const wordCount = $derived(countWords(phrase));
 	const remainingAttempts = $derived(user?.remaining_attempts ?? 0);
@@ -42,6 +48,13 @@
 			phrase.trim().length > 0 &&
 			remainingAttempts > 0
 	);
+
+	async function refreshStats() {
+		const data = await fetchSubmissionStats();
+		if (!data) return;
+		uniqueTesters = data.unique_testers;
+		totalAttempts = data.total_attempts;
+	}
 
 	async function loadSession() {
 		viewState = 'loading';
@@ -131,6 +144,7 @@
 		}
 
 		submitting = false;
+		await refreshStats();
 
 		switch (result.code) {
 			case 'VALID':
@@ -167,6 +181,10 @@
 
 	onMount(() => {
 		loadSession();
+		if (!isApiConfigured()) return;
+		refreshStats();
+		const intervalId = setInterval(refreshStats, STATS_POLL_MS);
+		return () => clearInterval(intervalId);
 	});
 </script>
 
@@ -175,6 +193,16 @@
 	title="Soumettre la phrase"
 	subtitle="Testez la phrase reconstituée par votre camp. Deux essais par 24 heures."
 >
+	{#if uniqueTesters !== null}
+		<p class="submit-live-stats" use:reveal role="status" aria-live="polite">
+			<span class="stat-card__live-dot" aria-hidden="true"></span>
+			<strong>{formatViews(uniqueTesters)}</strong> personne{uniqueTesters === 1 ? '' : 's'} ont déjà
+			testé
+			{#if totalAttempts !== null}
+				· <span class="text-zinc-500">{formatViews(totalAttempts)} essais</span>
+			{/if}
+		</p>
+	{/if}
 	{#if showColdStartNotice && viewState !== 'loading' && viewState !== 'unavailable'}
 		<p class="mb-4 text-center text-sm leading-relaxed text-zinc-500" role="status">
 			{API_COLD_START_MESSAGE}
