@@ -25,8 +25,27 @@ export interface NavLink {
 	href: string;
 	title: string;
 	description: string;
-	icon: 'rules' | 'clues' | 'tiktok' | 'schedule' | 'rewards' | 'concept';
+	icon: 'rules' | 'clues' | 'tiktok' | 'schedule' | 'rewards' | 'concept' | 'fragments';
 	featured?: boolean;
+}
+
+export type FragmentCamp = 'communaute' | 'staff';
+export type FragmentStatus = 'upcoming' | 'open' | 'validated';
+
+/** Quête / fragment publié sur le site (mode hybride). */
+export interface FragmentQuest {
+	id: string;
+	wave: number;
+	/** Position du mot dans la phrase (1–15), ou null si non communiquée. */
+	wordSlot: number | null;
+	/** Pseudo Discord public du porteur (sans @). */
+	discordUsername: string;
+	camp: FragmentCamp;
+	status: FragmentStatus;
+	/** Énigme publique — tout le monde peut aider à résoudre. */
+	enigma: string;
+	/** Indice meta après validation MJ (jamais le mot en clair). */
+	metaHint?: string;
 }
 
 export interface Phase {
@@ -78,6 +97,7 @@ export const CURRENT_PHASE_INDEX = 0;
 
 export const HEADER_NAV = [
 	{ href: '/regles', label: 'Règles' },
+	{ href: '/fragmentes', label: 'Fragmentés' },
 	{ href: '/indices', label: 'Indices' },
 	{ href: '/objectif-tiktok', label: 'TikTok' },
 	{ href: '/deroule', label: 'Déroulé' },
@@ -105,9 +125,9 @@ export const PARTICIPATION_STEPS = [
 	},
 	{
 		step: '02',
-		title: 'Suivez les indices',
+		title: 'Aidez les Fragmentés',
 		description:
-			'Consultez les transmissions officielles sur Discord et sur cette page. Les Fragmentés relaient des pistes à leur camp.'
+			'Consultez /fragmentes : énigmes publiques, porteurs Discord. Tout le monde théorise ; seul le Fragmenté fait valider le mot auprès de l’organisateur.'
 	},
 	{
 		step: '03',
@@ -125,11 +145,17 @@ export const NAV_LINKS: NavLink[] = [
 		icon: 'rules'
 	},
 	{
+		href: '/fragmentes',
+		title: 'Fragmentés',
+		description: 'Porteurs Discord, énigmes publiques et statut de chaque fragment.',
+		icon: 'fragments',
+		featured: true
+	},
+	{
 		href: '/indices',
 		title: 'Indices',
 		description: 'Indices publiés via les annonces officielles et les paliers TikTok.',
-		icon: 'clues',
-		featured: true
+		icon: 'clues'
 	},
 	{
 		href: '/objectif-tiktok',
@@ -156,6 +182,29 @@ export const NAV_LINKS: NavLink[] = [
 		icon: 'concept'
 	}
 ];
+
+/**
+ * Fragments publiés sur le site (source de vérité MJ).
+ * Ajoute / modifie ici puis commit + push pour publier.
+ *
+ * Exemple :
+ * {
+ *   id: 'w1-m1',
+ *   wave: 1,
+ *   wordSlot: 3,
+ *   discordUsername: 'PseudoDiscord',
+ *   camp: 'communaute',
+ *   status: 'open',
+ *   enigma: 'Texte de l’énigme…'
+ * }
+ */
+export const FRAGMENTS: FragmentQuest[] = [];
+
+export const FRAGMENT_MODE_INTRO = [
+	'Mode hybride : les porteurs (pseudos Discord) et leurs énigmes sont publics sur cette page.',
+	'Toute la communauté peut aider à résoudre. Seul le Fragmenté désigné peut faire valider le mot en message privé auprès de l’organisateur.',
+	'Après validation : un indice meta peut apparaître ici — jamais le mot en clair.'
+] as const;
 
 export const ANNOUNCEMENTS: Announcement[] = [];
 
@@ -220,8 +269,8 @@ export const PUBLIC_INDICES: PublicIndex[] = [];
 
 export const CONCEPT_INTRO = [
 	'Une phrase secrète de 15 mots est au cœur de l’enquête. Personne ne peut la reconstituer seul : il faut coopérer, théoriser et recouper les indices.',
-	'Tous les 5 jours, 5 Fragmentés sont désignés par camp. Chacun reçoit une énigme en message privé et relaie des pistes indirectes à son camp.',
-	'Les Fragmentés sont connus du camp (lore du portail), mais ne publient jamais le mot en clair : ils relaient des indices indirects dans les salons d’enquête.',
+	'Tous les 5 jours, 5 Fragmentés sont désignés par camp. Leurs pseudos Discord et leurs énigmes sont publiés sur la page Fragmentés.',
+	'Toute la communauté peut aider à résoudre. Seul le Fragmenté désigné fait valider le mot auprès de l’organisateur (MP) — le mot n’est jamais publié en clair.',
 	'Les Enquêteurs — tout le reste du camp — théorisent, mettent à jour le journal collectif, alimentent TikTok et soumettent la phrase finale sur ce site.',
 	'Deux camps s’affrontent : la Communauté Leveling et le Staff Leveling (modération/administration Discord). L’organisateur est neutre et ne joue dans aucun camp.'
 ];
@@ -242,15 +291,15 @@ export const COLLABORATION_RULES = [
 	'L’événement est une enquête collective : personne ne possède assez d’informations pour résoudre la phrase seul.',
 	'Chaque participant fait avancer son camp — Fragmentés comme Enquêteurs.',
 	'Les Enquêteurs partagent leurs hypothèses, recoupent les indices publics et s’entraident dans les salons d’enquête.',
-	'Les Fragmentés restent joignables et relaient des indices meta sans révéler le mot exact.',
+	'Les Fragmentés restent joignables ; les énigmes sont sur /fragmentes et la validation du mot passe uniquement par le porteur auprès de l’organisateur.',
 	'Le journal épinglé (#journal-unite) permet à toute personne arrivant en cours d’événement de comprendre l’état de l’enquête en quelques minutes.'
 ];
 
 export const CONFIDENTIALITY_RULES = [
-	'Les énigmes et mots reçus en message privé restent confidentiels : pas de copier-coller, pas de citation mot pour mot, pas de capture d’écran partagée.',
-	'Un Fragmenté aide son camp avec des indices indirects : type de mot, longueur, position probable, confirmation ou infirmation d’une théorie.',
-	'L’identité des Fragmentés de la vague est publique ; le contenu de leur fragment ne l’est pas.',
-	'En cas de fuite, le fragment est marqué compromis et un indice de remplacement est publié — le camp n’est pas exclu pour une seule erreur.'
+	'Les énigmes sont publiques sur /fragmentes ; la solution (le mot) reste confidentielle jusqu’à la fin de l’événement.',
+	'Seul le Fragmenté nommé peut demander la validation du mot à l’organisateur en message privé.',
+	'Un Fragmenté (ou le camp) aide ensuite avec des indices indirects : type de mot, longueur, position probable — jamais le mot exact.',
+	'Pas de capture d’écran des MP de validation. En cas de fuite du mot, le fragment est compromis et un indice de remplacement est publié.'
 ];
 
 export const RULES = [
@@ -441,20 +490,20 @@ export const ROLES = [
 	{
 		title: 'Les Fragmentés',
 		description:
-			'5 joueurs par vague, désignés publiquement. Ils reçoivent une énigme en MP ; la solution est un fragment. Ils relaient des indices indirects à leur camp sans publier le mot exact.',
+			'5 joueurs par vague, désignés publiquement (pseudos Discord). Leur énigme est publiée sur le site ; tout le monde peut aider. Seul le porteur fait valider le mot auprès de l’organisateur.',
 		items: [
-			'Identité publique, fragment confidentiel',
+			'Pseudo + énigme publics sur /fragmentes',
+			'Validation du mot uniquement via le Fragmenté (MP orga)',
 			'Rotation chaque vague (5 jours)',
-			'Max 2 vagues par personne sur l’événement',
-			'Éligibles au vote Top Fragmenté si les Membres gagnent'
+			'Max 2 vagues par personne sur l’événement'
 		]
 	},
 	{
 		title: 'Les Enquêteurs',
 		description:
-			'Tous les autres membres du camp. Ils assemblent les fragments, alimentent le journal, contribuent à TikTok et peuvent soumettre la phrase finale.',
+			'Tous les autres membres du camp. Ils aident sur les énigmes publiques, assemblent la phrase, alimentent le journal / TikTok et peuvent soumettre la phrase finale.',
 		items: [
-			'Théories et recoupements dans #enquete',
+			'Théories dans #enquete et sur les énigmes du site',
 			'Lecture du journal pour les arrivants',
 			'Soumission sur /soumettre (2 essais / 24 h)',
 			'Éligibles au vote Top Enquêteur si les Membres gagnent'

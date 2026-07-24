@@ -30,14 +30,14 @@ Deux camps s'affrontent :
 - chaque énigme est confiée à un **Fragmenté** qui relaie des pistes à son camp ;
 - les **indices publics** (annonces + TikTok) sont publiés sur le site.
 
-### Les Fragmentés (lore du portail)
+### Les Fragmentés (mode hybride)
 
-Tous les 5 jours, **5 Fragmentés** sont désignés **publiquement** par camp :
+Tous les 5 jours, **5 Fragmentés** sont désignés **publiquement** par camp (pseudos Discord sur le site) :
 
-1. ils reçoivent une **énigme en message privé** ;
-2. ils envoient la solution à l'organisateur pour validation ;
-3. ils **ne publient jamais le mot en clair** ;
-4. ils relaient des **indices indirects** dans le salon d'enquête de leur camp (type de mot, longueur, position, confirmation d'une théorie…) ;
+1. leur **énigme est publiée** sur [/fragmentes](https://leveling-unite.vercel.app/fragmentes) ;
+2. **toute la communauté** peut aider à résoudre ;
+3. **seul le Fragmenté** envoie la solution à l'organisateur en MP pour validation ;
+4. le **mot n'est jamais publié en clair** ; des indices meta peuvent l'être après validation ;
 5. en fin de vague, de **nouveaux** Fragmentés prennent le relais (rotation).
 
 Les **Enquêteurs**, c'est tout le reste du camp : ils théorisent, mettent à jour le journal collectif, contribuent à TikTok et peuvent soumettre la phrase finale.
@@ -154,6 +154,7 @@ Quand la phrase est trouvée :
 | **Accueil** | Vue d'ensemble, compte à rebours, CTA Discord |
 | **Concept** | Énigme, rôles, camps, organisateur |
 | **Règles** | Règlement complet |
+| **Fragmentés** | Porteurs Discord, énigmes publiques, statuts |
 | **Indices** | Indices publiés (annonces & TikTok) |
 | **Déroulé** | Les 4 vagues |
 | **TikTok** | Progression des vues et paliers |

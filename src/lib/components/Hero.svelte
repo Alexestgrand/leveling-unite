@@ -23,6 +23,7 @@
 	] as const;
 
 	const secondaryLinks = [
+		{ href: '/fragmentes', label: 'Fragmentés' },
 		{ href: '/regles', label: 'Règles' },
 		{ href: '/indices', label: 'Indices' },
 		{ href: '/deroule', label: 'Déroulé' },

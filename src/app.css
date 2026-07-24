@@ -1353,6 +1353,166 @@
 	color: rgba(113, 113, 122, 0.95);
 }
 
+/* ── Fragmentés board ── */
+.fragments-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+	.fragments-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+.fragment-card {
+	padding: 1.1rem 1.15rem;
+	border: 1px solid rgba(0, 153, 255, 0.2);
+	background: rgba(15, 17, 24, 0.72);
+}
+
+.fragment-card--open {
+	border-color: rgba(70, 200, 255, 0.35);
+}
+
+.fragment-card--validated {
+	border-color: rgba(52, 211, 153, 0.35);
+}
+
+.fragment-card--upcoming {
+	opacity: 0.85;
+}
+
+.fragment-card__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+}
+
+.fragment-card__meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.fragment-card__camp {
+	padding: 0.15rem 0.45rem;
+	border-radius: 0.25rem;
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.fragment-card__camp--communaute {
+	border: 1px solid rgba(0, 153, 255, 0.35);
+	color: var(--color-leveling-blue-light);
+	background: rgba(0, 153, 255, 0.1);
+}
+
+.fragment-card__camp--staff {
+	border: 1px solid rgba(251, 191, 36, 0.35);
+	color: #fcd34d;
+	background: rgba(251, 191, 36, 0.1);
+}
+
+.fragment-card__slot {
+	font-size: 0.7rem;
+	font-weight: 600;
+	color: rgba(161, 161, 170, 0.95);
+}
+
+.fragment-card__status {
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.fragment-card__status--open {
+	color: var(--color-accent-cyan);
+}
+
+.fragment-card__status--validated {
+	color: #6ee7b7;
+}
+
+.fragment-card__status--upcoming {
+	color: rgba(113, 113, 122, 0.95);
+}
+
+.fragment-card__bearer {
+	margin: 0.85rem 0 0;
+}
+
+.fragment-card__bearer-label {
+	display: block;
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: rgba(113, 113, 122, 0.95);
+}
+
+.fragment-card__username {
+	display: inline-block;
+	margin-top: 0.2rem;
+	font-family: var(--font-display);
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: #fff;
+}
+
+.fragment-card__enigma {
+	margin-top: 0.9rem;
+	padding-top: 0.85rem;
+	border-top: 1px solid rgba(63, 63, 70, 0.55);
+}
+
+.fragment-card__enigma--empty {
+	margin-top: 0.9rem;
+	font-size: 0.85rem;
+	font-style: italic;
+	color: rgba(113, 113, 122, 0.9);
+}
+
+.fragment-card__enigma-label,
+.fragment-card__hint-label {
+	margin: 0;
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: rgba(161, 161, 170, 0.9);
+}
+
+.fragment-card__enigma-text {
+	margin: 0.4rem 0 0;
+	font-size: 0.92rem;
+	line-height: 1.55;
+	color: rgba(228, 228, 231, 0.95);
+	white-space: pre-wrap;
+}
+
+.fragment-card__hint {
+	margin-top: 0.85rem;
+	padding: 0.7rem 0.8rem;
+	border: 1px solid rgba(52, 211, 153, 0.25);
+	border-radius: 0.4rem;
+	background: rgba(52, 211, 153, 0.06);
+}
+
+.fragment-card__hint-text {
+	margin: 0.35rem 0 0;
+	font-size: 0.85rem;
+	line-height: 1.5;
+	color: #a7f3d0;
+}
+
 /* ── Page transitions ── */
 .page-enter {
 	animation: page-enter 0.45s var(--ease-smooth) both;
