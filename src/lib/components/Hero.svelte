@@ -35,7 +35,12 @@
 
 	const CTA_DURATION_MS = 1400;
 
-	let remaining = $state<TimeRemaining>(getTimeRemaining(EVENT.endDate));
+	function getCountdownTarget(now = Date.now()): Date {
+		return now < EVENT.startDate.getTime() ? EVENT.startDate : EVENT.endDate;
+	}
+
+	let countdownTarget = $state(getCountdownTarget());
+	let remaining = $state<TimeRemaining>(getTimeRemaining(getCountdownTarget()));
 	let tickKey = $state(0);
 	let apiHealth = $state<ApiHealthStatus | null>(null);
 	let ctaProgress = $state(0);
@@ -44,13 +49,29 @@
 
 	const apiReady = isApiConfigured();
 	const showColdStartNotice = $derived(apiReady && apiHealth !== null && apiHealth !== 'ok');
+	const beforeStart = $derived(Date.now() < EVENT.startDate.getTime());
+	const eventEnded = $derived(!beforeStart && remaining.expired);
+	const countdownTitle = $derived(
+		beforeStart ? 'Ouverture dans' : eventEnded ? 'Événement terminé' : 'Temps restant'
+	);
+	const countdownDateLabel = $derived(beforeStart ? EVENT.startDateLabel : EVENT.endDateLabel);
+	const portalBadge = $derived(
+		beforeStart
+			? 'Système — ouverture samedi 12h'
+			: eventEnded
+				? 'Système — le portail est fermé'
+				: 'Système — le portail est ouvert'
+	);
 
 	$effect(() => {
-		remaining = getTimeRemaining(EVENT.endDate);
-		const intervalId = setInterval(() => {
-			remaining = getTimeRemaining(EVENT.endDate);
+		function tick() {
+			countdownTarget = getCountdownTarget();
+			remaining = getTimeRemaining(countdownTarget);
 			tickKey++;
-		}, 1000);
+		}
+
+		tick();
+		const intervalId = setInterval(tick, 1000);
 		return () => clearInterval(intervalId);
 	});
 
@@ -96,7 +117,7 @@
 		<div class="hero__content hero__content--portal">
 			<p class="hero__portal-badge clip-corner-sm hero-fade hero-fade-1" use:reveal>
 				<span class="hero__portal-dot" aria-hidden="true"></span>
-				Système — le portail est ouvert
+				{portalBadge}
 			</p>
 
 			<header class="hero-fade hero-fade-2" use:reveal={{ delay: 60 }}>
@@ -130,11 +151,11 @@
 
 			<div class="hero__countdown hero__countdown--portal hero-fade hero-fade-3" use:reveal={{ delay: 120 }}>
 				<div class="hero__countdown-head">
-					<p class="hero__countdown-title">Temps restant</p>
-					<p class="hero__countdown-date">{EVENT.endDateLabel}</p>
+					<p class="hero__countdown-title">{countdownTitle}</p>
+					<p class="hero__countdown-date">{countdownDateLabel}</p>
 				</div>
 
-				{#if remaining.expired}
+				{#if eventEnded}
 					<div class="hero__countdown-cell hero__expired-portal">
 						<p class="hero__expired-text">Événement terminé</p>
 					</div>

@@ -53,8 +53,12 @@ export const EVENT = {
 	title: 'LEVELING: UNITE',
 	subtitle: 'The Fragments',
 	tagline: 'Aucun joueur ne peut gagner seul. Toute la communauté doit collaborer.',
-	endDate: new Date('2026-06-29T23:59:00+02:00'),
-	endDateLabel: '29 juin 2026',
+	/** Ouverture officielle — samedi 25 juillet 2026 à 12h (heure de Paris). */
+	startDate: new Date('2026-07-25T12:00:00+02:00'),
+	startDateLabel: '25 juillet 2026 · 12h',
+	/** Fin = ouverture + 20 jours (4 vagues de 5 jours). */
+	endDate: new Date('2026-08-14T12:00:00+02:00'),
+	endDateLabel: '14 août 2026 · 12h',
 	duration: '20 jours (4 vagues de 5 fragments)',
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.gg/kNnVZWhfCe'
@@ -70,7 +74,7 @@ export const ENIGMA_SUMMARY = {
 } as const;
 
 /** Index 0-based de la vague en cours (-1 = pas encore commencé) */
-export const CURRENT_PHASE_INDEX = -1;
+export const CURRENT_PHASE_INDEX = 0;
 
 export const HEADER_NAV = [
 	{ href: '/regles', label: 'Règles' },

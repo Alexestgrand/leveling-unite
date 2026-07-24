@@ -1,7 +1,9 @@
 # Leveling: Unite – The Fragments
 
 Événement communautaire Discord autour d'une grande énigme collective.  
-**Site officiel :** [leveling-unite.vercel.app](https://leveling-unite.vercel.app)
+**Site officiel :** [leveling-unite.vercel.app](https://leveling-unite.vercel.app)  
+**Ouverture :** samedi 25 juillet 2026 à 12h (Paris)  
+**Durée :** 20 jours — fin le 14 août 2026 à 12h
 
 ---
 

@@ -29,6 +29,7 @@
 		<div class="site-footer__info">
 			<p class="site-footer__nav-title">Événement</p>
 			<ul class="site-footer__meta">
+				<li>Début — {EVENT.startDateLabel}</li>
 				<li>Fin — {EVENT.endDateLabel}</li>
 				<li>Durée — {EVENT.duration}</li>
 			</ul>
