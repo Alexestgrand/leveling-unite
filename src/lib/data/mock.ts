@@ -300,7 +300,7 @@ Date limite : 28/07 à 13h00.`
 		id: 'w1-m5',
 		wave: 1,
 		wordSlot: 5,
-		discordUsername: 'zero6777_',
+		discordUsername: 'bangodsno',
 		camp: 'communaute',
 		status: 'open',
 		enigma: `LE SABLIER
@@ -323,7 +323,15 @@ export const FRAGMENT_MODE_INTRO = [
 	'72 heures par mot. Raté ou expiré : le mot est perdu, et seul un palier TikTok le fera réapparaître — pour les deux camps.'
 ] as const;
 
-export const ANNOUNCEMENTS: Announcement[] = [];
+export const ANNOUNCEMENTS: Announcement[] = [
+	{
+		id: 'ouverture-vague-1',
+		date: '2026-07-25T13:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'L’énigme est ouverte. Les 5 premiers porteurs de la Vague 1 sont désignés, leurs énigmes sont publiques — 72 heures par mot, un seul essai. Tout le monde peut chercher. Bonne chasse.'
+	}
+];
 
 export const TIKTOK_TRACKER = {
 	currentViews: 0,
