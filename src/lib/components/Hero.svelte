@@ -171,11 +171,11 @@
 					aria-busy={ctaLaunching}
 					onclick={launchSubmit}
 				>
-					<span
+					<pan
 						class="hero__cta-progress"
 						style="width: {ctaProgress}%"
 						aria-hidden="true"
-					></span>
+					></pan>
 					<span class="hero__cta-label">
 						<svg
 							class="hero__cta-discord-icon"

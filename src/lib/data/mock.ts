@@ -316,7 +316,7 @@ Date limite : 28/07 à 12h00.`
 
 export const FRAGMENT_MODE_INTRO = [
 	'Les porteurs et leurs énigmes sont publics. Tout le monde peut chercher.',
-	'Seul le Fragmenté désigné fait valider son mot — un essai, définitif, confirmé par 2 autres Fragmentés de son camp.',
+	'Seul le Fragmenté désigné fait valider son mot — en MP à @so_hakai, l’organisateur. Un essai, définitif, confirmé par 2 autres Fragmentés de son camp.',
 	'72 heures par mot. Raté ou expiré : le mot est perdu, et seul un palier TikTok le fera réapparaître — pour les deux camps.'
 ] as const;
 
@@ -418,14 +418,14 @@ export const PUBLIC_INDICES: PublicIndex[] = [];
 export const CONCEPT_INTRO = [
 	'Une phrase de quinze mots est cachée. Personne n’en détient assez pour la reconstituer seul.',
 	'À chaque vague, cinq Fragmentés sont désignés publiquement. Chacun porte un mot ; son énigme est publiée sur la page Fragmentés.',
-	'Tout le monde cherche. Seul le porteur valide son mot auprès de l’organisateur — un essai, deux confirmations de son camp, 72 heures. Un mot raté est perdu jusqu’au prochain palier TikTok.',
-	'Deux camps s’affrontent : la Communauté Leveling et le Staff. L’organisateur est neutre — il conçoit, observe et tranche.'
+	'Tout le monde cherche. Seul le porteur valide son mot auprès de l’organisateur, @so_hakai — un essai, deux confirmations de son camp, 72 heures. Un mot raté est perdu jusqu’au prochain palier TikTok.',
+	'Deux camps s’affrontent : la Communauté Leveling et le Staff. L’organisateur, @so_hakai (Hakai), est neutre — il conçoit, observe et tranche.'
 ];
 
 export const ORGANIZER_ROLE = {
-	title: 'L’organisateur',
+	title: 'L’organisateur — @so_hakai',
 	description:
-		'Il conçoit l’énigme, désigne les Fragmentés, valide les mots en MP. Il ne joue dans aucun camp.',
+		'Hakai conçoit l’énigme, désigne les Fragmentés et valide les mots en MP. Il ne joue dans aucun camp.',
 	items: [
 		'Neutre — ni Membres, ni Staff',
 		'Propose les shortlists des votes',
@@ -443,15 +443,15 @@ export const COLLABORATION_RULES = [
 
 export const CONFIDENTIALITY_RULES = [
 	'Les énigmes sont publiques ; les mots restent confidentiels jusqu’à la fin de l’événement.',
-	'Seul le Fragmenté nommé valide son mot en MP — un essai, définitif.',
-	'Avant l’envoi : 2 confirmations d’autres Fragmentés du camp, dans le salon dédié. Les confirmateurs écrivent aussi à l’organisateur. Sans elles, l’essai n’est pas traité.',
+	'Seul le Fragmenté nommé valide son mot en MP à @so_hakai (organisateur) — un essai, définitif.',
+	'Avant l’envoi : 2 confirmations d’autres Fragmentés du camp, dans le salon dédié. Les confirmateurs écrivent aussi à @so_hakai. Sans elles, l’essai n’est pas traité.',
 	'72 h par mot. Raté ou expiré : perdu jusqu’au prochain palier TikTok, révélé aux deux camps.',
 	'Après validation, le porteur relaie des indices indirects — jamais le mot exact.',
 	'Pas de capture des MP de validation. Un mot fuité est invalidé et remplacé par un indice public.'
 ];
 
 export const RULES = [
-	'Deux camps : Communauté Leveling vs Staff Leveling. L’organisateur est neutre.',
+	'Deux camps : Communauté Leveling vs Staff Leveling. L’organisateur, @so_hakai (Hakai), est neutre.',
 	'Victoire : première phrase de 15 mots validée sur le site par un membre du camp gagnant.',
 	'Respect du fair-play, de l’entraide et du règlement général du serveur.',
 	'Les décisions finales concernant l’événement reviennent à l’organisateur.'

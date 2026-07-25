@@ -135,7 +135,7 @@
 			{/each}
 		</ul>
 		<p class="mt-4 text-xs text-zinc-500">
-			Validation en MP à l’organisateur —
+			Validation en MP à <span class="font-semibold text-zinc-300">@so_hakai</span> (organisateur) —
 			<code class="text-zinc-400">FRAGMENT [n°] / [mot] / confirmé par Pseudo1 + Pseudo2</code>
 			— les confirmateurs écrivent aussi de leur côté.
 		</p>

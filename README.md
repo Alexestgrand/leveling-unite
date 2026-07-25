@@ -17,7 +17,7 @@ Deux camps s'affrontent :
 - la **Communauté Leveling** (les membres du serveur) ;
 - le **Staff Leveling** (modération et administration Discord).
 
-**L'organisateur** conçoit l'événement, désigne les Fragmentés et reste **neutre** — il ne joue dans aucun camp.
+**L'organisateur** — **@so_hakai** (Hakai) — conçoit l'événement, désigne les Fragmentés et reste **neutre** — il ne joue dans aucun camp.
 
 ---
 
@@ -36,7 +36,7 @@ Tous les 5 jours, **5 Fragmentés** sont désignés **publiquement** par camp (p
 
 1. leur **énigme est publiée** sur [/fragmentes](https://leveling-unite.vercel.app/fragmentes) ;
 2. **toute la communauté** peut aider à résoudre ;
-3. **seul le Fragmenté** envoie la solution à l'organisateur en MP — **un seul essai, définitif**, confirmé au préalable par **2 autres Fragmentés** du camp ;
+3. **seul le Fragmenté** envoie la solution à **@so_hakai** en MP — **un seul essai, définitif**, confirmé au préalable par **2 autres Fragmentés** du camp ;
 4. essai raté ou **72 h** dépassées : le mot est **perdu** — il ne sera révélé (aux deux camps) qu'au **prochain palier TikTok** atteint ;
 5. le **mot n'est jamais publié en clair** ; des indices meta peuvent l'être après validation ;
 6. en fin de vague, de **nouveaux** Fragmentés prennent le relais (rotation).
