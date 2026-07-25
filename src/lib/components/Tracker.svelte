@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
-	import { TIKTOK_TRACKER, TIKTOK_ACCOUNT } from '$lib/data/mock';
+	import { TIKTOK_TRACKER, TIKTOK_ACCOUNT, TIKTOK_LOST_WORD_NOTE } from '$lib/data/mock';
 	import { formatViews, milestonePercent } from '$lib/utils/format';
 
 	const { currentViews, goal, milestones, hashtags } = TIKTOK_TRACKER;
@@ -85,6 +85,10 @@
 
 	<p class="tracker__stairs-title">
 		Paliers débloqués — {reachedCount}/{milestones.length}
+	</p>
+
+	<p class="mt-2 text-sm leading-relaxed text-zinc-400">
+		{TIKTOK_LOST_WORD_NOTE}
 	</p>
 
 	<div class="tracker__stairs">

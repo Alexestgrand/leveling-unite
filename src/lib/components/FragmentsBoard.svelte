@@ -18,7 +18,8 @@
 	const statusLabel: Record<FragmentStatus, string> = {
 		upcoming: 'À venir',
 		open: 'En cours',
-		validated: 'Validé'
+		validated: 'Validé',
+		lost: 'Mot perdu'
 	};
 
 	const currentWave = CURRENT_PHASE_INDEX >= 0 ? CURRENT_PHASE_INDEX + 1 : 1;
@@ -39,6 +40,7 @@
 	function statusClass(status: FragmentStatus): string {
 		if (status === 'validated') return 'fragment-card--validated';
 		if (status === 'open') return 'fragment-card--open';
+		if (status === 'lost') return 'fragment-card--lost';
 		return 'fragment-card--upcoming';
 	}
 </script>
@@ -82,6 +84,16 @@
 				<p class="fragment-card__hint-text">{fragment.metaHint}</p>
 			</div>
 		{/if}
+
+		{#if fragment.status === 'lost'}
+			<div class="fragment-card__hint fragment-card__hint--lost">
+				<p class="fragment-card__hint-label">Mot perdu</p>
+				<p class="fragment-card__hint-text">
+					Essai raté ou délai dépassé. Ce mot ne sera révélé — aux deux camps — qu’au prochain
+					palier TikTok atteint.
+				</p>
+			</div>
+		{/if}
 	</article>
 {/snippet}
 
@@ -100,8 +112,9 @@
 			{/each}
 		</ul>
 		<p class="mt-4 text-xs text-zinc-500">
-			Validation : le Fragmenté envoie le mot en MP à l’organisateur —
-			<code class="text-zinc-400">Vague {currentWave} | @pseudo | mot</code>
+			Validation (un seul essai, définitif) : le Fragmenté envoie en MP à l’organisateur —
+			<code class="text-zinc-400">FRAGMENT [n° du mot] / [mot] / confirmé par Pseudo1 + Pseudo2</code>
+			— les deux confirmateurs écrivent aussi à l’organisateur de leur côté.
 		</p>
 	</div>
 

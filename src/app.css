@@ -1384,6 +1384,11 @@
 	opacity: 0.85;
 }
 
+.fragment-card--lost {
+	border-color: rgba(248, 113, 113, 0.4);
+	opacity: 0.9;
+}
+
 .fragment-card__head {
 	display: flex;
 	flex-wrap: wrap;
@@ -1443,6 +1448,10 @@
 
 .fragment-card__status--upcoming {
 	color: rgba(113, 113, 122, 0.95);
+}
+
+.fragment-card__status--lost {
+	color: #fca5a5;
 }
 
 .fragment-card__bearer {
@@ -1511,6 +1520,15 @@
 	font-size: 0.85rem;
 	line-height: 1.5;
 	color: #a7f3d0;
+}
+
+.fragment-card__hint--lost {
+	border-color: rgba(248, 113, 113, 0.25);
+	background: rgba(248, 113, 113, 0.06);
+}
+
+.fragment-card__hint--lost .fragment-card__hint-text {
+	color: #fecaca;
 }
 
 /* ── Page transitions ── */

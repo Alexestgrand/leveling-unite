@@ -27,6 +27,11 @@
 				<strong>{ENIGMA_SUMMARY.fragmentsPerWave} Fragmentés</strong> désignés par camp à chaque vague.
 			</li>
 			<li>
+				<strong>{ENIGMA_SUMMARY.fragmentAttempts} essai unique</strong> par Fragmenté pour valider
+				son mot — confirmé par {ENIGMA_SUMMARY.fragmentConfirmations} pairs, sous
+				{ENIGMA_SUMMARY.fragmentDeadlineHours} h.
+			</li>
+			<li>
 				<strong>{ENIGMA_SUMMARY.submitAttempts} soumissions</strong> maximum par
 				{ENIGMA_SUMMARY.submitWindowHours} h pour tenter la phrase complète.
 			</li>

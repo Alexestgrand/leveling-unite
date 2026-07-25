@@ -30,7 +30,7 @@ export interface NavLink {
 }
 
 export type FragmentCamp = 'communaute' | 'staff';
-export type FragmentStatus = 'upcoming' | 'open' | 'validated';
+export type FragmentStatus = 'upcoming' | 'open' | 'validated' | 'lost';
 
 /** Quête / fragment publié sur le site (mode hybride). */
 export interface FragmentQuest {
@@ -89,7 +89,13 @@ export const ENIGMA_SUMMARY = {
 	waveDurationDays: 5,
 	waveCount: 4,
 	submitAttempts: 2,
-	submitWindowHours: 24
+	submitWindowHours: 24,
+	/** Essais de validation par Fragmenté (définitif). */
+	fragmentAttempts: 1,
+	/** Confirmations requises par d'autres Fragmentés du camp avant l'envoi. */
+	fragmentConfirmations: 2,
+	/** Délai pour valider son mot avant qu'il soit perdu. */
+	fragmentDeadlineHours: 72
 } as const;
 
 /** Index 0-based de la vague en cours (-1 = pas encore commencé) */
@@ -127,7 +133,7 @@ export const PARTICIPATION_STEPS = [
 		step: '02',
 		title: 'Aidez les Fragmentés',
 		description:
-			'Consultez /fragmentes : énigmes publiques, porteurs Discord. Tout le monde théorise ; seul le Fragmenté fait valider le mot auprès de l’organisateur.'
+			'Consultez /fragmentes : énigmes publiques, porteurs Discord. Tout le monde théorise ; seul le Fragmenté fait valider le mot auprès de l’organisateur — un seul essai, définitif.'
 	},
 	{
 		step: '03',
@@ -203,6 +209,8 @@ export const FRAGMENTS: FragmentQuest[] = [];
 export const FRAGMENT_MODE_INTRO = [
 	'Mode hybride : les porteurs (pseudos Discord) et leurs énigmes sont publics sur cette page.',
 	'Toute la communauté peut aider à résoudre. Seul le Fragmenté désigné peut faire valider le mot en message privé auprès de l’organisateur.',
+	'UN SEUL essai par Fragmenté — définitif. Avant l’envoi, le mot doit être confirmé par 2 autres Fragmentés du camp dans le salon dédié.',
+	'Essai raté ou délai de 72 h dépassé : le mot est PERDU. Il ne sera révélé — aux deux camps — qu’au prochain palier TikTok atteint.',
 	'Après validation : un indice meta peut apparaître ici — jamais le mot en clair.'
 ] as const;
 
@@ -241,6 +249,10 @@ export const TIKTOK_TRACKER = {
 	] satisfies Milestone[]
 };
 
+/** Rattrapage : les mots perdus par les Fragmentés reviennent via les paliers TikTok. */
+export const TIKTOK_LOST_WORD_NOTE =
+	'Si un Fragmenté a perdu son mot (essai raté ou délai dépassé), chaque palier atteint peut le révéler — aux deux camps. C’est le seul moyen de le récupérer.' as const;
+
 export const TIKTOK_ACCOUNT = {
 	handle: '@leveling.event',
 	url: 'https://www.tiktok.com/@leveling.event?_r=1&_t=ZN-97Edzoo61hu',
@@ -270,7 +282,8 @@ export const PUBLIC_INDICES: PublicIndex[] = [];
 export const CONCEPT_INTRO = [
 	'Une phrase secrète de 15 mots est au cœur de l’enquête. Personne ne peut la reconstituer seul : il faut coopérer, théoriser et recouper les indices.',
 	'Tous les 5 jours, 5 Fragmentés sont désignés par camp. Leurs pseudos Discord et leurs énigmes sont publiés sur la page Fragmentés.',
-	'Toute la communauté peut aider à résoudre. Seul le Fragmenté désigné fait valider le mot auprès de l’organisateur (MP) — le mot n’est jamais publié en clair.',
+	'Toute la communauté peut aider à résoudre. Seul le Fragmenté désigné fait valider le mot auprès de l’organisateur (MP) — un seul essai, définitif, confirmé au préalable par 2 autres Fragmentés du camp. Le mot n’est jamais publié en clair.',
+	'Un essai raté (ou un délai de 72 h dépassé) rend le mot perdu : il ne réapparaîtra qu’au prochain palier TikTok atteint, révélé aux deux camps.',
 	'Les Enquêteurs — tout le reste du camp — théorisent, mettent à jour le journal collectif, alimentent TikTok et soumettent la phrase finale sur ce site.',
 	'Deux camps s’affrontent : la Communauté Leveling et le Staff Leveling (modération/administration Discord). L’organisateur est neutre et ne joue dans aucun camp.'
 ];
@@ -297,7 +310,9 @@ export const COLLABORATION_RULES = [
 
 export const CONFIDENTIALITY_RULES = [
 	'Les énigmes sont publiques sur /fragmentes ; la solution (le mot) reste confidentielle jusqu’à la fin de l’événement.',
-	'Seul le Fragmenté nommé peut demander la validation du mot à l’organisateur en message privé.',
+	'Seul le Fragmenté nommé peut demander la validation du mot à l’organisateur en message privé — UN SEUL essai, définitif.',
+	'Avant l’envoi, 2 autres Fragmentés du camp doivent confirmer le mot dans le salon dédié (#fragmentes-membres / -staff) et l’écrire à l’organisateur de leur côté. Sans ces confirmations, l’essai n’est pas traité.',
+	'Chaque Fragmenté dispose de 72 h pour valider son mot. Essai raté ou délai dépassé : le mot est perdu et ne sera révélé — aux deux camps — qu’au prochain palier TikTok atteint.',
 	'Un Fragmenté (ou le camp) aide ensuite avec des indices indirects : type de mot, longueur, position probable — jamais le mot exact.',
 	'Pas de capture d’écran des MP de validation. En cas de fuite du mot, le fragment est compromis et un indice de remplacement est publié.'
 ];
@@ -321,7 +336,8 @@ export const PARTICIPATION_CRITERIA = [
 export const INACTIVITY_RULES = [
 	'Absence de réponse pendant 24 heures aux sollicitations de l’organisateur ou du camp.',
 	'Refus répété de relayer des indices indirects après validation de l’énigme.',
-	'Le Fragmenté est remplacé par un remplaçant pour les énigmes restantes de la vague.'
+	'Le Fragmenté est remplacé par un remplaçant pour les énigmes restantes de la vague.',
+	'Le remplaçant hérite de l’essai unique s’il n’a pas déjà été consommé — un remplacement ne redonne jamais d’essai supplémentaire.'
 ];
 
 export const SUBMISSION_RULES = [
@@ -365,7 +381,7 @@ export const CHEATING_CASES = [
 	{
 		title: 'Obstruction volontaire',
 		description:
-			'Harcèlement d’un Fragmenté, fausses informations majeures en connaissance de cause ou sabotage des salons d’enquête.'
+			'Harcèlement d’un Fragmenté, fausses informations majeures en connaissance de cause, sabotage des salons d’enquête ou essai de validation volontairement grillé (mot faux envoyé en connaissance de cause).'
 	}
 ];
 
@@ -395,7 +411,7 @@ export const PHASES: Phase[] = [
 		name: 'Vague 1 — L’Éveil',
 		share: '5 fragments',
 		description:
-			'5 Fragmentés désignés. 5 énigmes distribuées en MP. Les premières théories et le journal collectif sont lancés.'
+			'5 Fragmentés désignés. 5 énigmes publiées sur le site. Les premières théories et le journal collectif sont lancés.'
 	},
 	{
 		id: 'wave-2',
@@ -490,10 +506,12 @@ export const ROLES = [
 	{
 		title: 'Les Fragmentés',
 		description:
-			'5 joueurs par vague, désignés publiquement (pseudos Discord). Leur énigme est publiée sur le site ; tout le monde peut aider. Seul le porteur fait valider le mot auprès de l’organisateur.',
+			'5 joueurs par vague, désignés publiquement (pseudos Discord). Leur énigme est publiée sur le site ; tout le monde peut aider. Seul le porteur fait valider le mot auprès de l’organisateur — un seul essai, définitif.',
 		items: [
 			'Pseudo + énigme publics sur /fragmentes',
 			'Validation du mot uniquement via le Fragmenté (MP orga)',
+			'UN essai unique, confirmé par 2 autres Fragmentés du camp',
+			'72 h pour valider — sinon le mot est perdu (rattrapage via palier TikTok)',
 			'Rotation chaque vague (5 jours)',
 			'Max 2 vagues par personne sur l’événement'
 		]
