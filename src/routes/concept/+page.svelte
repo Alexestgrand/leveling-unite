@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Univers"
 	title="Concept & Rôles"
-	subtitle="Une phrase de 15 mots, quatre vagues — Staff Leveling contre Communauté Leveling."
+	subtitle="Une phrase de quinze mots. Deux camps. Vingt jours."
 >
 	<div class="content-block hud-panel clip-corners glow-border">
 		<h3>L'énigme</h3>
@@ -24,7 +24,7 @@
 				une vague tous les {ENIGMA_SUMMARY.waveDurationDays} jours.
 			</li>
 			<li>
-				<strong>{ENIGMA_SUMMARY.fragmentsPerWave} Fragmentés</strong> désignés par camp à chaque vague.
+				<strong>{ENIGMA_SUMMARY.fragmentsPerWave} Fragmentés</strong> désignés à chaque vague — un mot chacun.
 			</li>
 			<li>
 				<strong>{ENIGMA_SUMMARY.fragmentAttempts} essai unique</strong> par Fragmenté pour valider

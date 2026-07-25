@@ -36,13 +36,7 @@
 
 	const CTA_DURATION_MS = 1400;
 
-	function getCountdownTarget(now = Date.now()): Date {
-		return now < EVENT.startDate.getTime() ? EVENT.startDate : EVENT.endDate;
-	}
-
-	let countdownTarget = $state(getCountdownTarget());
-	let remaining = $state<TimeRemaining>(getTimeRemaining(getCountdownTarget()));
-	let tickKey = $state(0);
+	let remaining = $state<TimeRemaining>(getTimeRemaining(EVENT.endDate));
 	let apiHealth = $state<ApiHealthStatus | null>(null);
 	let ctaProgress = $state(0);
 	let ctaLaunching = $state(false);
@@ -50,36 +44,24 @@
 
 	const apiReady = isApiConfigured();
 	const showColdStartNotice = $derived(apiReady && apiHealth !== null && apiHealth !== 'ok');
-	const beforeStart = $derived(Date.now() < EVENT.startDate.getTime());
-	const eventEnded = $derived(!beforeStart && remaining.expired);
-	const countdownTitle = $derived(
-		beforeStart ? 'Ouverture dans' : eventEnded ? 'Événement terminé' : 'Temps restant'
-	);
-	const countdownDateLabel = $derived(beforeStart ? EVENT.startDateLabel : EVENT.endDateLabel);
+	const eventEnded = $derived(remaining.expired);
 	const portalBadge = $derived(
-		beforeStart
-			? 'Système — ouverture samedi 12h'
-			: eventEnded
-				? 'Système — le portail est fermé'
-				: 'Système — le portail est ouvert'
+		eventEnded ? 'Système — le portail est fermé' : 'Système — le portail est ouvert'
 	);
 
-	$effect(() => {
-		function tick() {
-			countdownTarget = getCountdownTarget();
-			remaining = getTimeRemaining(countdownTarget);
-			tickKey++;
-		}
+	onMount(() => {
+		remaining = getTimeRemaining(EVENT.endDate);
+		const intervalId = setInterval(() => {
+			remaining = getTimeRemaining(EVENT.endDate);
+		}, 1000);
 
-		tick();
-		const intervalId = setInterval(tick, 1000);
-		return () => clearInterval(intervalId);
-	});
-
-	onMount(async () => {
 		if (apiReady) {
-			apiHealth = await fetchApiHealth();
+			fetchApiHealth().then((status) => {
+				apiHealth = status;
+			});
 		}
+
+		return () => clearInterval(intervalId);
 	});
 
 	function launchSubmit() {
@@ -152,20 +134,20 @@
 
 			<div class="hero__countdown hero__countdown--portal hero-fade hero-fade-3" use:reveal={{ delay: 120 }}>
 				<div class="hero__countdown-head">
-					<p class="hero__countdown-title">{countdownTitle}</p>
-					<p class="hero__countdown-date">{countdownDateLabel}</p>
+					<p class="hero__countdown-title">L'énigme se termine dans</p>
+					<p class="hero__countdown-date">{EVENT.endDateLabel}</p>
 				</div>
 
 				{#if eventEnded}
 					<div class="hero__countdown-cell hero__expired-portal">
-						<p class="hero__expired-text">Événement terminé</p>
+						<p class="hero__expired-text">L'énigme est close</p>
 					</div>
 				{:else}
 					<div class="hero__countdown-grid hero__countdown-grid--portal">
 						{#each units as unit}
 							<div class="hero__countdown-cell clip-corner-sm">
 								{#if unit.key === 'seconds'}
-									{#key tickKey}
+									{#key remaining.seconds}
 										<p class="hero__countdown-value count-tick">{padTime(remaining[unit.key])}</p>
 									{/key}
 								{:else}
@@ -213,7 +195,7 @@
 					</span>
 				</button>
 				<p class="hero__cta-hint">
-					{MAX_SUBMIT_ATTEMPTS} tentatives par {RATE_LIMIT_WINDOW_HOURS} h — 15 mots exactement
+					{MAX_SUBMIT_ATTEMPTS} essais par {RATE_LIMIT_WINDOW_HOURS} h · 15 mots exactement
 				</p>
 				{#if showColdStartNotice}
 					<p class="hero__api-notice" role="status">{API_COLD_START_MESSAGE}</p>

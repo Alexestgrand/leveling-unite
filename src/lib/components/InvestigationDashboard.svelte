@@ -86,7 +86,7 @@
 	<SectionIntro
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
-		description="En un coup d'œil : la vague en cours, les phrases déjà testées, l'objectif TikTok et les indices publiés."
+		description="La vague, les essais, les vues, les indices — en direct."
 		href="/concept"
 		linkLabel="Comprendre le concept"
 	/>

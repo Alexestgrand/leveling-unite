@@ -13,9 +13,9 @@
 
 <section id="journal">
 	<SectionIntro
-		eyebrow="Actualités"
+		eyebrow="Transmissions"
 		title="Le journal de bord"
-		description="Annonces officielles, indices et alertes publiées par le staff. C'est ici que l'événement prend vie au quotidien."
+		description="Les annonces officielles, dans l'ordre. Rien d'autre ne fait foi."
 	/>
 
 	<div class="surface-card timeline-panel" use:reveal={{ delay: 100 }}>

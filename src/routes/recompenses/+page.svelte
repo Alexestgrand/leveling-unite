@@ -19,7 +19,7 @@
 <PageShell
 	sectionLabel="Enjeux"
 	title="Récompenses"
-	subtitle="Staff Leveling vs Communauté Leveling : voici ce qui est en jeu selon le camp victorieux."
+	subtitle="Trois issues possibles. Chacune a son prix."
 >
 	<div class="content-block hud-panel clip-corners glow-border border-leveling-blue/40 glow-neon">
 		<h3>Si la Communauté gagne</h3>

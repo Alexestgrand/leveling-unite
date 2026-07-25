@@ -112,9 +112,9 @@
 			{/each}
 		</ul>
 		<p class="mt-4 text-xs text-zinc-500">
-			Validation (un seul essai, définitif) : le Fragmenté envoie en MP à l’organisateur —
-			<code class="text-zinc-400">FRAGMENT [n° du mot] / [mot] / confirmé par Pseudo1 + Pseudo2</code>
-			— les deux confirmateurs écrivent aussi à l’organisateur de leur côté.
+			Validation en MP à l’organisateur —
+			<code class="text-zinc-400">FRAGMENT [n°] / [mot] / confirmé par Pseudo1 + Pseudo2</code>
+			— les confirmateurs écrivent aussi de leur côté.
 		</p>
 	</div>
 

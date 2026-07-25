@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Fragmentés"
 	title="Fragmentés"
-	subtitle="Porteurs Discord, énigmes publiques et statut de chaque fragment. Toute la communauté peut aider — seul le porteur fait valider le mot, en un seul essai."
+	subtitle="Un porteur par mot, un essai par porteur. Tout le monde peut chercher."
 >
 	<FragmentsBoard />
 </PageShell>

@@ -71,7 +71,7 @@ export interface NamedReward {
 export const EVENT = {
 	title: 'LEVELING: UNITE',
 	subtitle: 'The Fragments',
-	tagline: 'Aucun joueur ne peut gagner seul. Toute la communauté doit collaborer.',
+	tagline: 'Quinze mots. Deux camps. Personne ne gagne seul.',
 	/** Ouverture officielle — samedi 25 juillet 2026 à 12h (heure de Paris). */
 	startDate: new Date('2026-07-25T12:00:00+02:00'),
 	startDateLabel: '25 juillet 2026 · 12h',
@@ -127,19 +127,19 @@ export const PARTICIPATION_STEPS = [
 		step: '01',
 		title: 'Rejoignez le serveur',
 		description:
-			'Intégrez la communauté Discord Leveling, lisez #bienvenue-unite et le journal épinglé pour rattraper l’enquête.'
+			'L’enquête vit sur le Discord Leveling. Le journal épinglé raconte ce que vous avez manqué.'
 	},
 	{
 		step: '02',
 		title: 'Aidez les Fragmentés',
 		description:
-			'Consultez /fragmentes : énigmes publiques, porteurs Discord. Tout le monde théorise ; seul le Fragmenté fait valider le mot auprès de l’organisateur — un seul essai, définitif.'
+			'Leurs énigmes sont publiques. Tout le monde cherche — eux seuls valident, en un essai.'
 	},
 	{
 		step: '03',
-		title: 'Testez une phrase',
+		title: 'Testez la phrase',
 		description:
-			'Quand votre camp pense avoir la solution, essayez la phrase complète sur ce site (2 essais par 24 h).'
+			'Quinze mots, deux essais par 24 h. Le premier camp qui valide remporte tout.'
 	}
 ] as const;
 
@@ -147,44 +147,44 @@ export const NAV_LINKS: NavLink[] = [
 	{
 		href: '/regles',
 		title: 'Règles',
-		description: 'Fair-play, Fragmentés, votes, fuites et cadre de l’événement.',
+		description: 'Le cadre, les camps, les sanctions.',
 		icon: 'rules'
 	},
 	{
 		href: '/fragmentes',
 		title: 'Fragmentés',
-		description: 'Porteurs Discord, énigmes publiques et statut de chaque fragment.',
+		description: 'Les porteurs, leurs énigmes, leur statut.',
 		icon: 'fragments',
 		featured: true
 	},
 	{
 		href: '/indices',
 		title: 'Indices',
-		description: 'Indices publiés via les annonces officielles et les paliers TikTok.',
+		description: 'Tout ce qui a été révélé. Rien d’autre.',
 		icon: 'clues'
 	},
 	{
 		href: '/objectif-tiktok',
 		title: 'Objectif TikTok',
-		description: 'Les vues communautaires débloquent des aides pour l’enquête.',
+		description: 'Les vues débloquent des révélations.',
 		icon: 'tiktok'
 	},
 	{
 		href: '/deroule',
 		title: 'Déroulé',
-		description: 'Les 4 vagues de l’événement — 5 fragments tous les 5 jours.',
+		description: 'Quatre vagues, vingt jours.',
 		icon: 'schedule'
 	},
 	{
 		href: '/recompenses',
 		title: 'Récompenses',
-		description: 'Victoire Membres ou Staff — finder, votes et giveaways.',
+		description: 'Ce que chaque issue rapporte.',
 		icon: 'rewards'
 	},
 	{
 		href: '/concept',
 		title: 'Concept & Rôles',
-		description: 'L’énigme, les Fragmentés, les camps et l’organisateur neutre.',
+		description: 'La phrase, les rôles, les camps.',
 		icon: 'concept'
 	}
 ];
@@ -310,11 +310,9 @@ Date limite : 28/07 à 12h00.`
 ];
 
 export const FRAGMENT_MODE_INTRO = [
-	'Mode hybride : les porteurs (pseudos Discord) et leurs énigmes sont publics sur cette page.',
-	'Toute la communauté peut aider à résoudre. Seul le Fragmenté désigné peut faire valider le mot en message privé auprès de l’organisateur.',
-	'UN SEUL essai par Fragmenté — définitif. Avant l’envoi, le mot doit être confirmé par 2 autres Fragmentés du camp dans le salon dédié.',
-	'Essai raté ou délai de 72 h dépassé : le mot est PERDU. Il ne sera révélé — aux deux camps — qu’au prochain palier TikTok atteint.',
-	'Après validation : un indice meta peut apparaître ici — jamais le mot en clair.'
+	'Les porteurs et leurs énigmes sont publics. Tout le monde peut chercher.',
+	'Seul le Fragmenté désigné fait valider son mot — un essai, définitif, confirmé par 2 autres Fragmentés de son camp.',
+	'72 heures par mot. Raté ou expiré : le mot est perdu, et seul un palier TikTok le fera réapparaître — pour les deux camps.'
 ] as const;
 
 export const ANNOUNCEMENTS: Announcement[] = [];
@@ -383,41 +381,38 @@ export const SUBMIT_FOOTNOTE =
 export const PUBLIC_INDICES: PublicIndex[] = [];
 
 export const CONCEPT_INTRO = [
-	'Une phrase secrète de 15 mots est au cœur de l’enquête. Personne ne peut la reconstituer seul : il faut coopérer, théoriser et recouper les indices.',
-	'Tous les 5 jours, 5 Fragmentés sont désignés par camp. Leurs pseudos Discord et leurs énigmes sont publiés sur la page Fragmentés.',
-	'Toute la communauté peut aider à résoudre. Seul le Fragmenté désigné fait valider le mot auprès de l’organisateur (MP) — un seul essai, définitif, confirmé au préalable par 2 autres Fragmentés du camp. Le mot n’est jamais publié en clair.',
-	'Un essai raté (ou un délai de 72 h dépassé) rend le mot perdu : il ne réapparaîtra qu’au prochain palier TikTok atteint, révélé aux deux camps.',
-	'Les Enquêteurs — tout le reste du camp — théorisent, mettent à jour le journal collectif, alimentent TikTok et soumettent la phrase finale sur ce site.',
-	'Deux camps s’affrontent : la Communauté Leveling et le Staff Leveling (modération/administration Discord). L’organisateur est neutre et ne joue dans aucun camp.'
+	'Une phrase de quinze mots est cachée. Personne n’en détient assez pour la reconstituer seul.',
+	'À chaque vague, cinq Fragmentés sont désignés publiquement. Chacun porte un mot ; son énigme est publiée sur la page Fragmentés.',
+	'Tout le monde cherche. Seul le porteur valide son mot auprès de l’organisateur — un essai, deux confirmations de son camp, 72 heures. Un mot raté est perdu jusqu’au prochain palier TikTok.',
+	'Deux camps s’affrontent : la Communauté Leveling et le Staff. L’organisateur est neutre — il conçoit, observe et tranche.'
 ];
 
 export const ORGANIZER_ROLE = {
 	title: 'L’organisateur',
 	description:
-		'L’organisateur conçoit l’énigme, désigne les Fragmentés, valide les solutions en MP et anime l’événement. Il ne participe à aucun camp et tranche en cas de litige.',
+		'Il conçoit l’énigme, désigne les Fragmentés, valide les mots en MP. Il ne joue dans aucun camp.',
 	items: [
-		'Ne joue ni avec les Membres ni avec le Staff',
-		'Désigne les candidats aux votes (Top Fragmenté / Top Enquêteur)',
-		'Gère les remplacements et les fuites',
-		'Décision finale sur l’événement'
+		'Neutre — ni Membres, ni Staff',
+		'Propose les shortlists des votes',
+		'Gère remplacements et fuites',
+		'Décision finale en cas de litige'
 	]
 };
 
 export const COLLABORATION_RULES = [
-	'L’événement est une enquête collective : personne ne possède assez d’informations pour résoudre la phrase seul.',
-	'Chaque participant fait avancer son camp — Fragmentés comme Enquêteurs.',
-	'Les Enquêteurs partagent leurs hypothèses, recoupent les indices publics et s’entraident dans les salons d’enquête.',
-	'Les Fragmentés restent joignables ; les énigmes sont sur /fragmentes et la validation du mot passe uniquement par le porteur auprès de l’organisateur.',
-	'Le journal épinglé (#journal-unite) permet à toute personne arrivant en cours d’événement de comprendre l’état de l’enquête en quelques minutes.'
+	'Personne ne possède assez d’informations pour résoudre la phrase seul — l’enquête est collective.',
+	'Les Enquêteurs théorisent et recoupent les indices dans les salons d’enquête.',
+	'Les Fragmentés restent joignables ; la validation d’un mot passe uniquement par eux.',
+	'Le journal épinglé (#journal-unite) résume l’enquête pour ceux qui arrivent en cours de route.'
 ];
 
 export const CONFIDENTIALITY_RULES = [
-	'Les énigmes sont publiques sur /fragmentes ; la solution (le mot) reste confidentielle jusqu’à la fin de l’événement.',
-	'Seul le Fragmenté nommé peut demander la validation du mot à l’organisateur en message privé — UN SEUL essai, définitif.',
-	'Avant l’envoi, 2 autres Fragmentés du camp doivent confirmer le mot dans le salon dédié (#fragmentes-membres / -staff) et l’écrire à l’organisateur de leur côté. Sans ces confirmations, l’essai n’est pas traité.',
-	'Chaque Fragmenté dispose de 72 h pour valider son mot. Essai raté ou délai dépassé : le mot est perdu et ne sera révélé — aux deux camps — qu’au prochain palier TikTok atteint.',
-	'Un Fragmenté (ou le camp) aide ensuite avec des indices indirects : type de mot, longueur, position probable — jamais le mot exact.',
-	'Pas de capture d’écran des MP de validation. En cas de fuite du mot, le fragment est compromis et un indice de remplacement est publié.'
+	'Les énigmes sont publiques ; les mots restent confidentiels jusqu’à la fin de l’événement.',
+	'Seul le Fragmenté nommé valide son mot en MP — un essai, définitif.',
+	'Avant l’envoi : 2 confirmations d’autres Fragmentés du camp, dans le salon dédié. Les confirmateurs écrivent aussi à l’organisateur. Sans elles, l’essai n’est pas traité.',
+	'72 h par mot. Raté ou expiré : perdu jusqu’au prochain palier TikTok, révélé aux deux camps.',
+	'Après validation, le porteur relaie des indices indirects — jamais le mot exact.',
+	'Pas de capture des MP de validation. Un mot fuité est invalidé et remplacé par un indice public.'
 ];
 
 export const RULES = [
@@ -513,29 +508,25 @@ export const PHASES: Phase[] = [
 		id: 'wave-1',
 		name: 'Vague 1 — L’Éveil',
 		share: '5 fragments',
-		description:
-			'5 Fragmentés désignés. 5 énigmes publiées sur le site. Les premières théories et le journal collectif sont lancés.'
+		description: 'Cinq porteurs désignés, cinq énigmes publiées. L’enquête commence.'
 	},
 	{
 		id: 'wave-2',
 		name: 'Vague 2 — L’Accélération',
 		share: '5 fragments',
-		description:
-			'5 nouveaux Fragmentés. Les théories se multiplient — le camp recoupe les indices publics et le journal.'
+		description: 'Cinq nouveaux porteurs. Les théories se recoupent, le journal s’épaissit.'
 	},
 	{
 		id: 'wave-3',
 		name: 'Vague 3 — Le Chaos',
 		share: '5 fragments',
-		description:
-			'5 nouveaux Fragmentés. Les salons s’embrasent. TikTok peut débloquer des aides décisives.'
+		description: 'Les salons s’embrasent. TikTok peut faire basculer l’enquête.'
 	},
 	{
 		id: 'wave-4',
 		name: 'Vague 4 — La Résolution',
-		share: '5 fragments',
-		description:
-			'Derniers Fragmentés, sprint final. Course à la soumission sur le site.'
+		share: 'Sprint final',
+		description: 'Derniers mots, course à la soumission. Un seul camp validera.'
 	}
 ];
 
@@ -609,25 +600,23 @@ export const ROLES = [
 	{
 		title: 'Les Fragmentés',
 		description:
-			'5 joueurs par vague, désignés publiquement (pseudos Discord). Leur énigme est publiée sur le site ; tout le monde peut aider. Seul le porteur fait valider le mot auprès de l’organisateur — un seul essai, définitif.',
+			'Cinq porteurs par vague, désignés publiquement. Chacun détient un mot — et un seul essai pour le valider.',
 		items: [
 			'Pseudo + énigme publics sur /fragmentes',
-			'Validation du mot uniquement via le Fragmenté (MP orga)',
-			'UN essai unique, confirmé par 2 autres Fragmentés du camp',
-			'72 h pour valider — sinon le mot est perdu (rattrapage via palier TikTok)',
-			'Rotation chaque vague (5 jours)',
-			'Max 2 vagues par personne sur l’événement'
+			'Un essai, confirmé par 2 pairs du camp',
+			'72 h — sinon le mot est perdu',
+			'Max 2 vagues par personne'
 		]
 	},
 	{
 		title: 'Les Enquêteurs',
 		description:
-			'Tous les autres membres du camp. Ils aident sur les énigmes publiques, assemblent la phrase, alimentent le journal / TikTok et peuvent soumettre la phrase finale.',
+			'Tout le reste du camp. Ils décodent les énigmes, assemblent la phrase et la soumettent sur ce site.',
 		items: [
-			'Théories dans #enquete et sur les énigmes du site',
-			'Lecture du journal pour les arrivants',
-			'Soumission sur /soumettre (2 essais / 24 h)',
-			'Éligibles au vote Top Enquêteur si les Membres gagnent'
+			'Théories dans #enquete',
+			'Décodage des énigmes publiques',
+			'Soumission — 2 essais / 24 h',
+			'Éligibles au vote Top Enquêteur'
 		]
 	}
 ];
@@ -635,12 +624,10 @@ export const ROLES = [
 export const CAMPS = [
 	{
 		name: 'Communauté Leveling',
-		description:
-			'Tous les membres du serveur Discord. Objectif : reconstituer la phrase de 15 mots et la soumettre en premier sur le site.'
+		description: 'Tous les membres du serveur. Reconstituer la phrase, la soumettre en premier.'
 	},
 	{
 		name: 'Staff Leveling',
-		description:
-			'Équipe de modération et d’administration du serveur. Même énigme, salon séparé. L’organisateur ne fait pas partie de ce camp.'
+		description: 'La modération du serveur. Même énigme, salon séparé, aucun privilège.'
 	}
 ];

@@ -17,7 +17,7 @@
 <PageShell
 	sectionLabel="Règlement"
 	title="Règles"
-	subtitle="Staff Leveling vs Communauté Leveling : entraide, confidentialité des fragments, soumission sur le site et votes collectifs."
+	subtitle="Ce qui est permis, ce qui se paie. L'essentiel tient en quelques lignes."
 >
 	<div class="content-block hud-panel clip-corners glow-border border-leveling-blue/30 glow-neon">
 		<h3>Esprit de l'événement</h3>

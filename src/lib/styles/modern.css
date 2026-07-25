@@ -387,8 +387,13 @@
 }
 
 .hero__countdown-date {
-	font-size: 0.75rem;
-	color: rgba(113, 122, 142, 0.95);
+	font-family: var(--font-display);
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--accent-cyan);
+	text-shadow: 0 0 18px rgba(70, 200, 255, 0.35);
 }
 
 .hero-fade {

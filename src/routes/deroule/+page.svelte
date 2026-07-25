@@ -1,12 +1,12 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
-	import { EVENT, PHASES, FINAL_REVEAL, CURRENT_PHASE_INDEX } from '$lib/data/mock';
+	import { PHASES, FINAL_REVEAL, CURRENT_PHASE_INDEX } from '$lib/data/mock';
 </script>
 
 <PageShell
 	sectionLabel="Déroulement"
 	title="Déroulé"
-	subtitle="L'événement dure {EVENT.duration}. Chaque vague désigne 5 Fragmentés et débloque 5 fragments vers la phrase de 15 mots."
+	subtitle="Quatre vagues de cinq fragments — du 25 juillet au 14 août."
 >
 	<div class="relative space-y-0">
 		{#each PHASES as phase, index (phase.id)}
@@ -28,7 +28,7 @@
 				<div class="content-block hud-panel clip-corners flex-1">
 					<div class="mb-2 flex flex-wrap items-center gap-3">
 						<h3>{phase.name}</h3>
-						<span class="phase-step__share">{phase.share} des fragments</span>
+						<span class="phase-step__share">{phase.share}</span>
 						{#if isActive}
 							<span class="phase-step__status">En cours</span>
 						{:else if isPast}
@@ -45,9 +45,7 @@
 
 	<div class="content-block hud-panel clip-corners glow-border mt-6 border-leveling-blue/30 glow-neon">
 		<h3>Révélation finale</h3>
-		<p class="text-zinc-400">
-			La résolution de l'énigme doit constituer un véritable moment fort pour toute la communauté.
-		</p>
+		<p class="text-zinc-400">Quand la phrase tombe, tout se débloque.</p>
 		<ul class="mt-4">
 			{#each FINAL_REVEAL as item}
 				<li>{item}</li>

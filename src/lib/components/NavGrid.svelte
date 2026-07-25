@@ -9,7 +9,7 @@
 	<SectionIntro
 		eyebrow="Aller plus loin"
 		title="Explorez l'événement"
-		description="Chaque page détaille un aspect de l'enquête : règles, indices, TikTok, déroulé, récompenses et rôles."
+		description="Chaque page éclaire une zone d'ombre."
 	/>
 
 	<div class="nav-grid">

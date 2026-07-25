@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Indices"
 	title="Indices"
-	subtitle="Indices publiés via les annonces officielles et les paliers TikTok atteints. Les nouvelles transmissions apparaîtront ici."
+	subtitle="Tout ce qui a été révélé officiellement. Le reste n'est que théorie."
 >
 	<CluesGrid />
 </PageShell>

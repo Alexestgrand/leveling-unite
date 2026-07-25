@@ -8,9 +8,9 @@
 	<SectionIntro
 		eyebrow="Rejoindre l'enquête"
 		title="Comment participer"
-		description="Trois étapes simples pour comprendre l'événement et commencer à contribuer avec la communauté."
+		description="Trois étapes. Le reste se joue sur le serveur."
 		href="/regles"
-		linkLabel="Lire les règles complètes"
+		linkLabel="Lire les règles"
 	/>
 
 	<div class="steps-grid">
