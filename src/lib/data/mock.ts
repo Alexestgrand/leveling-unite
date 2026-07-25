@@ -204,7 +204,110 @@ export const NAV_LINKS: NavLink[] = [
  *   enigma: 'Texte de l’énigme…'
  * }
  */
-export const FRAGMENTS: FragmentQuest[] = [];
+export const FRAGMENTS: FragmentQuest[] = [
+	{
+		id: 'w1-m1',
+		wave: 1,
+		wordSlot: 1,
+		discordUsername: 'chikara2ndlocky45',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `L'ANCRE
+
+PUHUEQE
+UEAXQE
+EQGXE
+RMUNXQE
+
+Tout a glissé du même nombre de crans. Combien ? La réponse n'est pas ici.
+
+Elle est sur le serveur. Un salon porte un nom : celui où l'enquête garde sa mémoire, celui qui existe pour que personne ne soit laissé en arrière. Compte ses lettres, tirets exclus.
+
+Ce nombre est ta clé.
+
+Date limite : 28/07 à 12h00.`
+	},
+	{
+		id: 'w1-m2',
+		wave: 1,
+		wordSlot: 2,
+		discordUsername: 'pourfendeur8',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `LE SABLIER
+
+Ce qui suit a été versé dans un seul flux, une lettre à la fois, à tour de rôle. Tout s'écoule ensemble.
+
+TCNE OEOU UUUX SXS.
+
+Prends une lettre sur quatre, et tu tiendras le premier fil. Recommence un cran plus loin pour le suivant.
+
+Le point marque une fin.
+
+Date limite : 28/07 à 12h00.`
+	},
+	{
+		id: 'w1-m3',
+		wave: 1,
+		wordSlot: 3,
+		discordUsername: 'asterion_45',
+		camp: 'staff',
+		status: 'open',
+		enigma: `LE CERCLE
+
+BGTSNMR
+UPNCPOT
+EGFQPU
+SOLRQV
+
+Tout a glissé — mais pas d'autant. Chaque ligne avance d'un pas de plus que celle qui la précède.
+
+Le premier pas t'est donné par le jour où cette énigme a été publiée. Ensuite, tourne.
+
+Date limite : 28/07 à 12h00.`
+	},
+	{
+		id: 'w1-m4',
+		wave: 1,
+		wordSlot: 4,
+		discordUsername: 'mabimzaa',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `L'ANCRE
+
+AD
+OMD
+YMUE
+PAZO
+
+Tout a glissé du même nombre de crans. Combien ? La réponse n'est pas ici.
+
+Elle est sur le serveur. Un salon porte un nom : celui où l'enquête garde sa mémoire, celui qui existe pour que personne ne soit laissé en arrière. Compte ses lettres, tirets exclus.
+
+Ce nombre est ta clé.
+
+Date limite : 28/07 à 12h00.`
+	},
+	{
+		id: 'w1-m5',
+		wave: 1,
+		wordSlot: 5,
+		discordUsername: 'zero6777_',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `LE SABLIER
+
+Ce qui suit a été versé dans un seul flux, une lettre à la fois, à tour de rôle. Tout s'écoule ensemble.
+
+CNLU EOEN TTUE TRR. EE..
+
+Prends une lettre sur quatre, et tu tiendras le premier fil. Recommence un cran plus loin pour le suivant.
+
+Le point marque une fin.
+
+Date limite : 28/07 à 12h00.`
+	}
+];
 
 export const FRAGMENT_MODE_INTRO = [
 	'Mode hybride : les porteurs (pseudos Discord) et leurs énigmes sont publics sur cette page.',
