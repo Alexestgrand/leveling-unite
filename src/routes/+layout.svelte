@@ -8,10 +8,10 @@
 </script>
 
 <svelte:head>
-	<title>Leveling: Unite – The Fragments</title>
+	<title>LEVELING: Unite – The Fragments</title>
 	<meta
 		name="description"
-		content="Tableau de bord officiel de l'événement communautaire Leveling: Unite – The Fragments."
+		content="Tableau de bord officiel de l'événement communautaire LEVELING: Unite – The Fragments."
 	/>
 	<meta name="theme-color" content="#080a10" />
 	<link rel="icon" href="/favicon.ico" sizes="48x48" />

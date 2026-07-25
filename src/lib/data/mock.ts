@@ -76,7 +76,7 @@ export interface NamedReward {
 }
 
 export const EVENT = {
-	title: 'LEVELING: UNITE',
+	title: 'LEVELING: Unite',
 	subtitle: 'The Fragments',
 	tagline: 'Quinze mots. Deux camps. Personne ne gagne seul.',
 	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */

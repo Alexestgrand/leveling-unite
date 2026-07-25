@@ -1,4 +1,4 @@
-# Leveling: Unite – The Fragments
+# LEVELING: Unite – The Fragments
 
 Documentation technique et fonctionnelle complète du projet.
 
@@ -31,7 +31,7 @@ Documentation technique et fonctionnelle complète du projet.
 
 ## 1. Vue d'ensemble
 
-**Leveling: Unite – The Fragments** est un événement communautaire d'enquête organisé pour la communauté Discord **Leveling**. Le site web officiel sert de tableau de bord : règles, indices, progression TikTok, déroulé des phases, récompenses, et **soumission finale de la phrase secrète** via authentification Discord.
+**LEVELING: Unite – The Fragments** est un événement communautaire d'enquête organisé pour la communauté Discord **Leveling**. Le site web officiel sert de tableau de bord : règles, indices, progression TikTok, déroulé des phases, récompenses, et **soumission finale de la phrase secrète** via authentification Discord.
 
 Le projet est composé de **deux dépôts / dossiers distincts** :
 
@@ -52,7 +52,7 @@ Reconstituer une **phrase secrète de 15 mots** fragmentée et distribuée progr
 
 ### Durée et dates
 
-- **Titre :** LEVELING: UNITE — The Fragments
+- **Titre :** LEVELING: Unite — The Fragments
 - **Durée :** 3 semaines
 - **Fin :** 29 juin 2026, 23:59 (heure de Paris, UTC+2)
 - **Tagline :** *Aucun joueur ne peut gagner seul. Toute la communauté doit collaborer.*
@@ -906,4 +906,4 @@ Navigateur : https://leveling-unite.vercel.app/soumettre
 
 ---
 
-*Documentation générée pour Leveling: Unite – The Fragments. Dernière mise à jour : juin 2026.*
+*Documentation générée pour LEVELING: Unite – The Fragments. Dernière mise à jour : juin 2026.*

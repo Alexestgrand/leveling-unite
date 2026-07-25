@@ -1,4 +1,4 @@
-# Leveling: Unite – The Fragments
+# LEVELING: Unite – The Fragments
 
 Événement communautaire Discord autour d'une grande énigme collective.  
 **Site officiel :** [leveling-unite.vercel.app](https://leveling-unite.vercel.app)  
@@ -166,4 +166,4 @@ Quand la phrase est trouvée :
 
 ---
 
-*Leveling: Unite – The Fragments — une expérience dont les membres se souviendront longtemps.*
+*LEVELING: Unite – The Fragments — une expérience dont les membres se souviendront longtemps.*

@@ -80,7 +80,7 @@
 	</div>
 
 	<div class="content-block hud-panel clip-corners">
-		<h3>Ce que Leveling: Unite récompense</h3>
+		<h3>Ce que LEVELING: Unite récompense</h3>
 		<p>
 			L'événement valorise la coopération, l'intelligence collective et l'engagement — pas le niveau
 			ni la vitesse individuelle. Le Finder est récompensé automatiquement ; les meilleurs
@@ -88,7 +88,7 @@
 			l'organisateur.
 		</p>
 		<p class="mt-4 italic text-leveling-blue-light/80">
-			« Tu étais là pendant Leveling: Unite ? Quand tout le serveur s'est transformé en gigantesque
+			« Tu étais là pendant LEVELING: Unite ? Quand tout le serveur s'est transformé en gigantesque
 			enquête ? »
 		</p>
 	</div>
