@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import AmbientBackground from '$lib/components/AmbientBackground.svelte';
 	import SiteHeader from '$lib/components/SiteHeader.svelte';
+	import TourGuide from '$lib/components/TourGuide.svelte';
 
 	let { children } = $props();
 </script>
@@ -36,4 +37,5 @@
 			</div>
 		{/key}
 	</div>
+	<TourGuide />
 </div>

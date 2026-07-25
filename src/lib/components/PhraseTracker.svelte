@@ -53,7 +53,7 @@
 	}
 </script>
 
-<div class="phrase-board surface-card" use:reveal>
+<div class="phrase-board surface-card" data-tour="tour-phrase" use:reveal>
 	<div class="phrase-board__head">
 		<p class="phrase-board__title">
 			<span class="phrase-board__title-glyph" aria-hidden="true">◈</span>

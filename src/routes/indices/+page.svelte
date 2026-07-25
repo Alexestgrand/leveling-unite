@@ -8,5 +8,7 @@
 	title="Indices"
 	subtitle="Annonces staff et révélations TikTok uniquement. Les énigmes des porteurs sont sur Fragmentés."
 >
-	<CluesGrid />
+	<div data-tour="tour-indices">
+		<CluesGrid />
+	</div>
 </PageShell>

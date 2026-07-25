@@ -193,6 +193,7 @@
 	title="Soumettre la phrase"
 	subtitle="Testez la phrase reconstituée par votre camp. Deux essais par 24 heures."
 >
+	<div data-tour="tour-soumettre">
 	{#if uniqueTesters !== null}
 		<p class="submit-live-stats" use:reveal role="status" aria-live="polite">
 			<span class="stat-card__live-dot" aria-hidden="true"></span>
@@ -383,4 +384,5 @@
 	{/if}
 
 	<p class="submit-footnote" use:reveal={{ delay: 120 }}>{SUBMIT_FOOTNOTE}</p>
+	</div>
 </PageShell>

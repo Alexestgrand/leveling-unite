@@ -133,7 +133,7 @@
 	}
 </script>
 
-<section class="hero ambient-bg">
+<section class="hero ambient-bg" data-tour="tour-intro">
 	<div class="hero__glow" aria-hidden="true"></div>
 
 	<div class="page-container hero__inner hero__inner--portal">

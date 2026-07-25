@@ -95,6 +95,7 @@
 		class="fragment-card surface-card {statusClass(fragment.status)}"
 		class:fragment-card--focus={focusedSlot !== null && fragment.wordSlot === focusedSlot}
 		class:fragment-card--validated-pulse={fragment.status === 'validated'}
+		data-tour={index === 0 ? 'tour-porteur' : undefined}
 		use:reveal={{ delay: index * 60 }}
 		tabindex="-1"
 	>
@@ -166,7 +167,7 @@
 	</article>
 {/snippet}
 
-<section class="fragments-board space-y-5 sm:space-y-6">
+<section class="fragments-board space-y-5 sm:space-y-6" data-tour="tour-fragmentes">
 	<PhraseTracker showBoardLink={false} />
 
 	<div class="surface-card hud-panel clip-corners p-5 sm:p-6" use:reveal>
