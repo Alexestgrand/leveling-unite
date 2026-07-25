@@ -87,7 +87,7 @@ export const EVENT = {
 	endDateLabel: '14 août 2026 · 13h',
 	duration: '20 jours (4 vagues de 5 fragments)',
 	discordLabel: 'Serveur Discord Leveling',
-	discordUrl: 'https://discord.gg/kNnVZWhfCe'
+	discordUrl: 'https://discord.com/invite/appleveling'
 };
 
 export const ENIGMA_SUMMARY = {
@@ -424,7 +424,16 @@ export const SUBMIT_FOOTNOTE =
 	"pas la peine de tricher avec plusieurs compte famé y'a 15000 milliards de possibiité 🥀 littérelement" as const;
 
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
-export const PUBLIC_INDICES: PublicIndex[] = [];
+export const PUBLIC_INDICES: PublicIndex[] = [
+	{
+		id: 'tiktok-signal-1',
+		date: '2026-07-26T00:00:00+02:00',
+		source: 'tiktok',
+		title: 'Transmission TikTok — Signal intercepté',
+		content:
+			'Une séquence a été diffusée sur le compte officiel. Elle ne dit pas tout — mais elle dit assez.\nhttps://vm.tiktok.com/ZN8JxQc4e/'
+	}
+];
 
 export const CONCEPT_INTRO = [
 	'Une phrase de quinze mots est cachée. Personne n’en détient assez pour la reconstituer seul.',
