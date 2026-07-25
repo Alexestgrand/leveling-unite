@@ -300,7 +300,7 @@ Date limite : 28/07 à 13h00.`
 		id: 'w1-m5',
 		wave: 1,
 		wordSlot: 5,
-		discordUsername: 'bangodsno',
+		discordUsername: 'zero6777_',
 		camp: 'communaute',
 		status: 'open',
 		enigma: `LE SABLIER
