@@ -2292,3 +2292,516 @@
 		animation: none !important;
 	}
 }
+
+/* ═══════════ GAMIFICATION ═══════════ */
+
+/* ── Phrase board — 15 fragments ── */
+.phrase-board {
+	padding: 1.15rem 1.25rem 1.25rem;
+}
+
+.phrase-board__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.5rem;
+	margin-bottom: 0.9rem;
+}
+
+.phrase-board__title {
+	margin: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-family: var(--font-display);
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: rgba(228, 228, 231, 0.95);
+}
+
+.phrase-board__title-glyph {
+	color: var(--color-accent-cyan);
+	text-shadow: 0 0 12px rgba(70, 200, 255, 0.6);
+}
+
+.phrase-board__count {
+	margin: 0;
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: rgba(148, 156, 176, 0.95);
+}
+
+.phrase-board__count-value {
+	font-family: var(--font-display);
+	font-size: 1rem;
+	font-weight: 700;
+	color: #6ee7b7;
+}
+
+.phrase-board__slots {
+	display: grid;
+	grid-template-columns: repeat(15, minmax(0, 1fr));
+	gap: 0.35rem;
+}
+
+@media (max-width: 767px) {
+	.phrase-board__slots {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		gap: 0.45rem;
+	}
+}
+
+.phrase-slot {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 4 / 5;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 0.55rem;
+	background: rgba(255, 255, 255, 0.02);
+	transition:
+		transform 0.3s var(--ease-smooth),
+		border-color 0.3s,
+		box-shadow 0.3s;
+}
+
+.phrase-slot:hover {
+	transform: translateY(-2px);
+}
+
+.phrase-slot__num {
+	position: absolute;
+	top: 0.22rem;
+	left: 0.32rem;
+	font-size: 0.55rem;
+	font-weight: 700;
+	color: rgba(113, 122, 142, 0.85);
+}
+
+.phrase-slot__glyph {
+	font-family: var(--font-display);
+	font-size: clamp(0.85rem, 2vw, 1.05rem);
+	font-weight: 700;
+	line-height: 1;
+}
+
+.phrase-slot--locked {
+	border-style: dashed;
+	border-color: rgba(255, 255, 255, 0.07);
+}
+
+.phrase-slot--locked .phrase-slot__glyph {
+	color: rgba(113, 122, 142, 0.55);
+}
+
+.phrase-slot--open {
+	border-color: rgba(70, 200, 255, 0.45);
+	background: rgba(70, 200, 255, 0.06);
+	animation: slot-pulse 2.6s ease-in-out infinite;
+}
+
+.phrase-slot--open .phrase-slot__glyph {
+	color: var(--color-accent-cyan);
+	text-shadow: 0 0 10px rgba(70, 200, 255, 0.7);
+}
+
+.phrase-slot--open .phrase-slot__num {
+	color: rgba(70, 200, 255, 0.8);
+}
+
+@keyframes slot-pulse {
+	0%,
+	100% {
+		box-shadow: 0 0 6px rgba(70, 200, 255, 0.12);
+	}
+	50% {
+		box-shadow: 0 0 16px rgba(70, 200, 255, 0.4);
+	}
+}
+
+.phrase-slot--validated {
+	border-color: rgba(52, 211, 153, 0.5);
+	background: rgba(52, 211, 153, 0.08);
+}
+
+.phrase-slot--validated .phrase-slot__glyph {
+	color: #6ee7b7;
+	text-shadow: 0 0 10px rgba(52, 211, 153, 0.55);
+}
+
+.phrase-slot--lost {
+	border-color: rgba(248, 113, 113, 0.45);
+	background: rgba(248, 113, 113, 0.06);
+}
+
+.phrase-slot--lost .phrase-slot__glyph {
+	color: #fca5a5;
+}
+
+.phrase-board__legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 1.1rem;
+	margin-top: 0.9rem;
+}
+
+.phrase-board__legend-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.68rem;
+	font-weight: 600;
+	color: rgba(148, 156, 176, 0.95);
+}
+
+.phrase-board__legend-dot {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 0.15rem;
+}
+
+.phrase-board__legend-item--open .phrase-board__legend-dot {
+	background: var(--color-accent-cyan);
+	box-shadow: 0 0 8px rgba(70, 200, 255, 0.7);
+}
+
+.phrase-board__legend-item--validated .phrase-board__legend-dot {
+	background: #34d399;
+}
+
+.phrase-board__legend-item--lost .phrase-board__legend-dot {
+	background: #f87171;
+}
+
+.phrase-board__legend-item--locked .phrase-board__legend-dot {
+	background: rgba(113, 122, 142, 0.6);
+}
+
+/* ── Fragment cards — quêtes ── */
+.fragments-board__camp-title {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.85rem;
+	font-family: var(--font-display);
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.fragments-board__camp-title--communaute {
+	color: var(--color-leveling-blue-light);
+}
+
+.fragments-board__camp-title--staff {
+	color: rgba(252, 211, 77, 0.9);
+}
+
+.fragment-card {
+	position: relative;
+	overflow: hidden;
+	transition:
+		transform 0.35s var(--ease-smooth),
+		border-color 0.35s,
+		box-shadow 0.35s;
+}
+
+.fragment-card::before {
+	content: '';
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 3px;
+	background: linear-gradient(180deg, rgba(70, 200, 255, 0.7), transparent 80%);
+	opacity: 0;
+	transition: opacity 0.35s;
+}
+
+.fragment-card--open::before {
+	opacity: 1;
+}
+
+.fragment-card--validated::before {
+	background: linear-gradient(180deg, rgba(52, 211, 153, 0.7), transparent 80%);
+	opacity: 1;
+}
+
+.fragment-card--lost::before {
+	background: linear-gradient(180deg, rgba(248, 113, 113, 0.7), transparent 80%);
+	opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.fragment-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 16px 44px rgba(0, 0, 0, 0.4), 0 0 24px rgba(70, 200, 255, 0.08);
+	}
+
+	.fragment-card--lost:hover {
+		box-shadow: 0 16px 44px rgba(0, 0, 0, 0.4), 0 0 24px rgba(248, 113, 113, 0.1);
+	}
+}
+
+.fragment-card__quest {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.22rem 0.6rem;
+	border: 1px solid rgba(70, 200, 255, 0.25);
+	border-radius: 0.4rem;
+	background: rgba(70, 200, 255, 0.06);
+	font-family: var(--font-display);
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-accent-cyan);
+}
+
+.fragment-card__quest-glyph {
+	font-size: 0.7rem;
+}
+
+.fragment-card__status--lost {
+	color: #fca5a5;
+}
+
+.fragment-card__status--open {
+	position: relative;
+	padding-left: 0.85rem;
+}
+
+.fragment-card__status--open::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0.45rem;
+	height: 0.45rem;
+	transform: translateY(-50%);
+	border-radius: 50%;
+	background: var(--color-accent-cyan);
+	box-shadow: 0 0 8px rgba(70, 200, 255, 0.8);
+	animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.fragment-card__bearer {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	margin: 0.9rem 0 0;
+}
+
+.fragment-card__avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.15rem;
+	height: 2.15rem;
+	flex-shrink: 0;
+	border-radius: 0.6rem;
+	font-family: var(--font-display);
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.fragment-card__avatar--communaute {
+	border: 1px solid rgba(70, 200, 255, 0.35);
+	background: rgba(70, 200, 255, 0.1);
+	color: var(--color-accent-cyan);
+}
+
+.fragment-card__avatar--staff {
+	border: 1px solid rgba(251, 191, 36, 0.35);
+	background: rgba(251, 191, 36, 0.1);
+	color: #fcd34d;
+}
+
+.fragment-card__bearer-text {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem;
+	min-width: 0;
+}
+
+.fragment-card__bearer-label {
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: rgba(113, 122, 142, 0.95);
+}
+
+.fragment-card__username {
+	overflow-wrap: anywhere;
+}
+
+.fragment-card__enigma-name {
+	margin: 0;
+	display: inline-block;
+	padding: 0.2rem 0.55rem;
+	border: 1px solid rgba(139, 92, 246, 0.35);
+	border-radius: 0.35rem;
+	background: rgba(139, 92, 246, 0.1);
+	font-family: var(--font-display);
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #c4b5fd;
+}
+
+.fragment-card__enigma-text {
+	margin-top: 0.65rem;
+	padding: 0.8rem 0.9rem;
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	border-radius: 0.6rem;
+	background: rgba(5, 6, 10, 0.6);
+	font-family: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, monospace;
+	font-size: 0.78rem;
+	line-height: 1.6;
+	color: rgba(212, 218, 230, 0.92);
+}
+
+/* ── Portes TikTok — rangs ── */
+.gate-rank {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	flex-shrink: 0;
+	border: 1px solid rgba(63, 63, 70, 0.8);
+	border-radius: 0.55rem;
+	background: rgba(9, 9, 11, 0.7);
+	font-family: var(--font-display);
+	font-size: 0.85rem;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	color: rgba(113, 122, 142, 0.9);
+	transition: border-color 0.4s, color 0.4s, box-shadow 0.4s, background 0.4s;
+}
+
+.gate-rank--e { color: rgba(154, 163, 181, 0.9); }
+.gate-rank--d { color: #7dd3fc; }
+.gate-rank--c { color: var(--color-accent-cyan); }
+.gate-rank--b { color: #a78bfa; }
+.gate-rank--a { color: #fbbf24; }
+
+.gate-rank--lost {
+	color: #fca5a5;
+	border-color: rgba(248, 113, 113, 0.35);
+	font-size: 0.72rem;
+}
+
+.gate-rank--reached {
+	border-color: currentColor;
+	box-shadow: 0 0 14px rgba(70, 200, 255, 0.25);
+	background: rgba(70, 200, 255, 0.06);
+}
+
+.gate-rank--lost.gate-rank--reached {
+	box-shadow: 0 0 14px rgba(248, 113, 113, 0.3);
+	background: rgba(248, 113, 113, 0.08);
+}
+
+.tracker__step {
+	transition: transform 0.3s var(--ease-smooth), border-color 0.4s, background 0.4s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.tracker__step:hover {
+		transform: translateX(4px);
+	}
+}
+
+.tracker__step--lost {
+	border-color: rgba(248, 113, 113, 0.25);
+	background: rgba(248, 113, 113, 0.03);
+}
+
+.tracker__step--lost.tracker__step--reached {
+	border-color: rgba(248, 113, 113, 0.45);
+	background: rgba(248, 113, 113, 0.07);
+}
+
+.tracker__step--lost .tracker__step-label {
+	color: #fecaca;
+}
+
+.tracker__step-tag {
+	display: inline-block;
+	margin-left: 0.45rem;
+	padding: 0.1rem 0.4rem;
+	border: 1px solid rgba(248, 113, 113, 0.4);
+	border-radius: 0.3rem;
+	font-size: 0.55rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #fca5a5;
+	background: rgba(248, 113, 113, 0.08);
+	vertical-align: middle;
+}
+
+.tracker__marker-dot--lost {
+	border-radius: 0.15rem;
+	transform: rotate(45deg);
+}
+
+.tracker__marker-dot--lost.tracker__marker-dot--reached {
+	border-color: #f87171;
+	box-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
+}
+
+.tracker__lost-note {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	margin-top: 1.5rem;
+	padding: 0.9rem 1rem;
+	border: 1px solid rgba(248, 113, 113, 0.22);
+	border-radius: 0.7rem;
+	background: rgba(248, 113, 113, 0.04);
+}
+
+.tracker__lost-note-glyph {
+	flex-shrink: 0;
+	font-size: 1.05rem;
+	line-height: 1.4;
+	color: #fca5a5;
+}
+
+.tracker__lost-note p {
+	margin: 0;
+	font-size: 0.82rem;
+	line-height: 1.6;
+	color: rgba(212, 218, 230, 0.9);
+}
+
+/* ── Step cards — quêtes de participation ── */
+.step-card__number {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2rem;
+	height: 2rem;
+	padding-inline: 0.5rem;
+	border: 1px solid rgba(70, 200, 255, 0.3);
+	border-radius: 0.5rem;
+	background: rgba(70, 200, 255, 0.07);
+	font-size: 0.8rem;
+	color: var(--color-accent-cyan);
+	box-shadow: inset 0 0 12px rgba(70, 200, 255, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.phrase-slot--open,
+	.fragment-card__status--open::before {
+		animation: none !important;
+	}
+}

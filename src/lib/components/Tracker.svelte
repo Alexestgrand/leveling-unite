@@ -1,14 +1,32 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
-	import { TIKTOK_TRACKER, TIKTOK_ACCOUNT, TIKTOK_LOST_WORD_NOTE } from '$lib/data/mock';
+	import {
+		TIKTOK_TRACKER,
+		TIKTOK_ACCOUNT,
+		TIKTOK_LOST_WORD_NOTE,
+		LOST_WORD_MILESTONE_STEP,
+		getLostWordMilestones,
+		type Milestone
+	} from '$lib/data/mock';
 	import { formatViews, milestonePercent } from '$lib/utils/format';
 
-	const { currentViews, goal, milestones, hashtags } = TIKTOK_TRACKER;
+	const { currentViews, hashtags } = TIKTOK_TRACKER;
+
+	const lostMilestones = getLostWordMilestones();
+	const milestones: Milestone[] = [...TIKTOK_TRACKER.milestones, ...lostMilestones];
+	const goal = Math.max(TIKTOK_TRACKER.goal, milestones[milestones.length - 1].views);
+
 	const progress = milestonePercent(currentViews, goal);
 	const reachedCount = milestones.filter((m) => currentViews >= m.views).length;
 
 	function isReached(views: number): boolean {
 		return currentViews >= views;
+	}
+
+	function rankClass(milestone: Milestone): string {
+		return milestone.kind === 'rattrapage'
+			? 'gate-rank--lost'
+			: `gate-rank--${milestone.rank.toLowerCase()}`;
 	}
 </script>
 
@@ -76,6 +94,7 @@
 					<div
 						class="tracker__marker-dot"
 						class:tracker__marker-dot--reached={reached}
+						class:tracker__marker-dot--lost={milestone.kind === 'rattrapage'}
 					></div>
 					<span class="tracker__marker-views">{formatViews(milestone.views)}</span>
 				</div>
@@ -84,11 +103,7 @@
 	</div>
 
 	<p class="tracker__stairs-title">
-		Paliers débloqués — {reachedCount}/{milestones.length}
-	</p>
-
-	<p class="mt-2 text-sm leading-relaxed text-zinc-400">
-		{TIKTOK_LOST_WORD_NOTE}
+		Portes débloquées — {reachedCount}/{milestones.length}
 	</p>
 
 	<div class="tracker__stairs">
@@ -97,25 +112,49 @@
 			<div
 				class="tracker__step"
 				class:tracker__step--reached={reached}
+				class:tracker__step--lost={milestone.kind === 'rattrapage'}
 				style="--step-index: {index}"
 				use:reveal={{ delay: index * 70 }}
 			>
 				<div class="tracker__step-rail" aria-hidden="true">
-					<span class="tracker__step-num">{index + 1}</span>
+					<span class="gate-rank {rankClass(milestone)}" class:gate-rank--reached={reached}>
+						{milestone.rank}
+					</span>
 				</div>
 				<div class="tracker__step-body">
 					<div class="tracker__step-head">
-						<p class="tracker__step-label">{milestone.label}</p>
+						<p class="tracker__step-label">
+							{milestone.label}
+							{#if milestone.kind === 'rattrapage'}
+								<span class="tracker__step-tag">Mot perdu</span>
+							{/if}
+						</p>
 						<span class="tracker__step-views">{formatViews(milestone.views)} vues</span>
 					</div>
 					<p class="tracker__step-desc">{milestone.description}</p>
 					{#if reached}
-						<span class="tracker__step-badge">Débloqué</span>
+						<span class="tracker__step-badge">Porte franchie</span>
 					{:else}
-						<span class="tracker__step-badge tracker__step-badge--locked">En attente</span>
+						<span class="tracker__step-badge tracker__step-badge--locked">Verrouillée</span>
 					{/if}
 				</div>
 			</div>
 		{/each}
+	</div>
+
+	<div class="tracker__lost-note" use:reveal>
+		<span class="tracker__lost-note-glyph" aria-hidden="true">⟁</span>
+		<p>
+			{TIKTOK_LOST_WORD_NOTE}
+			{#if lostMilestones.length === 0}
+				Aucun mot n'est perdu pour l'instant — l'objectif reste à {formatViews(TIKTOK_TRACKER.goal)}.
+			{:else}
+				{lostMilestones.length}
+				{lostMilestones.length > 1 ? 'portes de rattrapage sont ouvertes' : 'porte de rattrapage est ouverte'}
+				— l'objectif est étendu à {formatViews(goal)} (+{formatViews(
+					lostMilestones.length * LOST_WORD_MILESTONE_STEP
+				)}).
+			{/if}
+		</p>
 	</div>
 </section>

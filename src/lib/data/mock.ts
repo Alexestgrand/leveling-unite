@@ -7,10 +7,15 @@ export interface Announcement {
 	content: string;
 }
 
+export type MilestoneKind = 'aide' | 'rattrapage';
+
 export interface Milestone {
 	views: number;
 	label: string;
 	description: string;
+	/** Rang de la porte (gamification) — E, D, C, B, A, S… */
+	rank: string;
+	kind: MilestoneKind;
 }
 
 export interface PublicIndex {
@@ -325,34 +330,64 @@ export const TIKTOK_TRACKER = {
 		{
 			views: 10_000,
 			label: 'Lettre révélée',
-			description: 'Révélation d’une lettre utile à la phrase secrète.'
+			description: 'Une lettre utile à la phrase secrète est révélée.',
+			rank: 'E',
+			kind: 'aide'
 		},
 		{
 			views: 50_000,
 			label: 'Indice global',
-			description: 'Un indice global supplémentaire pour la communauté.'
+			description: 'Un indice global supplémentaire pour la communauté.',
+			rank: 'D',
+			kind: 'aide'
 		},
 		{
 			views: 100_000,
 			label: 'Catégorie confirmée',
-			description: 'Confirmation de la catégorie d’un mot de la phrase.'
+			description: 'La catégorie d’un mot de la phrase est confirmée.',
+			rank: 'C',
+			kind: 'aide'
 		},
 		{
 			views: 250_000,
 			label: 'Piste écartée',
-			description: 'Une piste communautaire est officiellement écartée par le staff.'
+			description: 'Une piste communautaire est officiellement écartée.',
+			rank: 'B',
+			kind: 'aide'
 		},
 		{
 			views: 500_000,
 			label: 'Indice décisif',
-			description: 'Indice décisif pour aider le camp des Membres.'
+			description: 'Un indice décisif pour le camp des Membres.',
+			rank: 'A',
+			kind: 'aide'
 		}
 	] satisfies Milestone[]
 };
 
+/** Chaque mot perdu ajoute une porte de rattrapage à +250k vues au-dessus du dernier palier. */
+export const LOST_WORD_MILESTONE_STEP = 250_000;
+
+const LOST_WORD_RANKS = ['S', 'SS', 'SSS'] as const;
+
+/** Portes de rattrapage générées depuis les fragments perdus (status 'lost'). */
+export function getLostWordMilestones(): Milestone[] {
+	const lastBase = TIKTOK_TRACKER.milestones[TIKTOK_TRACKER.milestones.length - 1].views;
+
+	return FRAGMENTS.filter((f) => f.status === 'lost')
+		.sort((a, b) => (a.wordSlot ?? 99) - (b.wordSlot ?? 99))
+		.map((fragment, index) => ({
+			views: lastBase + (index + 1) * LOST_WORD_MILESTONE_STEP,
+			label: `Rattrapage — mot n°${fragment.wordSlot ?? '?'}`,
+			description: `Le mot perdu n°${fragment.wordSlot ?? '?'} est révélé — aux deux camps.`,
+			rank: LOST_WORD_RANKS[Math.min(index, LOST_WORD_RANKS.length - 1)],
+			kind: 'rattrapage' as const
+		}));
+}
+
 /** Rattrapage : les mots perdus par les Fragmentés reviennent via les paliers TikTok. */
 export const TIKTOK_LOST_WORD_NOTE =
-	'Si un Fragmenté a perdu son mot (essai raté ou délai dépassé), chaque palier atteint peut le révéler — aux deux camps. C’est le seul moyen de le récupérer.' as const;
+	'Chaque mot perdu par un Fragmenté ouvre une porte de rattrapage : +250 000 vues au-dessus du dernier palier. Franchie, elle révèle le mot — aux deux camps.' as const;
 
 export const TIKTOK_ACCOUNT = {
 	handle: '@leveling.event',

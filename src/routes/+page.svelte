@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Hero from '$lib/components/Hero.svelte';
+	import PhraseTracker from '$lib/components/PhraseTracker.svelte';
 	import InvestigationDashboard from '$lib/components/InvestigationDashboard.svelte';
 	import HowToParticipate from '$lib/components/HowToParticipate.svelte';
 	import Timeline from '$lib/components/Timeline.svelte';
@@ -10,7 +11,8 @@
 <Hero />
 
 <main class="page-container space-y-10 pt-8 sm:space-y-20 sm:pt-14 md:space-y-28">
-	<section class="relative">
+	<section class="relative space-y-5 sm:space-y-6">
+		<PhraseTracker />
 		<InvestigationDashboard />
 	</section>
 

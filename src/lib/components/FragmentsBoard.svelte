@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
+	import PhraseTracker from '$lib/components/PhraseTracker.svelte';
 	import {
 		CURRENT_PHASE_INDEX,
 		FRAGMENTS,
@@ -43,38 +44,58 @@
 		if (status === 'lost') return 'fragment-card--lost';
 		return 'fragment-card--upcoming';
 	}
+
+	/** Première ligne en MAJUSCULES = nom de l'énigme (L'ANCRE, LE SABLIER…). */
+	function enigmaParts(text: string): { name: string | null; body: string } {
+		const trimmed = text.trim();
+		const lines = trimmed.split('\n');
+		const first = (lines[0] ?? '').trim();
+		if (lines.length > 1 && first.length > 0 && first.length <= 26 && first === first.toUpperCase()) {
+			return { name: first, body: lines.slice(1).join('\n').trim() };
+		}
+		return { name: null, body: trimmed };
+	}
 </script>
 
 {#snippet fragmentCard(fragment: FragmentQuest, index: number)}
+	{@const parts = enigmaParts(fragment.enigma)}
 	<article
-		class="fragment-card surface-card hud-panel clip-corners {statusClass(fragment.status)}"
+		class="fragment-card surface-card {statusClass(fragment.status)}"
 		use:reveal={{ delay: index * 60 }}
 	>
 		<header class="fragment-card__head">
-			<div class="fragment-card__meta">
-				<span class="fragment-card__camp fragment-card__camp--{fragment.camp}">
-					{campLabel[fragment.camp]}
-				</span>
+			<span class="fragment-card__quest">
+				<span class="fragment-card__quest-glyph" aria-hidden="true">◈</span>
+				Quête
 				{#if fragment.wordSlot !== null}
-					<span class="fragment-card__slot">Mot {fragment.wordSlot}/15</span>
+					· Mot {fragment.wordSlot}/15
 				{/if}
-			</div>
+			</span>
 			<span class="fragment-card__status fragment-card__status--{fragment.status}">
 				{statusLabel[fragment.status]}
 			</span>
 		</header>
 
 		<p class="fragment-card__bearer">
-			<span class="fragment-card__bearer-label">Porteur</span>
-			<span class="fragment-card__username">@{fragment.discordUsername}</span>
+			<span class="fragment-card__avatar fragment-card__avatar--{fragment.camp}" aria-hidden="true">
+				{fragment.discordUsername.charAt(0).toUpperCase()}
+			</span>
+			<span class="fragment-card__bearer-text">
+				<span class="fragment-card__bearer-label">Porteur · {campLabel[fragment.camp]}</span>
+				<span class="fragment-card__username">@{fragment.discordUsername}</span>
+			</span>
 		</p>
 
 		{#if fragment.status === 'upcoming' && !fragment.enigma.trim()}
 			<p class="fragment-card__enigma fragment-card__enigma--empty">Énigme à publier…</p>
 		{:else}
 			<div class="fragment-card__enigma">
-				<p class="fragment-card__enigma-label">Énigme</p>
-				<p class="fragment-card__enigma-text">{fragment.enigma}</p>
+				{#if parts.name}
+					<p class="fragment-card__enigma-name">{parts.name}</p>
+				{:else}
+					<p class="fragment-card__enigma-label">Énigme</p>
+				{/if}
+				<p class="fragment-card__enigma-text">{parts.body}</p>
 			</div>
 		{/if}
 
@@ -89,15 +110,17 @@
 			<div class="fragment-card__hint fragment-card__hint--lost">
 				<p class="fragment-card__hint-label">Mot perdu</p>
 				<p class="fragment-card__hint-text">
-					Essai raté ou délai dépassé. Ce mot ne sera révélé — aux deux camps — qu’au prochain
-					palier TikTok atteint.
+					Une porte de rattrapage s'est ouverte sur l'objectif TikTok. Franchie, elle révélera ce
+					mot — aux deux camps.
 				</p>
 			</div>
 		{/if}
 	</article>
 {/snippet}
 
-<section class="fragments-board space-y-6">
+<section class="fragments-board space-y-5 sm:space-y-6">
+	<PhraseTracker />
+
 	<div class="surface-card hud-panel clip-corners p-5 sm:p-6" use:reveal>
 		<p class="section-eyebrow">
 			<span class="section-eyebrow__dot" aria-hidden="true"></span>
@@ -129,7 +152,8 @@
 	{:else}
 		{#if members.length > 0}
 			<div>
-				<h2 class="mb-3 font-display text-sm font-bold uppercase tracking-wider text-leveling-blue-light">
+				<h2 class="fragments-board__camp-title fragments-board__camp-title--communaute">
+					<span aria-hidden="true">◆</span>
 					Camp Communauté
 				</h2>
 				<div class="fragments-grid">
@@ -142,7 +166,8 @@
 
 		{#if staff.length > 0}
 			<div>
-				<h2 class="mb-3 font-display text-sm font-bold uppercase tracking-wider text-amber-300/90">
+				<h2 class="fragments-board__camp-title fragments-board__camp-title--staff">
+					<span aria-hidden="true">◇</span>
 					Camp Staff
 				</h2>
 				<div class="fragments-grid">
