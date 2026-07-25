@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import PhraseTracker from '$lib/components/PhraseTracker.svelte';
 	import {
 		CURRENT_PHASE_INDEX,
+		EVENT,
 		FRAGMENTS,
 		FRAGMENT_MODE_INTRO,
 		PHASES,
@@ -38,6 +40,8 @@
 	const members = $derived(waveFragments.filter((f) => f.camp === 'communaute'));
 	const staff = $derived(waveFragments.filter((f) => f.camp === 'staff'));
 
+	let focusedSlot = $state<number | null>(null);
+
 	function statusClass(status: FragmentStatus): string {
 		if (status === 'validated') return 'fragment-card--validated';
 		if (status === 'open') return 'fragment-card--open';
@@ -55,14 +59,51 @@
 		}
 		return { name: null, body: trimmed };
 	}
+
+	function cardId(fragment: FragmentQuest): string | undefined {
+		return fragment.wordSlot !== null ? `mot-${fragment.wordSlot}` : undefined;
+	}
+
+	function focusFromHash() {
+		const hash = window.location.hash.replace(/^#/, '');
+		const match = /^mot-(\d+)$/.exec(hash);
+		if (!match) return;
+
+		const slot = Number(match[1]);
+		focusedSlot = slot;
+		const el = document.getElementById(`mot-${slot}`);
+		if (!el) return;
+
+		el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		window.setTimeout(() => {
+			if (focusedSlot === slot) focusedSlot = null;
+		}, 2400);
+	}
+
+	onMount(() => {
+		focusFromHash();
+		window.addEventListener('hashchange', focusFromHash);
+		return () => window.removeEventListener('hashchange', focusFromHash);
+	});
 </script>
 
 {#snippet fragmentCard(fragment: FragmentQuest, index: number)}
 	{@const parts = enigmaParts(fragment.enigma)}
+	{@const id = cardId(fragment)}
 	<article
+		{id}
 		class="fragment-card surface-card {statusClass(fragment.status)}"
+		class:fragment-card--focus={focusedSlot !== null && fragment.wordSlot === focusedSlot}
+		class:fragment-card--validated-pulse={fragment.status === 'validated'}
 		use:reveal={{ delay: index * 60 }}
+		tabindex="-1"
 	>
+		{#if fragment.status === 'validated'}
+			<p class="fragment-card__system-log" role="status">
+				FRAGMENT_{fragment.wordSlot?.toString().padStart(2, '0') ?? '??'} · VALIDATED
+			</p>
+		{/if}
+
 		<header class="fragment-card__head">
 			<span class="fragment-card__quest">
 				<span class="fragment-card__quest-glyph" aria-hidden="true">◈</span>
@@ -126,7 +167,7 @@
 {/snippet}
 
 <section class="fragments-board space-y-5 sm:space-y-6">
-	<PhraseTracker />
+	<PhraseTracker showBoardLink={false} />
 
 	<div class="surface-card hud-panel clip-corners p-5 sm:p-6" use:reveal>
 		<p class="section-eyebrow">
@@ -153,8 +194,14 @@
 			<p class="font-display text-lg font-bold text-white">Aucun fragment publié pour l’instant</p>
 			<p class="mt-2 text-sm text-zinc-400">
 				Les porteurs Discord et leurs énigmes apparaîtront ici à l’ouverture de la vague
-				(samedi 12h).
+				(samedi 12h). En attendant, le journal vit sur le serveur.
 			</p>
+			<a href={EVENT.discordUrl} class="section-intro__link mt-5 justify-center" rel="noopener noreferrer" target="_blank">
+				Rejoindre le Discord
+				<svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+				</svg>
+			</a>
 		</div>
 	{:else}
 		{#if members.length > 0}

@@ -109,13 +109,13 @@ export const ENIGMA_SUMMARY = {
 export const CURRENT_PHASE_INDEX = 0;
 
 export const HEADER_NAV = [
-	{ href: '/regles', label: 'Règles' },
 	{ href: '/fragmentes', label: 'Fragmentés' },
+	{ href: '/soumettre', label: 'Soumettre' },
 	{ href: '/indices', label: 'Indices' },
+	{ href: '/regles', label: 'Règles' },
 	{ href: '/objectif-tiktok', label: 'TikTok' },
 	{ href: '/deroule', label: 'Déroulé' },
-	{ href: '/recompenses', label: 'Récompenses' },
-	{ href: '/soumettre', label: 'Soumettre' }
+	{ href: '/recompenses', label: 'Récompenses' }
 ] as const;
 
 export const SUBMIT_CRITERIA = [
@@ -152,22 +152,16 @@ export const PARTICIPATION_STEPS = [
 
 export const NAV_LINKS: NavLink[] = [
 	{
-		href: '/regles',
-		title: 'Règles',
-		description: 'Le cadre, les camps, les sanctions.',
-		icon: 'rules'
-	},
-	{
 		href: '/fragmentes',
 		title: 'Fragmentés',
-		description: 'Les porteurs, leurs énigmes, leur statut.',
+		description: 'Porteurs, énigmes publiques, validation.',
 		icon: 'fragments',
 		featured: true
 	},
 	{
 		href: '/indices',
 		title: 'Indices',
-		description: 'Tout ce qui a été révélé. Rien d’autre.',
+		description: 'Annonces staff & révélations TikTok (pas les énigmes).',
 		icon: 'clues'
 	},
 	{
@@ -175,6 +169,12 @@ export const NAV_LINKS: NavLink[] = [
 		title: 'Objectif TikTok',
 		description: 'Les vues débloquent des révélations.',
 		icon: 'tiktok'
+	},
+	{
+		href: '/regles',
+		title: 'Règles',
+		description: 'Le cadre, les camps, les sanctions.',
+		icon: 'rules'
 	},
 	{
 		href: '/deroule',

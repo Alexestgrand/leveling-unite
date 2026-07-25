@@ -990,6 +990,107 @@
 	color: rgba(161, 161, 170, 0.95);
 }
 
+.step-card__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-top: 0.85rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: var(--color-leveling-blue-light);
+	text-decoration: none;
+	transition: color 0.2s, gap 0.2s;
+}
+
+.step-card__link:hover {
+	color: var(--color-neon-blue);
+	gap: 0.5rem;
+}
+
+/* ── Player paths (jouer / découvrir) ── */
+.player-paths {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+	.player-paths {
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+}
+
+.player-path {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 1.15rem 1.2rem 1.25rem;
+	text-decoration: none;
+	color: inherit;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	transition:
+		transform 0.35s var(--ease-spring),
+		border-color 0.35s,
+		box-shadow 0.35s;
+}
+
+.player-path:hover {
+	transform: translateY(-3px);
+	border-color: rgba(70, 200, 255, 0.35);
+	box-shadow: 0 12px 32px rgba(59, 158, 255, 0.12);
+}
+
+.player-path--play {
+	border-color: rgba(70, 200, 255, 0.22);
+	background: linear-gradient(145deg, rgba(70, 200, 255, 0.08), rgba(15, 17, 24, 0.55));
+}
+
+.player-path--discover {
+	border-color: rgba(255, 255, 255, 0.08);
+}
+
+.player-path__eyebrow {
+	margin: 0;
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-accent-cyan);
+}
+
+.player-path--discover .player-path__eyebrow {
+	color: rgba(161, 170, 190, 0.95);
+}
+
+.player-path__title {
+	margin: 0.45rem 0 0;
+	font-family: var(--font-display);
+	font-size: 1.05rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: #fff;
+}
+
+.player-path__desc {
+	margin: 0.45rem 0 0;
+	flex: 1;
+	font-size: 0.85rem;
+	line-height: 1.5;
+	color: rgba(161, 170, 190, 0.95);
+}
+
+.player-path__cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-top: 1rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: var(--color-leveling-blue-light);
+}
+
 /* ── Nav grid (varied layout) ── */
 .nav-grid {
 	display: grid;
@@ -1378,6 +1479,52 @@
 
 .fragment-card--validated {
 	border-color: rgba(52, 211, 153, 0.35);
+}
+
+.fragment-card--validated-pulse {
+	animation: fragment-validated-glow 2.2s ease-in-out infinite;
+}
+
+@keyframes fragment-validated-glow {
+	0%,
+	100% {
+		box-shadow: 0 0 0 rgba(52, 211, 153, 0);
+	}
+	50% {
+		box-shadow: 0 0 22px rgba(52, 211, 153, 0.22);
+	}
+}
+
+.fragment-card--focus {
+	outline: 2px solid var(--color-accent-cyan);
+	outline-offset: 3px;
+	animation: fragment-focus-flash 1.8s var(--ease-smooth) both;
+}
+
+@keyframes fragment-focus-flash {
+	0% {
+		transform: scale(0.985);
+		box-shadow: 0 0 0 rgba(70, 200, 255, 0);
+	}
+	40% {
+		transform: scale(1.015);
+		box-shadow: 0 0 28px rgba(70, 200, 255, 0.35);
+	}
+	100% {
+		transform: scale(1);
+		box-shadow: 0 0 12px rgba(70, 200, 255, 0.15);
+	}
+}
+
+.fragment-card__system-log {
+	margin: 0 0 0.65rem;
+	font-family: var(--font-display);
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #6ee7b7;
+	text-shadow: 0 0 12px rgba(52, 211, 153, 0.45);
 }
 
 .fragment-card--upcoming {
@@ -2363,10 +2510,17 @@
 	border: 1px solid rgba(255, 255, 255, 0.08);
 	border-radius: 0.55rem;
 	background: rgba(255, 255, 255, 0.02);
+	text-decoration: none;
+	color: inherit;
 	transition:
 		transform 0.3s var(--ease-smooth),
 		border-color 0.3s,
 		box-shadow 0.3s;
+}
+
+.phrase-slot--link:focus-visible {
+	outline: 2px solid var(--color-accent-cyan);
+	outline-offset: 2px;
 }
 
 .phrase-slot:hover {
@@ -2428,6 +2582,25 @@
 	background: rgba(52, 211, 153, 0.08);
 }
 
+.phrase-slot--celebrate {
+	animation: slot-celebrate 1.4s var(--ease-smooth) both;
+}
+
+@keyframes slot-celebrate {
+	0% {
+		transform: scale(0.92);
+		box-shadow: 0 0 0 rgba(52, 211, 153, 0);
+	}
+	45% {
+		transform: scale(1.06);
+		box-shadow: 0 0 18px rgba(52, 211, 153, 0.55);
+	}
+	100% {
+		transform: scale(1);
+		box-shadow: 0 0 8px rgba(52, 211, 153, 0.25);
+	}
+}
+
 .phrase-slot--validated .phrase-slot__glyph {
 	color: #6ee7b7;
 	text-shadow: 0 0 10px rgba(52, 211, 153, 0.55);
@@ -2479,6 +2652,23 @@
 
 .phrase-board__legend-item--locked .phrase-board__legend-dot {
 	background: rgba(113, 122, 142, 0.6);
+}
+
+.phrase-board__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	margin-top: 0.95rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: var(--color-leveling-blue-light);
+	text-decoration: none;
+	transition: gap 0.2s, color 0.2s;
+}
+
+.phrase-board__link:hover {
+	gap: 0.55rem;
+	color: var(--color-neon-blue);
 }
 
 /* ── Fragment cards — quêtes ── */
@@ -2820,6 +3010,9 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.phrase-slot--open,
+	.phrase-slot--celebrate,
+	.fragment-card--validated-pulse,
+	.fragment-card--focus,
 	.fragment-card__status--open::before {
 		animation: none !important;
 	}

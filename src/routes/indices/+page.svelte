@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Indices"
 	title="Indices"
-	subtitle="Tout ce qui a été révélé officiellement. Le reste n'est que théorie."
+	subtitle="Annonces staff et révélations TikTok uniquement. Les énigmes des porteurs sont sur Fragmentés."
 >
 	<CluesGrid />
 </PageShell>

@@ -87,8 +87,8 @@
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
 		description="La vague, les essais, les vues, les indices — en direct."
-		href="/concept"
-		linkLabel="Comprendre le concept"
+		href="/fragmentes"
+		linkLabel="Voir les quêtes"
 	/>
 
 	<div class="stat-grid">

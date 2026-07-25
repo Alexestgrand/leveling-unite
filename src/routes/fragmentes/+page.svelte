@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Fragmentés"
 	title="Fragmentés"
-	subtitle="Un porteur par mot, un essai par porteur. Tout le monde peut chercher."
+	subtitle="Quêtes en cours : un porteur Discord, une énigme publique, un essai. Les indices méta validés apparaissent ici — pas sur la page Indices."
 >
 	<FragmentsBoard />
 </PageShell>

@@ -10,10 +10,21 @@
 		fragment: FragmentQuest | null;
 	}
 
+	interface Props {
+		/** Lien « voir les énigmes » sous le board (accueil). */
+		showBoardLink?: boolean;
+	}
+
+	let { showBoardLink = true }: Props = $props();
+
 	const slots: Slot[] = Array.from({ length: EXPECTED_PHRASE_WORDS }, (_, i) => {
 		const n = i + 1;
 		const fragment = FRAGMENTS.find((f) => f.wordSlot === n) ?? null;
-		const status: SlotStatus = fragment ? (fragment.status === 'upcoming' ? 'locked' : fragment.status) : 'locked';
+		const status: SlotStatus = fragment
+			? fragment.status === 'upcoming'
+				? 'locked'
+				: fragment.status
+			: 'locked';
 		return { n, status, fragment };
 	});
 
@@ -29,10 +40,16 @@
 	};
 
 	function slotTitle(slot: Slot): string {
-		if (slot.status === 'open') return `Mot ${slot.n} — en jeu, porté par @${slot.fragment?.discordUsername}`;
-		if (slot.status === 'validated') return `Mot ${slot.n} — sécurisé`;
-		if (slot.status === 'lost') return `Mot ${slot.n} — perdu (rattrapage via TikTok)`;
-		return `Mot ${slot.n} — verrouillé`;
+		if (slot.status === 'open')
+			return `Mot ${slot.n} — en jeu, porté par @${slot.fragment?.discordUsername}. Ouvrir la quête.`;
+		if (slot.status === 'validated') return `Mot ${slot.n} — sécurisé. Voir le détail.`;
+		if (slot.status === 'lost') return `Mot ${slot.n} — perdu (rattrapage via TikTok). Voir le détail.`;
+		if (slot.fragment) return `Mot ${slot.n} — verrouillé. Voir la fiche.`;
+		return `Mot ${slot.n} — verrouillé. Voir les Fragmentés.`;
+	}
+
+	function slotHref(slot: Slot): string {
+		return slot.fragment ? `/fragmentes#mot-${slot.n}` : '/fragmentes';
 	}
 </script>
 
@@ -47,17 +64,18 @@
 		</p>
 	</div>
 
-	<div class="phrase-board__slots" role="list" aria-label="Progression de la phrase secrète">
+	<div class="phrase-board__slots" aria-label="Progression de la phrase secrète">
 		{#each slots as slot (slot.n)}
-			<div
-				class="phrase-slot phrase-slot--{slot.status}"
-				role="listitem"
+			<a
+				href={slotHref(slot)}
+				class="phrase-slot phrase-slot--{slot.status} phrase-slot--link"
+				class:phrase-slot--celebrate={slot.status === 'validated'}
 				title={slotTitle(slot)}
+				aria-label={slotTitle(slot)}
 			>
 				<span class="phrase-slot__num">{slot.n}</span>
 				<span class="phrase-slot__glyph" aria-hidden="true">{glyphs[slot.status]}</span>
-				<span class="sr-only">{slotTitle(slot)}</span>
-			</div>
+			</a>
 		{/each}
 	</div>
 
@@ -79,4 +97,13 @@
 			{EXPECTED_PHRASE_WORDS - validatedCount - openCount - lostCount} verrouillés
 		</span>
 	</div>
+
+	{#if showBoardLink}
+		<a href="/fragmentes" class="phrase-board__link">
+			Voir les énigmes en cours
+			<svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+			</svg>
+		</a>
+	{/if}
 </div>
