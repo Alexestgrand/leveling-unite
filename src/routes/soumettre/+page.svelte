@@ -17,6 +17,7 @@
 	import {
 		EXPECTED_PHRASE_WORDS,
 		MAX_SUBMIT_ATTEMPTS,
+		RATE_LIMIT_WINDOW_HOURS,
 		SUBMIT_CRITERIA,
 		SUBMIT_FOOTNOTE
 	} from '$lib/data/mock';
@@ -292,11 +293,16 @@
 		>
 			<h2 class="font-display text-lg font-bold text-amber-300">Limite atteinte</h2>
 			<p class="mt-3 text-sm text-zinc-400">
-				{statusMessage || 'Vous avez utilisé vos 2 essais pour les prochaines 24 heures. Revenez plus tard.'}
+				{statusMessage ||
+					`Tes ${MAX_SUBMIT_ATTEMPTS} essais sont épuisés pour les prochaines ${RATE_LIMIT_WINDOW_HOURS} h. Le compteur se réinitialise automatiquement — en attendant, aide les Fragmentés.`}
 			</p>
 			<p class="mt-4 text-xs uppercase tracking-wider text-zinc-500">
 				Essais restants : 0 / {MAX_SUBMIT_ATTEMPTS}
 			</p>
+			<div class="mt-6 flex flex-wrap gap-3">
+				<a href="/fragmentes" class="btn-pill btn-pill--primary">Voir les quêtes</a>
+				<a href="/" class="btn-pill">Retour à l’accueil</a>
+			</div>
 		</div>
 	{:else}
 		<div class="space-y-4 sm:space-y-6">

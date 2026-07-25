@@ -2,7 +2,7 @@
 	import { reveal } from '$lib/actions/reveal';
 	import SectionIntro from '$lib/components/SectionIntro.svelte';
 	import { ANNOUNCEMENTS, EVENT, type AnnouncementTag } from '$lib/data/mock';
-	import { formatAnnouncementDate } from '$lib/utils/format';
+	import { formatAnnouncementDate, formatRelativeDate } from '$lib/utils/format';
 
 	interface Props {
 		/** Nombre max d'annonces affichées (accueil). */
@@ -66,8 +66,12 @@
 							class:timeline-item__card--urgent={announcement.tag === 'URGENT'}
 						>
 							<div class="mb-3 flex flex-wrap items-center gap-3">
-								<time datetime={announcement.date} class="text-xs font-semibold text-zinc-500 md:text-sm">
-									{formatAnnouncementDate(announcement.date)}
+								<time
+									datetime={announcement.date}
+									class="text-xs font-semibold text-zinc-500 md:text-sm"
+									title={formatAnnouncementDate(announcement.date)}
+								>
+									{formatRelativeDate(announcement.date)}
 								</time>
 								<span class="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider md:text-xs {tagStyles[announcement.tag]}">
 									{announcement.tag}

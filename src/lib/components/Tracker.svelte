@@ -40,6 +40,7 @@
 				<span class="tracker__goal">{formatViews(goal)}</span>
 			</p>
 			<p class="tracker__sub">vues cumulées via TikTok</p>
+			<p class="tracker__updated">{TIKTOK_TRACKER.updatedAtLabel}</p>
 		</div>
 		<div class="tracker__percent">
 			<span class="tracker__percent-value">{progress.toFixed(1)}%</span>

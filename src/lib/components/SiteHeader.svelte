@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { EVENT, HEADER_NAV, PHASES, CURRENT_PHASE_INDEX } from '$lib/data/mock';
+	import { tour } from '$lib/tour/tour.svelte';
 
 	let menuOpen = $state(false);
 
@@ -12,6 +14,14 @@
 
 	function closeMenu() {
 		menuOpen = false;
+	}
+
+	async function openGuide() {
+		closeMenu();
+		if ($page.url.pathname !== '/') {
+			await goto('/');
+		}
+		tour.start();
 	}
 </script>
 
@@ -38,6 +48,15 @@
 		</nav>
 
 		<div class="site-header__actions">
+			<button
+				type="button"
+				class="site-header__guide"
+				onclick={openGuide}
+				title="Comment ça marche ?"
+			>
+				Guide
+			</button>
+
 			<span class="site-header__phase" title={currentPhase?.name ?? 'Événement à venir'}>
 				<span class="site-header__phase-dot" aria-hidden="true"></span>
 				<span class="hidden sm:inline">{currentPhase?.name ?? 'À venir'}</span>
@@ -65,6 +84,9 @@
 
 	{#if menuOpen}
 		<nav id="mobile-nav" class="site-header__mobile" aria-label="Navigation mobile">
+			<button type="button" class="site-header__mobile-link site-header__mobile-guide" onclick={openGuide}>
+				Comment ça marche ?
+			</button>
 			{#each HEADER_NAV as link}
 				<a
 					href={link.href}
