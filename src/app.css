@@ -2640,6 +2640,25 @@
 	overflow-wrap: anywhere;
 }
 
+.fragment-card__note {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.45rem;
+	margin: 0.6rem 0 0;
+	padding: 0.5rem 0.65rem;
+	border: 1px dashed rgba(251, 191, 36, 0.35);
+	border-radius: 0.5rem;
+	background: rgba(251, 191, 36, 0.05);
+	font-size: 0.72rem;
+	line-height: 1.5;
+	color: rgba(253, 230, 138, 0.92);
+}
+
+.fragment-card__note span {
+	flex-shrink: 0;
+	color: #fcd34d;
+}
+
 .fragment-card__enigma-name {
 	margin: 0;
 	display: inline-block;

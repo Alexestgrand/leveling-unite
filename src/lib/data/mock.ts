@@ -51,6 +51,8 @@ export interface FragmentQuest {
 	enigma: string;
 	/** Indice meta après validation MJ (jamais le mot en clair). */
 	metaHint?: string;
+	/** Note de règle spécifique à ce porteur (affichée sous le pseudo). */
+	note?: string;
 }
 
 export interface Phase {
@@ -258,6 +260,7 @@ Date limite : 28/07 à 12h00.`
 		discordUsername: 'asterion_45',
 		camp: 'staff',
 		status: 'open',
+		note: 'Seul Fragmenté Staff de cette vague : il peut valider son mot en solo, sans confirmations.',
 		enigma: `LE CERCLE
 
 BGTSNMR

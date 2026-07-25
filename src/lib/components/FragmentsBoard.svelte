@@ -86,6 +86,13 @@
 			</span>
 		</p>
 
+		{#if fragment.note}
+			<p class="fragment-card__note">
+				<span aria-hidden="true">✦</span>
+				{fragment.note}
+			</p>
+		{/if}
+
 		{#if fragment.status === 'upcoming' && !fragment.enigma.trim()}
 			<p class="fragment-card__enigma fragment-card__enigma--empty">Énigme à publier…</p>
 		{:else}
