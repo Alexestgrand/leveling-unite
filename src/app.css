@@ -1348,6 +1348,30 @@
 	color: rgba(82, 82, 91, 0.8);
 }
 
+.clue-file__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-top: 0.85rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	color: var(--color-leveling-blue-light);
+	text-decoration: none;
+	transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.clue-file__link:hover {
+	color: #7dd3fc;
+	text-decoration: underline;
+}
+
+.clue-file__link:focus-visible {
+	outline: 2px solid rgba(0, 153, 255, 0.55);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
 .clue-file__corners span {
 	position: absolute;
 	width: 8px;

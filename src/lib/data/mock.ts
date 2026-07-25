@@ -24,6 +24,8 @@ export interface PublicIndex {
 	source: 'annonce' | 'tiktok';
 	title: string;
 	content: string;
+	/** Lien externe cliquable (TikTok, annonce, etc.). */
+	url?: string;
 }
 
 export interface NavLink {
@@ -433,7 +435,8 @@ export const PUBLIC_INDICES: PublicIndex[] = [
 		source: 'tiktok',
 		title: 'Transmission TikTok — Signal intercepté',
 		content:
-			'Une séquence a été diffusée sur le compte officiel. Elle ne dit pas tout — mais elle dit assez.\nhttps://vm.tiktok.com/ZN8JxQc4e/'
+			'Une séquence a été diffusée sur le compte officiel. Elle ne dit pas tout — mais elle dit assez.',
+		url: 'https://vm.tiktok.com/ZN8JxQc4e/'
 	}
 ];
 

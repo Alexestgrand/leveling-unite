@@ -62,6 +62,17 @@
 
 					<h3 class="clue-file__title">{index.title}</h3>
 					<p class="clue-file__content">{index.content}</p>
+					{#if index.url}
+						<a
+							class="clue-file__link"
+							href={index.url}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Voir la transmission
+							<span aria-hidden="true">↗</span>
+						</a>
+					{/if}
 
 					<div class="clue-file__corners" aria-hidden="true">
 						<span></span><span></span><span></span><span></span>
