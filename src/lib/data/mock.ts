@@ -79,12 +79,12 @@ export const EVENT = {
 	title: 'LEVELING: UNITE',
 	subtitle: 'The Fragments',
 	tagline: 'Quinze mots. Deux camps. Personne ne gagne seul.',
-	/** Ouverture officielle — samedi 25 juillet 2026 à 12h (heure de Paris). */
-	startDate: new Date('2026-07-25T12:00:00+02:00'),
-	startDateLabel: '25 juillet 2026 · 12h',
+	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */
+	startDate: new Date('2026-07-25T13:00:00+02:00'),
+	startDateLabel: '25 juillet 2026 · 13h',
 	/** Fin = ouverture + 20 jours (4 vagues de 5 jours). */
-	endDate: new Date('2026-08-14T12:00:00+02:00'),
-	endDateLabel: '14 août 2026 · 12h',
+	endDate: new Date('2026-08-14T13:00:00+02:00'),
+	endDateLabel: '14 août 2026 · 13h',
 	duration: '20 jours (4 vagues de 5 fragments)',
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.gg/kNnVZWhfCe'
@@ -232,7 +232,7 @@ Elle est sur le serveur. Un salon porte un nom : celui où l'enquête garde sa m
 
 Ce nombre est ta clé.
 
-Date limite : 28/07 à 12h00.`
+Date limite : 28/07 à 13h00.`
 	},
 	{
 		id: 'w1-m2',
@@ -251,7 +251,7 @@ Prends une lettre sur quatre, et tu tiendras le premier fil. Recommence un cran 
 
 Le point marque une fin.
 
-Date limite : 28/07 à 12h00.`
+Date limite : 28/07 à 13h00.`
 	},
 	{
 		id: 'w1-m3',
@@ -272,7 +272,7 @@ Tout a glissé — mais pas d'autant. Chaque ligne avance d'un pas de plus que c
 
 Le premier pas t'est donné par le jour où cette énigme a été publiée. Ensuite, tourne.
 
-Date limite : 28/07 à 12h00.`
+Date limite : 28/07 à 13h00.`
 	},
 	{
 		id: 'w1-m4',
@@ -294,7 +294,7 @@ Elle est sur le serveur. Un salon porte un nom : celui où l'enquête garde sa m
 
 Ce nombre est ta clé.
 
-Date limite : 28/07 à 12h00.`
+Date limite : 28/07 à 13h00.`
 	},
 	{
 		id: 'w1-m5',
@@ -313,7 +313,7 @@ Prends une lettre sur quatre, et tu tiendras le premier fil. Recommence un cran 
 
 Le point marque une fin.
 
-Date limite : 28/07 à 12h00.`
+Date limite : 28/07 à 13h00.`
 	}
 ];
 
