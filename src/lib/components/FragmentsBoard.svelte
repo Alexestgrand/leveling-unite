@@ -172,13 +172,26 @@
 		{#if fragment.status === 'upcoming' && !fragment.enigma.trim()}
 			<p class="fragment-card__enigma fragment-card__enigma--empty">Énigme à publier…</p>
 		{:else}
-			<div class="fragment-card__enigma">
-				{#if parts.name}
-					<p class="fragment-card__enigma-name">{parts.name}</p>
-				{:else}
-					<p class="fragment-card__enigma-label">Énigme</p>
+			<div
+				class="fragment-card__enigma-wrap"
+				class:fragment-card__enigma-wrap--secured={fragment.status === 'validated'}
+			>
+				<div class="fragment-card__enigma">
+					{#if parts.name}
+						<p class="fragment-card__enigma-name">{parts.name}</p>
+					{:else}
+						<p class="fragment-card__enigma-label">Énigme</p>
+					{/if}
+					<p class="fragment-card__enigma-text">{parts.body}</p>
+				</div>
+				{#if fragment.status === 'validated'}
+					<div class="fragment-card__secured" aria-hidden="true">
+						<svg class="fragment-card__secured-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+						</svg>
+						<span class="fragment-card__secured-label">Mot sécurisé</span>
+					</div>
 				{/if}
-				<p class="fragment-card__enigma-text">{parts.body}</p>
 			</div>
 		{/if}
 
@@ -226,7 +239,8 @@
 		<p class="mt-4 text-xs text-zinc-500">
 			Validation en MP à <span class="font-semibold text-zinc-300">@so_hakai</span> (organisateur) —
 			<code class="text-zinc-400">FRAGMENT [n°] / [mot] / confirmé par Pseudo1 + Pseudo2</code>
-			— les confirmateurs écrivent aussi de leur côté.
+			— <span class="text-zinc-400">Pseudo1 et Pseudo2 doivent être 2 autres Fragmentés du même camp</span>
+			(pas des Enquêteurs). Ils écrivent aussi de leur côté.
 		</p>
 	</div>
 

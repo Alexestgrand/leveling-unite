@@ -36,7 +36,7 @@ Tous les 5 jours, **5 Fragmentés** sont désignés **publiquement** par camp (p
 
 1. leur **énigme est publiée** sur [/fragmentes](https://leveling-unite.vercel.app/fragmentes) ;
 2. **toute la communauté** peut aider à résoudre ;
-3. **seul le Fragmenté** envoie la solution à **@so_hakai** en MP — **un seul essai, définitif**, confirmé au préalable par **2 autres Fragmentés** du camp ;
+3. **seul le Fragmenté** envoie la solution à **@so_hakai** en MP — **un seul essai, définitif**, confirmé au préalable par **exactement 2 autres Fragmentés** du camp (pas les Enquêteurs) ;
 4. essai raté ou **72 h** dépassées : le mot est **perdu** — il ne sera révélé (aux deux camps) qu'au **prochain palier TikTok** atteint ;
 5. le **mot n'est jamais publié en clair** ; des indices meta peuvent l'être après validation ;
 6. en fin de vague, de **nouveaux** Fragmentés prennent le relais (rotation).
@@ -129,7 +129,7 @@ Pour les votes **Top Fragmenté** et **Top Enquêteur** : l'organisateur propose
 - **Pas de mot en clair** issu d'une énigme Fragmenté dans les salons publics.
 - **Pas de capture d'écran** de messages privés contenant des fragments.
 - **Pas de multi-comptes**, pas de collusion entre camps.
-- **1 essai unique par Fragmenté** pour valider son mot (2 confirmations de pairs requises, 72 h max).
+- **1 essai unique par Fragmenté** pour valider son mot (**exactement 2 confirmations Fragmentés** du camp, 72 h max).
 - **2 soumissions / 24 h** sur le site pour la phrase finale.
 - En cas de **fuite** : le fragment est compromis, un indice de remplacement est publié, le fautif peut être exclu.
 - L'**organisateur** tranche en dernier ressort.

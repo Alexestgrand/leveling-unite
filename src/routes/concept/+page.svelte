@@ -28,8 +28,8 @@
 			</li>
 			<li>
 				<strong>{ENIGMA_SUMMARY.fragmentAttempts} essai unique</strong> par Fragmenté pour valider
-				son mot — confirmé par {ENIGMA_SUMMARY.fragmentConfirmations} pairs, sous
-				{ENIGMA_SUMMARY.fragmentDeadlineHours} h.
+				son mot — confirmé par exactement {ENIGMA_SUMMARY.fragmentConfirmations} autres Fragmentés
+				du camp (pas les Enquêteurs), sous {ENIGMA_SUMMARY.fragmentDeadlineHours} h.
 			</li>
 			<li>
 				<strong>{ENIGMA_SUMMARY.submitAttempts} soumissions</strong> maximum par
