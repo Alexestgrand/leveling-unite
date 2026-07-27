@@ -3852,3 +3852,249 @@
 	}
 }
 
+
+/* ----------- OMEN — popup rouge + FAB tête de mort ----------- */
+
+.omen-fab {
+	position: fixed;
+	top: max(4.6rem, calc(env(safe-area-inset-top) + 4.1rem));
+	right: max(0.85rem, env(safe-area-inset-right));
+	z-index: 95;
+	display: grid;
+	place-items: center;
+	width: 2.65rem;
+	height: 2.65rem;
+	border: 1px solid rgba(248, 113, 113, 0.55);
+	border-radius: 0.85rem;
+	background: linear-gradient(145deg, rgba(127, 29, 29, 0.92), rgba(28, 8, 8, 0.95));
+	color: #fecaca;
+	box-shadow:
+		0 0 0 1px rgba(0, 0, 0, 0.45),
+		0 8px 24px rgba(127, 29, 29, 0.45),
+		0 0 18px rgba(220, 38, 38, 0.25);
+	cursor: pointer;
+	transition:
+		transform 0.25s var(--ease-spring, cubic-bezier(0.22, 1, 0.36, 1)),
+		border-color 0.25s,
+		box-shadow 0.25s;
+}
+
+.omen-fab:hover {
+	transform: translateY(-2px) scale(1.04);
+	border-color: rgba(252, 165, 165, 0.85);
+	color: #fff1f2;
+	box-shadow:
+		0 0 0 1px rgba(0, 0, 0, 0.45),
+		0 10px 28px rgba(185, 28, 28, 0.55),
+		0 0 26px rgba(239, 68, 68, 0.4);
+}
+
+.omen-fab:focus-visible {
+	outline: 2px solid rgba(248, 113, 113, 0.8);
+	outline-offset: 3px;
+}
+
+.omen-fab__skull {
+	width: 1.45rem;
+	height: 1.45rem;
+	position: relative;
+	z-index: 1;
+	filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.55));
+}
+
+.omen-fab__pulse {
+	position: absolute;
+	inset: -3px;
+	border-radius: inherit;
+	border: 1px solid rgba(239, 68, 68, 0.55);
+	animation: omen-fab-pulse 2.2s ease-out infinite;
+	pointer-events: none;
+}
+
+.omen-fab--alert .omen-fab__pulse {
+	animation-duration: 1.1s;
+}
+
+@keyframes omen-fab-pulse {
+	0% {
+		opacity: 0.85;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(1.35);
+	}
+}
+
+.omen-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: grid;
+	place-items: center;
+	padding: 1.25rem;
+	background:
+		radial-gradient(ellipse at center, rgba(127, 29, 29, 0.35), transparent 55%),
+		rgba(5, 2, 2, 0.78);
+	backdrop-filter: blur(8px);
+}
+
+.omen-modal {
+	position: relative;
+	width: min(100%, 26rem);
+	padding: 1.75rem 1.4rem 1.5rem;
+	border: 1px solid rgba(248, 113, 113, 0.45);
+	border-radius: 1.1rem;
+	background:
+		linear-gradient(165deg, rgba(90, 18, 18, 0.95), rgba(18, 6, 6, 0.98) 55%, rgba(10, 4, 4, 0.98));
+	box-shadow:
+		0 0 0 1px rgba(127, 29, 29, 0.4),
+		0 24px 60px rgba(0, 0, 0, 0.55),
+		0 0 40px rgba(185, 28, 28, 0.28);
+	overflow: hidden;
+	text-align: center;
+}
+
+.omen-modal__glow {
+	position: absolute;
+	inset: -40% -20% auto;
+	height: 70%;
+	background: radial-gradient(circle, rgba(239, 68, 68, 0.28), transparent 65%);
+	pointer-events: none;
+}
+
+.omen-modal__scan {
+	position: absolute;
+	inset: 0;
+	background: repeating-linear-gradient(
+		180deg,
+		transparent,
+		transparent 3px,
+		rgba(255, 80, 80, 0.03) 3px,
+		rgba(255, 80, 80, 0.03) 4px
+	);
+	pointer-events: none;
+	animation: omen-scan 6s linear infinite;
+}
+
+@keyframes omen-scan {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: 0 40px;
+	}
+}
+
+.omen-modal__badge {
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 4.5rem;
+	height: 4.5rem;
+	margin: 0 auto 1rem;
+	border-radius: 1.15rem;
+	border: 1px solid rgba(252, 165, 165, 0.45);
+	background: linear-gradient(145deg, rgba(185, 28, 28, 0.55), rgba(40, 8, 8, 0.9));
+	box-shadow: 0 0 28px rgba(220, 38, 38, 0.4);
+	animation: omen-skull-bob 2.8s ease-in-out infinite;
+}
+
+.omen-modal__skull {
+	width: 2.6rem;
+	height: 2.6rem;
+	color: #fecaca;
+	filter: drop-shadow(0 0 10px rgba(248, 113, 113, 0.7));
+}
+
+@keyframes omen-skull-bob {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-4px);
+	}
+}
+
+.omen-modal__eyebrow {
+	position: relative;
+	margin: 0;
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: rgba(252, 165, 165, 0.8);
+}
+
+.omen-modal__title {
+	position: relative;
+	margin: 0.65rem 0 0;
+	font-family: var(--font-display);
+	font-size: clamp(1.55rem, 5vw, 2rem);
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	line-height: 1.15;
+	color: #fff1f2;
+	text-shadow: 0 0 24px rgba(239, 68, 68, 0.45);
+}
+
+.omen-modal__line {
+	position: relative;
+	margin: 0.75rem 0 0;
+	font-size: 1.05rem;
+	font-weight: 600;
+	line-height: 1.4;
+	color: #fca5a5;
+}
+
+.omen-modal__cta {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
+	margin-top: 1.35rem;
+	min-height: 2.75rem;
+	padding: 0.65rem 1.25rem;
+	border: 1px solid rgba(252, 165, 165, 0.55);
+	border-radius: 999px;
+	background: linear-gradient(135deg, rgba(185, 28, 28, 0.95), rgba(127, 29, 29, 0.9));
+	color: #fff1f2;
+	font-size: 0.88rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	cursor: pointer;
+	box-shadow: 0 0 22px rgba(220, 38, 38, 0.35);
+	transition:
+		transform 0.2s ease,
+		filter 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.omen-modal__cta:hover {
+	transform: translateY(-1px);
+	filter: brightness(1.08);
+	box-shadow: 0 0 28px rgba(239, 68, 68, 0.5);
+}
+
+.omen-modal__cta:focus-visible {
+	outline: 2px solid rgba(252, 165, 165, 0.85);
+	outline-offset: 3px;
+}
+
+.omen-modal__hint {
+	position: relative;
+	margin: 0.9rem 0 0;
+	font-size: 0.7rem;
+	line-height: 1.4;
+	color: rgba(252, 165, 165, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.omen-fab__pulse,
+	.omen-modal__badge,
+	.omen-modal__scan {
+		animation: none !important;
+	}
+}
