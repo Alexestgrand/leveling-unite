@@ -95,6 +95,14 @@ export const EVENT = {
 	discordUrl: 'https://discord.com/invite/appleveling'
 };
 
+/** Deadline ISO par vague (validation des mots). */
+export const WAVE_DEADLINES: Record<number, string> = {
+	1: '2026-07-28T13:00:00+02:00'
+};
+
+/** Fenêtre avant échéance pendant laquelle les cartes « En cours » clignotent. */
+export const DEADLINE_URGENCY_HOURS = 48;
+
 export const ENIGMA_SUMMARY = {
 	phraseWords: 15,
 	fragmentsPerWave: 5,

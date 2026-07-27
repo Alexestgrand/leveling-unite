@@ -4,10 +4,12 @@
 	import PhraseTracker from '$lib/components/PhraseTracker.svelte';
 	import {
 		CURRENT_PHASE_INDEX,
+		DEADLINE_URGENCY_HOURS,
 		EVENT,
 		FRAGMENTS,
 		FRAGMENT_MODE_INTRO,
 		PHASES,
+		WAVE_DEADLINES,
 		type FragmentCamp,
 		type FragmentQuest,
 		type FragmentStatus
@@ -27,6 +29,27 @@
 
 	const currentWave = CURRENT_PHASE_INDEX >= 0 ? CURRENT_PHASE_INDEX + 1 : 1;
 	const waveName = PHASES[currentWave - 1]?.name ?? `Vague ${currentWave}`;
+
+	let nowMs = $state(Date.now());
+
+	const waveDeadlineLabel = $derived.by(() => {
+		const iso = WAVE_DEADLINES[currentWave];
+		if (!iso) return null;
+		return new Intl.DateTimeFormat('fr-FR', {
+			day: 'numeric',
+			month: 'short',
+			hour: '2-digit',
+			minute: '2-digit'
+		}).format(new Date(iso));
+	});
+
+	const deadlineUrgent = $derived.by(() => {
+		const iso = WAVE_DEADLINES[currentWave];
+		if (!iso) return false;
+		const end = new Date(iso).getTime();
+		const windowMs = DEADLINE_URGENCY_HOURS * 60 * 60 * 1000;
+		return nowMs >= end - windowMs;
+	});
 
 	const waveFragments = $derived(
 		FRAGMENTS.filter((f) => f.wave === currentWave).sort((a, b) => {
@@ -83,18 +106,26 @@
 	onMount(() => {
 		focusFromHash();
 		window.addEventListener('hashchange', focusFromHash);
-		return () => window.removeEventListener('hashchange', focusFromHash);
+		const tickId = window.setInterval(() => {
+			nowMs = Date.now();
+		}, 60_000);
+		return () => {
+			window.removeEventListener('hashchange', focusFromHash);
+			window.clearInterval(tickId);
+		};
 	});
 </script>
 
 {#snippet fragmentCard(fragment: FragmentQuest, index: number)}
 	{@const parts = enigmaParts(fragment.enigma)}
 	{@const id = cardId(fragment)}
+	{@const urgent = deadlineUrgent && fragment.status === 'open'}
 	<article
 		{id}
 		class="fragment-card surface-card {statusClass(fragment.status)}"
 		class:fragment-card--focus={focusedSlot !== null && fragment.wordSlot === focusedSlot}
 		class:fragment-card--validated-pulse={fragment.status === 'validated'}
+		class:fragment-card--deadline-urgent={urgent}
 		data-tour={index === 0 ? 'tour-porteur' : undefined}
 		use:reveal={{ delay: index * 60 }}
 		tabindex="-1"
@@ -113,8 +144,11 @@
 					· Mot {fragment.wordSlot}/15
 				{/if}
 			</span>
-			<span class="fragment-card__status fragment-card__status--{fragment.status}">
-				{statusLabel[fragment.status]}
+			<span
+				class="fragment-card__status fragment-card__status--{fragment.status}"
+				class:fragment-card__status--urgent={urgent}
+			>
+				{urgent ? 'Échéance proche' : statusLabel[fragment.status]}
 			</span>
 		</header>
 
@@ -183,6 +217,12 @@
 				</li>
 			{/each}
 		</ul>
+		{#if deadlineUrgent && waveDeadlineLabel}
+			<p class="fragments-board__deadline-alert" role="status">
+				<span aria-hidden="true">⚠</span>
+				Deadline Vague {currentWave} : {waveDeadlineLabel} — les quêtes encore ouvertes clignotent.
+			</p>
+		{/if}
 		<p class="mt-4 text-xs text-zinc-500">
 			Validation en MP à <span class="font-semibold text-zinc-300">@so_hakai</span> (organisateur) —
 			<code class="text-zinc-400">FRAGMENT [n°] / [mot] / confirmé par Pseudo1 + Pseudo2</code>
