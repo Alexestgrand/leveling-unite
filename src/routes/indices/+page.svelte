@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Indices"
 	title="Indices"
-	subtitle="Annonces staff et révélations TikTok uniquement. Les énigmes des porteurs sont sur Fragmentés."
+	subtitle="Chaque signal officiel, dans l’ordre. Le journal n’annonce que les envois — le détail est ici."
 >
 	<div data-tour="tour-indices">
 		<CluesGrid />

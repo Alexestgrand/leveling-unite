@@ -78,6 +78,15 @@
 								</span>
 							</div>
 							<p class="text-sm leading-relaxed text-zinc-200 md:text-base">{announcement.content}</p>
+							{#if announcement.href}
+								<a
+									href={announcement.href}
+									class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-leveling-blue-light transition hover:text-sky-300"
+								>
+									{announcement.linkLabel ?? 'Voir plus'}
+									<span aria-hidden="true">→</span>
+								</a>
+							{/if}
 						</div>
 					</article>
 				{/each}

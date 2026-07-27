@@ -5,6 +5,9 @@ export interface Announcement {
 	date: string;
 	tag: AnnouncementTag;
 	content: string;
+	/** Lien optionnel (ex. vers /indices pour un INDICE). */
+	href?: string;
+	linkLabel?: string;
 }
 
 export type MilestoneKind = 'aide' | 'rattrapage';
@@ -330,8 +333,9 @@ export const ANNOUNCEMENTS: Announcement[] = [
 		id: 'signal-secondaire-1',
 		date: '2026-07-27T20:00:00+02:00',
 		tag: 'INDICE',
-		content:
-			'SIGNAL SECONDAIRE — intercepté. Les cinq premiers mots de la phrase commencent, dans le désordre, par les lettres : C · I · M · N · N. L’ordre n’est pas donné. Il ne le sera pas.'
+		content: 'Un nouvel indice a été publié dans le vault.',
+		href: '/indices#signal-secondaire-1',
+		linkLabel: 'Consulter l’indice'
 	},
 	{
 		id: 'ouverture-vague-1',
