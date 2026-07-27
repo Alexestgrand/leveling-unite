@@ -1338,6 +1338,7 @@
 	margin-top: 0.5rem;
 	font-size: 0.875rem;
 	line-height: 1.55;
+	white-space: pre-line;
 }
 
 .clue-file--unlocked .clue-file__content {

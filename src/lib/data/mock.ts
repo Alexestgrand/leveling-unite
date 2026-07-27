@@ -327,6 +327,13 @@ export const FRAGMENT_MODE_INTRO = [
 
 export const ANNOUNCEMENTS: Announcement[] = [
 	{
+		id: 'signal-secondaire-1',
+		date: '2026-07-27T20:00:00+02:00',
+		tag: 'INDICE',
+		content:
+			'SIGNAL SECONDAIRE — intercepté. Les cinq premiers mots de la phrase commencent, dans le désordre, par les lettres : C · I · M · N · N. L’ordre n’est pas donné. Il ne le sera pas.'
+	},
+	{
 		id: 'ouverture-vague-1',
 		date: '2026-07-25T13:00:00+02:00',
 		tag: 'URGENT',
@@ -437,6 +444,14 @@ export const PUBLIC_INDICES: PublicIndex[] = [
 		content:
 			'Une séquence a été diffusée sur le compte officiel. Elle ne dit pas tout — mais elle dit assez.',
 		url: 'https://vm.tiktok.com/ZN8JxQc4e/'
+	},
+	{
+		id: 'signal-secondaire-1',
+		date: '2026-07-27T20:00:00+02:00',
+		source: 'annonce',
+		title: 'SIGNAL SECONDAIRE — intercepté',
+		content:
+			'Les cinq premiers mots de la phrase commencent, dans le désordre, par les lettres :\n\nC · I · M · N · N\n\nL’ordre n’est pas donné. Il ne le sera pas.'
 	}
 ];
 
