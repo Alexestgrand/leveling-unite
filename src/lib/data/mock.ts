@@ -231,7 +231,8 @@ export const FRAGMENTS: FragmentQuest[] = [
 		wordSlot: 1,
 		discordUsername: 'chikara2ndlocky45',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le premier fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `L'ANCRE
 
 PUHUEQE
@@ -253,7 +254,8 @@ Date limite : 28/07 à 13h00.`
 		wordSlot: 2,
 		discordUsername: 'pourfendeur8',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le deuxième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `LE SABLIER
 
 Ce qui suit a été versé dans un seul flux, une lettre à la fois, à tour de rôle. Tout s'écoule ensemble.
