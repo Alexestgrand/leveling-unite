@@ -99,7 +99,7 @@ export interface NamedReward {
 export const EVENT = {
 	title: 'LEVELING: Unite',
 	subtitle: 'The Fragments',
-	tagline: 'Quinze mots. Deux camps. Personne ne gagne seul.',
+	tagline: '15 mots cachés. 2 camps. On cherche ensemble.',
 	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */
 	startDate: new Date('2026-07-25T13:00:00+02:00'),
 	startDateLabel: '25 juillet 2026 · 13h',
@@ -110,6 +110,65 @@ export const EVENT = {
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.com/invite/appleveling'
 };
+
+/** Résumé ultra-court pour les nouveaux (accueil, hero). */
+export const NEWCOMER_BRIEF = {
+	headline: 'C\'est quoi ?',
+	lines: [
+		'15 mots secrets forment une phrase.',
+		'Des joueurs portent chaque mot. Leur énigme est publique.',
+		'Toi, tu cherches. Lui seul envoie le mot à Hakai.',
+		'Quand ton camp a les 15 mots, envoie la phrase ici.'
+	]
+} as const;
+
+export type StartHereCard =
+	| { id: string; step: string; title: string; body: string; href: string; cta: string }
+	| { id: string; step: string; title: string; body: string; action: 'tour'; cta: string };
+
+export const START_HERE_CARDS: StartHereCard[] = [
+	{
+		id: 'help',
+		step: '1',
+		title: 'Aide les Fragmentés',
+		body: 'Va sur Fragmentés. Lis l\'énigme. Trouve le mot avec les autres.',
+		href: '/fragmentes',
+		cta: 'Ouvrir les quêtes'
+	},
+	{
+		id: 'understand',
+		step: '2',
+		title: 'Comprends le jeu',
+		body: 'Deux camps, des rôles, des règles simples.',
+		href: '/concept',
+		cta: 'Voir le concept'
+	},
+	{
+		id: 'tour',
+		step: '3',
+		title: 'Guide en 1 minute',
+		body: 'Un stickman te montre le site. Rapide et clair.',
+		action: 'tour',
+		cta: 'Lancer le guide'
+	}
+];
+
+export const EVENT_STATUS = {
+	waveLabel: 'Vague 1',
+	progressLabel: '4 mots sécurisés sur 15',
+	note: 'Édit du Creux actif — une règle bonus pour les Fragmentés.',
+	noteHref: '/regles#edit-du-creux',
+	noteLinkLabel: 'Lire l\'édit'
+} as const;
+
+export const GLOSSARY = [
+	{ term: 'Fragmenté', definition: 'Joueur choisi pour porter un mot secret et le valider.' },
+	{ term: 'Enquêteur', definition: 'Joueur qui cherche et aide, sans porter de mot.' },
+	{ term: 'Camp', definition: 'Communauté ou Staff — deux équipes qui s\'affrontent.' },
+	{ term: 'Hakai', definition: 'Organisateur neutre (@so_hakai). Il valide les mots en MP.' },
+	{ term: 'Sursis', definition: 'Second essai pour un Fragmenté (règle gagnée au Creux).' },
+	{ term: 'Phrase', definition: '15 mots à envoyer sur le site pour gagner l\'événement.' }
+] as const;
 
 /** Deadline ISO par vague (validation des mots). */
 export const WAVE_DEADLINES: Record<number, string> = {
@@ -163,21 +222,18 @@ export const RATE_LIMIT_WINDOW_HOURS = 24;
 export const PARTICIPATION_STEPS = [
 	{
 		step: '01',
-		title: 'Rejoignez le serveur',
-		description:
-			'L’enquête vit sur le Discord Leveling. Le journal épinglé raconte ce que vous avez manqué.'
+		title: 'Rejoins le Discord',
+		description: 'C\'est là que l\'enquête vit. Le journal résume ce que tu as manqué.'
 	},
 	{
 		step: '02',
-		title: 'Aidez les Fragmentés',
-		description:
-			'Leurs énigmes sont publiques. Tout le monde cherche — eux seuls valident, en un essai.'
+		title: 'Aide les Fragmentés',
+		description: 'Leurs énigmes sont publiques. Tout le monde cherche — eux seuls envoient le mot.'
 	},
 	{
 		step: '03',
-		title: 'Testez la phrase',
-		description:
-			'Quinze mots, deux essais par 24 h. Le premier camp qui valide remporte tout.'
+		title: 'Envoie la phrase',
+		description: '15 mots, 2 essais par 24 h. Le premier camp qui valide gagne.'
 	}
 ] as const;
 
@@ -359,13 +415,15 @@ Date limite : 28/07 à 13h00.`
 	}
 ];
 
-export const FRAGMENT_MODE_INTRO = [
-	'Les porteurs et leurs énigmes sont publics. Tout le monde peut chercher.',
-	'Seul le Fragmenté désigné valide son mot en MP à @so_hakai — un essai par défaut, définitif.',
-	'Exactement 2 autres Fragmentés du même camp doivent confirmer l’essai. Pas les Enquêteurs, pas un ami hors rôle : uniquement des Fragmentés actifs de la vague. Sinon l’essai n’est pas traité.',
-	'72 heures par mot. Raté ou expiré : le mot est perdu, et seul un palier TikTok le fera réapparaître — pour les deux camps.',
-	'Édit du Creux actif — Le Sursis : sur chaque vague, un Fragmenté par camp peut obtenir un second essai après un premier refus. Non cumulable.'
+export const FRAGMENT_MODE_INTRO_BASE = [
+	'Les énigmes sont publiques. Tout le monde peut chercher.',
+	'Seul le Fragmenté envoie son mot à @so_hakai — 1 essai, 72 h.',
+	'2 autres Fragmentés du même camp doivent confirmer avant l\'envoi.',
+	'Raté ou trop tard : le mot est perdu (récupération possible via TikTok).'
 ] as const;
+
+export const FRAGMENT_MODE_EDIT_NOTE =
+	'Édit du Creux actif — Le Sursis : 1 second essai par vague et par camp. Détails sur Règles.';
 
 export const ANNOUNCEMENTS: Announcement[] = [
 	{
@@ -656,10 +714,10 @@ export function getSursisWaveNote(wave: number): string | null {
 }
 
 export const CONCEPT_INTRO = [
-	'Une phrase de quinze mots est cachée. Personne n’en détient assez pour la reconstituer seul.',
-	'À chaque vague, cinq Fragmentés sont désignés publiquement. Chacun porte un mot ; son énigme est publiée sur la page Fragmentés.',
-	'Tout le monde cherche. Seul le porteur valide son mot auprès de l’organisateur, @so_hakai — un essai par défaut (deux si le Sursis est invoqué), confirmé uniquement par 2 autres Fragmentés de son camp (pas les Enquêteurs), 72 heures. Un mot raté est perdu jusqu’au prochain palier TikTok.',
-	'Deux camps s’affrontent : la Communauté Leveling et le Staff. L’organisateur, @so_hakai (Hakai), est neutre — il conçoit, observe et tranche.'
+	'Une phrase de 15 mots est cachée. Personne ne peut la deviner seul.',
+	'À chaque vague, 5 Fragmentés portent un mot. Leur énigme est publique sur le site.',
+	'Tout le monde cherche. Seul le Fragmenté envoie son mot à Hakai — 1 essai, 72 h, confirmé par 2 autres Fragmentés du camp.',
+	'Deux camps s\'affrontent : Communauté et Staff. Hakai (@so_hakai) est neutre.'
 ];
 
 export const ORGANIZER_ROLE = {

@@ -7,7 +7,8 @@
 		DEADLINE_URGENCY_HOURS,
 		EVENT,
 		FRAGMENTS,
-		FRAGMENT_MODE_INTRO,
+		FRAGMENT_MODE_INTRO_BASE,
+		FRAGMENT_MODE_EDIT_NOTE,
 		PHASES,
 		WAVE_DEADLINES,
 		CREUX_RESOLUTION,
@@ -286,13 +287,19 @@
 			{waveName}
 		</p>
 		<ul class="mt-4 space-y-2 text-sm leading-relaxed text-zinc-300">
-			{#each FRAGMENT_MODE_INTRO as line}
+			{#each FRAGMENT_MODE_INTRO_BASE as line}
 				<li class="flex gap-2">
 					<span class="text-leveling-blue-light shrink-0" aria-hidden="true">▸</span>
 					{line}
 				</li>
 			{/each}
 		</ul>
+		<p class="mt-3 text-sm leading-relaxed text-emerald-200/90">
+			{FRAGMENT_MODE_EDIT_NOTE}
+			<a href="/regles#edit-du-creux" class="ml-1 font-semibold text-emerald-300 underline underline-offset-2">
+				Voir l'édit
+			</a>
+		</p>
 		{#if deadlineUrgent && waveDeadlineLabel}
 			<p class="fragments-board__deadline-alert" role="status">
 				<span aria-hidden="true">⚠</span>

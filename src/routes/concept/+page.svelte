@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
-	import { CAMPS, ROLES, CONCEPT_INTRO, ORGANIZER_ROLE, ENIGMA_SUMMARY } from '$lib/data/mock';
+	import { CAMPS, ROLES, CONCEPT_INTRO, ORGANIZER_ROLE, ENIGMA_SUMMARY, GLOSSARY } from '$lib/data/mock';
 </script>
 
 <PageShell
@@ -79,5 +79,18 @@
 				<li>{item}</li>
 			{/each}
 		</ul>
+	</div>
+
+	<div id="lexique" class="content-block hud-panel clip-corners border-leveling-blue/25">
+		<h3>Lexique</h3>
+		<p class="text-sm text-zinc-400">Les mots importants, en une phrase chacun.</p>
+		<dl class="mt-4 space-y-3">
+			{#each GLOSSARY as entry}
+				<div>
+					<dt class="font-semibold text-white">{entry.term}</dt>
+					<dd class="mt-0.5 text-sm text-zinc-300">{entry.definition}</dd>
+				</div>
+			{/each}
+		</dl>
 	</div>
 </PageShell>

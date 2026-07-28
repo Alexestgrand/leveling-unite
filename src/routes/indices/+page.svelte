@@ -6,7 +6,8 @@
 <PageShell
 	sectionLabel="Indices"
 	title="Indices"
-	subtitle="Chaque signal officiel, dans l’ordre. Le journal n’annonce que les envois — le détail est ici."
+	subtitle="Chaque signal officiel, dans l'ordre."
+	contextLine="Indices staff et TikTok. Pas les énigmes des Fragmentés."
 >
 	<div data-tour="tour-indices">
 		<CluesGrid />

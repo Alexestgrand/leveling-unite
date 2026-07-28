@@ -6,7 +6,8 @@
 <PageShell
 	sectionLabel="Fragmentés"
 	title="Fragmentés"
-	subtitle="Quêtes en cours : un porteur Discord, une énigme publique, un essai. Les indices méta validés apparaissent ici — pas sur la page Indices."
+	subtitle="Quêtes en cours : un porteur Discord, une énigme publique, un essai."
+	contextLine="Les énigmes sont ici. Toi tu cherches. Le Fragmenté envoie le mot."
 >
 	<FragmentsBoard />
 </PageShell>

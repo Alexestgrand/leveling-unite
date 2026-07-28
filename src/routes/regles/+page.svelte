@@ -23,7 +23,8 @@
 <PageShell
 	sectionLabel="Règlement"
 	title="Règles"
-	subtitle="Ce qui est permis, ce qui se paie. L'essentiel tient en quelques lignes."
+	subtitle="Ce qui est permis, ce qui se paie."
+	contextLine="Les règles en clair. Lis avant de jouer."
 >
 	<div class="content-block hud-panel clip-corners glow-border border-leveling-blue/30 glow-neon">
 		<h3>Esprit de l'événement</h3>

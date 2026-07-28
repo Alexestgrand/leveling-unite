@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Hero from '$lib/components/Hero.svelte';
-	import PlayerPaths from '$lib/components/PlayerPaths.svelte';
+	import StartHere from '$lib/components/StartHere.svelte';
 	import PhraseTracker from '$lib/components/PhraseTracker.svelte';
 	import HowToParticipate from '$lib/components/HowToParticipate.svelte';
 	import InvestigationDashboard from '$lib/components/InvestigationDashboard.svelte';
@@ -18,44 +18,23 @@
 <Hero />
 
 <main class="page-container space-y-10 pt-8 sm:space-y-16 sm:pt-12 md:space-y-20">
-	<section class="tour-launch" aria-label="Guide">
-		<button type="button" class="tour-launch__btn" onclick={() => tour.start()}>
-			<span class="tour-launch__icon" aria-hidden="true">
-				<svg viewBox="0 0 40 56" fill="none" class="tour-launch__stick">
-					<circle cx="20" cy="9" r="6" stroke="currentColor" stroke-width="2" />
-					<path d="M20 15 V36" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-					<path d="M20 36 L12 50" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-					<path d="M20 36 L28 50" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-					<path d="M20 22 L10 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-					<path d="M20 22 L30 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-				</svg>
-			</span>
-			<span class="tour-launch__copy">
-				<span class="tour-launch__label">Comment ça marche ?</span>
-				<span class="tour-launch__hint">Un guide en 1 minute — stickman inclus</span>
-			</span>
-			<span class="tour-launch__cta" aria-hidden="true">▶</span>
-		</button>
-	</section>
+	<StartHere />
 
-	<section class="relative space-y-5 sm:space-y-6">
-		<PlayerPaths />
-		<PhraseTracker />
-	</section>
+	<PhraseTracker boardTitle="La phrase — 15 mots à trouver" />
 
-	<section class="section-divider">
+	<section class="go-deeper section-divider space-y-10 sm:space-y-16 md:space-y-20" aria-labelledby="go-deeper-heading">
+		<header class="go-deeper__head">
+			<p class="section-eyebrow">
+				<span class="section-eyebrow__dot" aria-hidden="true"></span>
+				Suite
+			</p>
+			<h2 id="go-deeper-heading" class="go-deeper__title">Aller plus loin</h2>
+			<p class="go-deeper__desc">Journal, stats et liens utiles pour l'enquête.</p>
+		</header>
+
 		<HowToParticipate />
-	</section>
-
-	<section class="section-divider">
 		<InvestigationDashboard />
-	</section>
-
-	<section class="section-divider">
 		<Timeline limit={3} />
-	</section>
-
-	<section class="section-divider">
 		<NavGrid />
 	</section>
 

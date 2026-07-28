@@ -192,7 +192,8 @@
 <PageShell
 	sectionLabel="Soumission"
 	title="Soumettre la phrase"
-	subtitle="Testez la phrase reconstituée par votre camp. Deux essais par 24 heures."
+	subtitle="Teste la phrase reconstituée par ton camp."
+	contextLine="15 mots. 2 essais par 24 h. Le premier camp qui valide gagne."
 >
 	<div data-tour="tour-soumettre">
 	{#if uniqueTesters !== null}

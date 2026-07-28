@@ -6,11 +6,12 @@
 	interface Props {
 		title: string;
 		subtitle?: string;
+		contextLine?: string;
 		sectionLabel?: string;
 		children: Snippet;
 	}
 
-	let { title, subtitle, sectionLabel, children }: Props = $props();
+	let { title, subtitle, contextLine, sectionLabel, children }: Props = $props();
 
 	let contentEl: HTMLDivElement | undefined;
 
@@ -42,6 +43,9 @@
 		</h1>
 		{#if subtitle}
 			<p class="mt-2 max-w-3xl text-sm leading-relaxed text-zinc-400 sm:mt-3 sm:text-base">{subtitle}</p>
+		{/if}
+		{#if contextLine}
+			<p class="page-shell__context" role="note">{contextLine}</p>
 		{/if}
 	</header>
 

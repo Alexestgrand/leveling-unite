@@ -23,6 +23,7 @@
 					<li><a href={link.href}>{link.label}</a></li>
 				{/each}
 				<li><a href="/concept">Concept</a></li>
+				<li><a href="/concept#lexique">Lexique</a></li>
 			</ul>
 		</nav>
 

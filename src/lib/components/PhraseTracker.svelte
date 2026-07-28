@@ -13,9 +13,11 @@
 	interface Props {
 		/** Lien « voir les énigmes » sous le board (accueil). */
 		showBoardLink?: boolean;
+		/** Titre personnalisé du board (accueil). */
+		boardTitle?: string;
 	}
 
-	let { showBoardLink = true }: Props = $props();
+	let { showBoardLink = true, boardTitle }: Props = $props();
 
 	const slots: Slot[] = Array.from({ length: EXPECTED_PHRASE_WORDS }, (_, i) => {
 		const n = i + 1;
@@ -57,7 +59,7 @@
 	<div class="phrase-board__head">
 		<p class="phrase-board__title">
 			<span class="phrase-board__title-glyph" aria-hidden="true">◈</span>
-			La phrase — {EXPECTED_PHRASE_WORDS} fragments
+			{boardTitle ?? `La phrase — ${EXPECTED_PHRASE_WORDS} fragments`}
 		</p>
 		<p class="phrase-board__count">
 			<span class="phrase-board__count-value">{validatedCount}</span>/{EXPECTED_PHRASE_WORDS} sécurisés

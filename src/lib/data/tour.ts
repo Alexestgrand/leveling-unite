@@ -19,32 +19,32 @@ export const TOUR_STEPS: TourStep[] = [
 		id: 'intro',
 		route: '/',
 		target: 'tour-intro',
-		title: 'Bienvenue, chasseur',
-		body: 'Quinze mots forment une phrase secrète. Deux camps. Personne ne gagne seul — on cherche ensemble.',
+		title: 'Bienvenue',
+		body: '15 mots secrets. Deux camps. On cherche ensemble sur le site et Discord.',
 		pose: 'wave'
 	},
 	{
 		id: 'phrase',
 		route: '/',
 		target: 'tour-phrase',
-		title: 'La phrase, case par case',
-		body: 'Chaque case = un mot. Clique une case pour ouvrir la quête du Fragmenté qui le porte.',
+		title: 'La phrase',
+		body: 'Chaque case = un mot. Clique pour voir l\'énigme du Fragmenté.',
 		pose: 'point'
 	},
 	{
 		id: 'fragmentes',
 		route: '/fragmentes',
 		target: 'tour-fragmentes',
-		title: 'Les énigmes sont ici',
-		body: 'Sur Fragmentés, les énigmes sont publiques. Tout le monde peut chercher — Discord et le site disent la même chose.',
+		title: 'Les énigmes',
+		body: 'Sur Fragmentés, tout le monde peut chercher. Discord et le site disent la même chose.',
 		pose: 'point'
 	},
 	{
 		id: 'porteur',
 		route: '/fragmentes',
 		target: 'tour-porteur',
-		title: 'Qui valide ?',
-		body: 'Seul le porteur Discord valide son mot (1 essai, 72 h), en MP à l’organisateur. Toi, tu aides à trouver.',
+		title: 'Qui envoie le mot ?',
+		body: 'Seul le Fragmenté envoie son mot à Hakai. Toi, tu l\'aides à le trouver.',
 		pose: 'think'
 	},
 	{
@@ -52,23 +52,23 @@ export const TOUR_STEPS: TourStep[] = [
 		route: '/indices',
 		target: 'tour-indices',
 		title: 'Indices ≠ énigmes',
-		body: 'La page Indices, ce sont les révélations staff / TikTok. Pas les quêtes des porteurs — celles-là sont sur Fragmentés.',
+		body: 'Ici : signaux staff et TikTok. Les quêtes des Fragmentés sont ailleurs.',
 		pose: 'think'
 	},
 	{
 		id: 'soumettre',
 		route: '/soumettre',
 		target: 'tour-soumettre',
-		title: 'Tester la phrase',
-		body: 'Quand tu as reconstitué 15 mots, connecte Discord ici et envoie la phrase. 2 essais par 24 h.',
+		title: 'Envoyer la phrase',
+		body: '15 mots, 2 essais par 24 h. Connecte Discord et envoie la phrase complète.',
 		pose: 'point'
 	},
 	{
 		id: 'fin',
 		route: '/',
 		target: 'tour-intro',
-		title: 'Tu as compris',
-		body: `Le reste se joue sur ${EVENT.discordLabel} : entraide, annonces, validation. Bonne chasse.`,
+		title: 'C\'est parti',
+		body: `Le reste se joue sur ${EVENT.discordLabel}. Bonne chasse.`,
 		pose: 'cheer'
 	}
 ];

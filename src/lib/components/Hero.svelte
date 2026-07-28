@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import {
 		EVENT,
+		NEWCOMER_BRIEF,
 		MAX_SUBMIT_ATTEMPTS,
 		RATE_LIMIT_WINDOW_HOURS
 	} from '$lib/data/mock';
@@ -170,6 +171,14 @@
 				</div>
 				<p class="hero__subtitle-portal text-accent-cyan">{EVENT.subtitle}</p>
 				<p class="hero__tagline-portal">{EVENT.tagline}</p>
+				<div class="hero__brief">
+					<p class="hero__brief-title">{NEWCOMER_BRIEF.headline}</p>
+					<ul class="hero__brief-list">
+						{#each NEWCOMER_BRIEF.lines as line}
+							<li>{line}</li>
+						{/each}
+					</ul>
+				</div>
 			</header>
 
 			<div class="hero__countdown hero__countdown--portal hero-fade hero-fade-3" use:reveal={{ delay: 120 }}>
