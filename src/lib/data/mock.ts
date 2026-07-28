@@ -364,7 +364,7 @@ export const FRAGMENT_MODE_INTRO = [
 	'Seul le Fragmenté désigné valide son mot en MP à @so_hakai — un essai par défaut, définitif.',
 	'Exactement 2 autres Fragmentés du même camp doivent confirmer l’essai. Pas les Enquêteurs, pas un ami hors rôle : uniquement des Fragmentés actifs de la vague. Sinon l’essai n’est pas traité.',
 	'72 heures par mot. Raté ou expiré : le mot est perdu, et seul un palier TikTok le fera réapparaître — pour les deux camps.',
-	'Édit du Creux actif — Le Sursis : sur chaque vague, un Fragmenté par camp peut obtenir un second essai après un premier refus.'
+	'Édit du Creux actif — Le Sursis : sur chaque vague, un Fragmenté par camp peut obtenir un second essai après un premier refus. Non cumulable.'
 ] as const;
 
 export const ANNOUNCEMENTS: Announcement[] = [
@@ -552,7 +552,7 @@ export const CREUX_RULE_OPTIONS: CreuxRuleOption[] = [
 		id: 'sursis',
 		title: 'II — Le Sursis',
 		description:
-			'Un Fragmenté par vague et par camp obtient un second essai. Une erreur cesse d’être définitive. Une par camp.'
+			'Un Fragmenté par vague et par camp obtient un second essai. Une erreur cesse d’être définitive. Les Sursis ne sont pas cumulables.'
 	},
 	{
 		id: 'tribut',
@@ -594,8 +594,9 @@ export const SURCIS_RULE_DETAILS = [
 	'Chaque vague : un Fragmenté par camp (Communauté et Staff) peut obtenir un second essai de validation.',
 	'Le Sursis s’invoque après un premier essai refusé ou raté, avant la fin du délai de 72 h du mot concerné.',
 	'Une fois utilisé par un camp sur une vague, le Sursis est épuisé pour ce camp — l’autre camp conserve le sien.',
+	'Les Sursis ne sont pas cumulables : pas de report sur une vague suivante, pas de second Sursis pour un autre Fragmenté du même camp sur la même vague.',
 	'Les 2 confirmations Fragmentés restent obligatoires à chaque essai, y compris au Sursis.',
-	'Un remplacement de porteur n’accorde pas de Sursis supplémentaire — l’édit ne se cumule pas au sein d’un camp.'
+	'Un remplacement de porteur n’accorde pas de Sursis supplémentaire.'
 ] as const;
 
 export type SursisWaveStatus = 'expired' | 'available' | 'consumed';
@@ -683,7 +684,7 @@ export const COLLABORATION_RULES = [
 export const CONFIDENTIALITY_RULES = [
 	'Les énigmes sont publiques ; les mots restent confidentiels jusqu’à la fin de l’événement.',
 	'Seul le Fragmenté nommé valide son mot en MP à @so_hakai (organisateur) — un essai par défaut, définitif.',
-	'Édit du Creux — Le Sursis (Communauté) : une fois par vague et par camp, un Fragmenté peut demander un second essai après un premier refus.',
+	'Édit du Creux — Le Sursis (Communauté) : une fois par vague et par camp, un Fragmenté peut demander un second essai après un premier refus. Les Sursis ne sont pas cumulables.',
 	'Avant l’envoi : exactement 2 confirmations d’autres Fragmentés du même camp (salon #fragmentes-membres ou #fragmentes-staff). Les Enquêteurs et les membres sans rôle Fragmenté ne peuvent pas confirmer — leurs messages ne comptent pas.',
 	'Les 2 confirmateurs écrivent aussi en MP à @so_hakai. Sans ces 2 confirmations Fragmentés, l’essai n’est pas traité.',
 	'72 h par mot. Raté ou expiré : perdu jusqu’au prochain palier TikTok, révélé aux deux camps — sauf si le Sursis du camp est encore disponible sur la vague.',

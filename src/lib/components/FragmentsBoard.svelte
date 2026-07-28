@@ -270,6 +270,10 @@
 						{sursisStaff ? '1 Sursis disponible' : 'Sursis épuisé ou expiré'}
 					</li>
 				</ul>
+				<p class="fragments-board__sursis-footnote">
+					Les Sursis ne sont pas cumulables — ni entre Fragmentés d’un même camp, ni d’une vague à
+					l’autre.
+				</p>
 			{:else if sursisNote}
 				<p class="fragments-board__sursis-text fragments-board__sursis-text--muted">{sursisNote}</p>
 			{/if}

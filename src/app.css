@@ -4596,6 +4596,13 @@
 	color: rgba(228, 228, 231, 0.92) !important;
 }
 
+.fragments-board__sursis-footnote {
+	margin: 0.55rem 0 0;
+	font-size: 0.75rem;
+	line-height: 1.45;
+	color: rgba(251, 191, 36, 0.9);
+}
+
 /* =========== Règles — édit du creux =========== */
 
 .edit-du-creux__badge {
