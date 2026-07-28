@@ -172,11 +172,9 @@
 		{#if fragment.status === 'upcoming' && !fragment.enigma.trim()}
 			<p class="fragment-card__enigma fragment-card__enigma--empty">Énigme à publier…</p>
 		{:else}
-			{@const sealed = fragment.status === 'validated' || fragment.status === 'lost'}
 			<div
 				class="fragment-card__enigma-wrap"
-				class:fragment-card__enigma-wrap--sealed={sealed}
-				class:fragment-card__enigma-wrap--sealed-validated={fragment.status === 'validated'}
+				class:fragment-card__enigma-wrap--secured={fragment.status === 'validated'}
 				class:fragment-card__enigma-wrap--sealed-lost={fragment.status === 'lost'}
 			>
 				<div class="fragment-card__enigma">
@@ -187,7 +185,24 @@
 					{/if}
 					<p class="fragment-card__enigma-text">{parts.body}</p>
 				</div>
-				{#if sealed}
+				{#if fragment.status === 'validated'}
+					<div class="fragment-card__secured" aria-hidden="true">
+						<svg
+							class="fragment-card__secured-icon"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+							/>
+						</svg>
+						<span class="fragment-card__secured-label">Mot sécurisé</span>
+					</div>
+				{:else if fragment.status === 'lost'}
 					<div class="fragment-card__sealed" aria-hidden="true">
 						<svg class="fragment-card__sealed-skull" viewBox="0 0 64 64">
 							<path

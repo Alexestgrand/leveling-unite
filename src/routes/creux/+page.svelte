@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
+	import TransmissionPlayer from '$lib/components/TransmissionPlayer.svelte';
 	import { CREUX_CHALLENGE, CREUX_RULE_OPTIONS } from '$lib/data/mock';
 </script>
 
@@ -24,9 +25,7 @@
 				<span aria-hidden="true">⚠</span>
 				Baissez le volume avant de lancer le fichier.
 			</p>
-			<audio class="creux-vault__audio" controls preload="metadata" src={CREUX_CHALLENGE.audioUrl}>
-				Votre navigateur ne supporte pas la lecture audio.
-			</audio>
+			<TransmissionPlayer src={CREUX_CHALLENGE.audioUrl} filename="transmission.wav" />
 		</div>
 
 		<div class="creux-vault__cipher-block">

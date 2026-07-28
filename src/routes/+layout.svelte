@@ -4,7 +4,6 @@
 	import AmbientBackground from '$lib/components/AmbientBackground.svelte';
 	import SiteHeader from '$lib/components/SiteHeader.svelte';
 	import TourGuide from '$lib/components/TourGuide.svelte';
-	import OmenPopup from '$lib/components/OmenPopup.svelte';
 
 	let { children } = $props();
 
@@ -59,5 +58,4 @@
 		{/key}
 	</div>
 	<TourGuide />
-	<OmenPopup />
 </div>

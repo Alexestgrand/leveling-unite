@@ -1,8 +1,6 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 import type { AuthMeResponse, SubmissionStats, ValidateResponse } from '$lib/types/validate';
 
-const API_URL = PUBLIC_API_URL?.trim() ?? '';
-
 const HEALTH_TIMEOUT_MS = 8000;
 const HEALTH_SLOW_MS = 3000;
 const STATS_TIMEOUT_MS = 5000;
@@ -13,16 +11,45 @@ export type AuthMeResult = AuthMeResponse | null | 'error';
 export const API_COLD_START_MESSAGE =
 	'Le portail peut mettre quelques secondes à s\'ouvrir — réessayez si la connexion échoue.';
 
+function normalizeApiUrl(raw: string): string {
+	return raw.trim().replace(/\/$/, '');
+}
+
+/**
+ * Same-origin `/api` (Vercel rewrite or Vite proxy) keeps the session cookie first-party
+ * and avoids Discord OAuth redirect loops caused by third-party cookie blocking.
+ */
+export function resolveApiUrl(): string {
+	const configured = normalizeApiUrl(PUBLIC_API_URL ?? '');
+	if (configured === '/api') return '/api';
+
+	if (typeof window === 'undefined') {
+		return configured || '/api';
+	}
+
+	if (!configured) return '/api';
+
+	try {
+		const apiOrigin = new URL(configured, window.location.origin).origin;
+		if (apiOrigin !== window.location.origin) return '/api';
+	} catch {
+		return configured;
+	}
+
+	return configured;
+}
+
 export function isApiConfigured(): boolean {
-	return API_URL.length > 0;
+	return resolveApiUrl().length > 0;
 }
 
 /** Redirect URL for Discord OAuth — must be a full navigation, not fetch (cookie set on callback). */
 export function getDiscordLoginUrl(): string {
-	return `${API_URL}/auth/discord`;
+	return `${resolveApiUrl()}/auth/discord`;
 }
 
 export async function fetchApiHealth(): Promise<ApiHealthStatus> {
+	const apiUrl = resolveApiUrl();
 	if (!isApiConfigured()) return 'error';
 
 	const controller = new AbortController();
@@ -30,7 +57,7 @@ export async function fetchApiHealth(): Promise<ApiHealthStatus> {
 	const startedAt = Date.now();
 
 	try {
-		const res = await fetch(`${API_URL}/health`, { signal: controller.signal });
+		const res = await fetch(`${apiUrl}/health`, { signal: controller.signal });
 		const elapsed = Date.now() - startedAt;
 
 		if (!res.ok) return 'error';
@@ -45,13 +72,14 @@ export async function fetchApiHealth(): Promise<ApiHealthStatus> {
 }
 
 export async function fetchSubmissionStats(): Promise<SubmissionStats | null> {
+	const apiUrl = resolveApiUrl();
 	if (!isApiConfigured()) return null;
 
 	const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), STATS_TIMEOUT_MS);
 
 	try {
-		const res = await fetch(`${API_URL}/stats`, { signal: controller.signal });
+		const res = await fetch(`${apiUrl}/stats`, { signal: controller.signal });
 		if (!res.ok) return null;
 		const data = (await res.json()) as SubmissionStats;
 		return {
@@ -66,10 +94,11 @@ export async function fetchSubmissionStats(): Promise<SubmissionStats | null> {
 }
 
 export async function fetchAuthMe(): Promise<AuthMeResult> {
+	const apiUrl = resolveApiUrl();
 	if (!isApiConfigured()) return 'error';
 
 	try {
-		const res = await fetch(`${API_URL}/auth/me`, { credentials: 'include' });
+		const res = await fetch(`${apiUrl}/auth/me`, { credentials: 'include' });
 
 		if (res.status === 401) return null;
 		if (!res.ok) return 'error';
@@ -81,10 +110,11 @@ export async function fetchAuthMe(): Promise<AuthMeResult> {
 }
 
 export async function logout(): Promise<void> {
+	const apiUrl = resolveApiUrl();
 	if (!isApiConfigured()) return;
 
 	try {
-		await fetch(`${API_URL}/auth/logout`, {
+		await fetch(`${apiUrl}/auth/logout`, {
 			method: 'POST',
 			credentials: 'include'
 		});
@@ -94,6 +124,7 @@ export async function logout(): Promise<void> {
 }
 
 export async function submitPhrase(phrase: string): Promise<ValidateResponse> {
+	const apiUrl = resolveApiUrl();
 	if (!isApiConfigured()) {
 		return {
 			success: false,
@@ -103,7 +134,7 @@ export async function submitPhrase(phrase: string): Promise<ValidateResponse> {
 	}
 
 	try {
-		const res = await fetch(`${API_URL}/validate`, {
+		const res = await fetch(`${apiUrl}/validate`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },

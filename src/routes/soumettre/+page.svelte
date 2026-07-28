@@ -253,7 +253,7 @@
 
 			<div class="mt-8 flex flex-wrap gap-3">
 				<button type="button" class="btn-pill btn-pill--primary" onclick={connectDiscord}>
-					Tester une phrase
+					Se connecter avec Discord
 				</button>
 				<a href="/regles" class="btn-pill">Lire les règles</a>
 			</div>
