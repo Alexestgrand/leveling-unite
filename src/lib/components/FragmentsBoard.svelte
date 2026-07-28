@@ -172,9 +172,12 @@
 		{#if fragment.status === 'upcoming' && !fragment.enigma.trim()}
 			<p class="fragment-card__enigma fragment-card__enigma--empty">Énigme à publier…</p>
 		{:else}
+			{@const sealed = fragment.status === 'validated' || fragment.status === 'lost'}
 			<div
 				class="fragment-card__enigma-wrap"
-				class:fragment-card__enigma-wrap--secured={fragment.status === 'validated'}
+				class:fragment-card__enigma-wrap--sealed={sealed}
+				class:fragment-card__enigma-wrap--sealed-validated={fragment.status === 'validated'}
+				class:fragment-card__enigma-wrap--sealed-lost={fragment.status === 'lost'}
 			>
 				<div class="fragment-card__enigma">
 					{#if parts.name}
@@ -184,12 +187,17 @@
 					{/if}
 					<p class="fragment-card__enigma-text">{parts.body}</p>
 				</div>
-				{#if fragment.status === 'validated'}
-					<div class="fragment-card__secured" aria-hidden="true">
-						<svg class="fragment-card__secured-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+				{#if sealed}
+					<div class="fragment-card__sealed" aria-hidden="true">
+						<svg class="fragment-card__sealed-skull" viewBox="0 0 64 64">
+							<path
+								fill="currentColor"
+								d="M32 6c-12.4 0-22 9.2-22 22.2 0 7.4 3.4 13.2 8.2 17.2V52c0 2.2 1.8 4 4 4h3.2l1.6 4h10l1.6-4H41c2.2 0 4-1.8 4-4v-6.6c4.8-4 8.2-9.8 8.2-17.2C53.2 15.2 44.4 6 32 6zm-9 22.5c0-2.5 2-4.5 4.5-4.5S32 26 32 28.5 30 33 27.5 33 23 31 23 28.5zm18 0c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5-2 4.5-4.5 4.5-4.5-2-4.5-4.5zM24 42c0-4.4 3.6-6 8-6s8 1.6 8 6H24z"
+							/>
+							<circle cx="27.5" cy="28.5" r="2.2" fill="#120303" />
+							<circle cx="41.5" cy="28.5" r="2.2" fill="#120303" />
 						</svg>
-						<span class="fragment-card__secured-label">Mot sécurisé</span>
+						<span class="fragment-card__sealed-q">?</span>
 					</div>
 				{/if}
 			</div>

@@ -31,6 +31,22 @@ export interface PublicIndex {
 	url?: string;
 }
 
+/** Option de règle gagnée via l'énigme du creux (entre-vagues). */
+export interface CreuxRuleOption {
+	id: string;
+	title: string;
+	description: string;
+}
+
+export interface CreuxChallenge {
+	id: string;
+	deadline: string;
+	deadlineLabel: string;
+	audioUrl: string;
+	cipher: string;
+	audioHint: string;
+}
+
 export interface NavLink {
 	href: string;
 	title: string;
@@ -164,6 +180,13 @@ export const PARTICIPATION_STEPS = [
 ] as const;
 
 export const NAV_LINKS: NavLink[] = [
+	{
+		href: '/creux',
+		title: 'Le Creux',
+		description: 'Transmission mystérieuse entre deux vagues. Une règle en jeu.',
+		icon: 'clues',
+		featured: true
+	},
 	{
 		href: '/fragmentes',
 		title: 'Fragmentés',
@@ -343,6 +366,15 @@ export const FRAGMENT_MODE_INTRO = [
 
 export const ANNOUNCEMENTS: Announcement[] = [
 	{
+		id: 'enigme-du-creux',
+		date: '2026-07-28T14:00:00+02:00',
+		tag: 'INDICE',
+		content:
+			'Une transmission non identifiée a été captée. L’énigme du creux est en ligne — le premier camp à la résoudre choisira une règle pour toute la suite de l’événement.',
+		href: '/creux',
+		linkLabel: 'Ouvrir l’énigme du creux'
+	},
+	{
 		id: 'cloture-vague-1',
 		date: '2026-07-28T13:00:00+02:00',
 		tag: 'URGENT',
@@ -461,6 +493,15 @@ export const SUBMIT_FOOTNOTE =
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
 export const PUBLIC_INDICES: PublicIndex[] = [
 	{
+		id: 'enigme-du-creux',
+		date: '2026-07-28T14:00:00+02:00',
+		source: 'annonce',
+		title: 'TRANSMISSION NON IDENTIFIÉE — Énigme du creux',
+		content:
+			'Un signal a été capté sur la fréquence de l’événement. Il ne provient d’aucun de nos canaux. Écoutez la transmission, décodez ce qu’elle cache — le premier camp à répondre choisira une règle jusqu’à la fin.',
+		url: '/creux'
+	},
+	{
 		id: 'tiktok-signal-1',
 		date: '2026-07-26T00:00:00+02:00',
 		source: 'tiktok',
@@ -476,6 +517,36 @@ export const PUBLIC_INDICES: PublicIndex[] = [
 		title: 'SIGNAL SECONDAIRE — intercepté',
 		content:
 			'Les cinq premiers mots de la phrase commencent, dans le désordre, par les lettres :\n\nC · I · M · N · N\n\nL’ordre n’est pas donné. Il ne le sera pas.'
+	}
+];
+
+export const CREUX_CHALLENGE: CreuxChallenge = {
+	id: 'enigme-du-creux',
+	deadline: '2026-07-30T13:00:00+02:00',
+	deadlineLabel: '30 juillet 2026 · 13h (ouverture Vague 2)',
+	audioUrl: '/transmission.wav',
+	audioHint: 'Entendu ?.. Nien',
+	cipher: 'DIOPZRQVZ NP QCK SGAYZTRG'
+};
+
+export const CREUX_RULE_OPTIONS: CreuxRuleOption[] = [
+	{
+		id: 'transparence',
+		title: 'I — La Transparence',
+		description:
+			'Tout mot validé est révélé publiquement, aux deux camps. Vous verrez la phrase se construire. Eux aussi.'
+	},
+	{
+		id: 'sursis',
+		title: 'II — Le Sursis',
+		description:
+			'Un Fragmenté par vague obtient un second essai. Une erreur cesse d’être définitive. Une seule.'
+	},
+	{
+		id: 'tribut',
+		title: 'III — Le Tribut',
+		description:
+			'Un indice public supplémentaire à chaque vague. Mais chaque camp perd un jour sur son délai.'
 	}
 ];
 

@@ -96,14 +96,15 @@
 						<p class="clues-chrono__body">{index.content}</p>
 
 						{#if index.url}
+							{@const internal = index.url.startsWith('/')}
 							<a
 								class="clues-chrono__link"
 								href={index.url}
-								target="_blank"
-								rel="noopener noreferrer"
+								target={internal ? undefined : '_blank'}
+								rel={internal ? undefined : 'noopener noreferrer'}
 							>
-								Voir la transmission
-								<span aria-hidden="true">↗</span>
+								{internal ? 'Ouvrir sur le site' : 'Voir la transmission'}
+								<span aria-hidden="true">{internal ? '→' : '↗'}</span>
 							</a>
 						{/if}
 					</article>
