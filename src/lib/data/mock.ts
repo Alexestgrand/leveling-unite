@@ -274,8 +274,8 @@ Date limite : 28/07 à 13h00.`
 		wordSlot: 3,
 		discordUsername: 'asterion_45',
 		camp: 'staff',
-		status: 'open',
-		note: 'Seul Fragmenté Staff de cette vague : il peut valider son mot en solo, sans confirmations.',
+		status: 'lost',
+		note: 'Seul Fragmenté Staff de cette vague : il pouvait valider son mot en solo, sans confirmations.',
 		enigma: `LE CERCLE
 
 BGTSNMR
@@ -318,7 +318,8 @@ Date limite : 28/07 à 13h00.`
 		wordSlot: 5,
 		discordUsername: 'zero6777_',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le cinquième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `LE SABLIER
 
 Ce qui suit a été versé dans un seul flux, une lettre à la fois, à tour de rôle. Tout s'écoule ensemble.
@@ -341,6 +342,13 @@ export const FRAGMENT_MODE_INTRO = [
 ] as const;
 
 export const ANNOUNCEMENTS: Announcement[] = [
+	{
+		id: 'cloture-vague-1',
+		date: '2026-07-28T13:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Vague 1 — échéance atteinte (28/07, 13h). Quatre fragments sécurisés. Le mot n°3 (Staff, @asterion_45) est perdu : essai refusé. Récupération possible via palier TikTok.'
+	},
 	{
 		id: 'signal-secondaire-1',
 		date: '2026-07-27T20:00:00+02:00',
@@ -600,7 +608,8 @@ export const PHASES: Phase[] = [
 		id: 'wave-1',
 		name: 'Vague 1 — L’Éveil',
 		share: '5 fragments',
-		description: 'Cinq porteurs désignés, cinq énigmes publiées. L’enquête commence.'
+		description:
+			'Clôturée le 28/07 à 13h — 4 fragments sécurisés, 1 mot perdu (n°3, Staff).'
 	},
 	{
 		id: 'wave-2',
