@@ -10,7 +10,13 @@
 		SUBMISSION_RULES,
 		VOTE_RULES,
 		CHEATING_CASES,
-		SANCTIONS
+		SANCTIONS,
+		CREUX_RESOLUTION,
+		CREUX_CAMP_LABEL,
+		ACTIVE_CREUX_RULE,
+		SURCIS_RULE_DETAILS,
+		SURCIS_WAVE_STATUS,
+		EVENT_VIGILANCE
 	} from '$lib/data/mock';
 </script>
 
@@ -29,6 +35,60 @@
 	</div>
 
 	<div class="accordion">
+		{#if CREUX_RESOLUTION.resolved}
+			<CollapseSection title="Édit du Creux — règle active" open id="edit-du-creux">
+				<div class="edit-du-creux">
+					<p class="edit-du-creux__badge">Issu de l'énigme du creux · {CREUX_RESOLUTION.resolvedLabel}</p>
+					<h3 class="edit-du-creux__title">{ACTIVE_CREUX_RULE.title}</h3>
+					<p class="edit-du-creux__lead">
+						Imposé par <strong>{CREUX_CAMP_LABEL[CREUX_RESOLUTION.winnerCamp]}</strong> après
+						résolution de la transmission. S'applique aux deux camps jusqu'à la fin de l'événement.
+					</p>
+					<p class="text-zinc-300">{ACTIVE_CREUX_RULE.description}</p>
+					<ul class="mt-4">
+						{#each SURCIS_RULE_DETAILS as line}
+							<li>{line}</li>
+						{/each}
+					</ul>
+					<div class="edit-du-creux__waves mt-6">
+						<p class="edit-du-creux__waves-title">Statut du Sursis par vague et par camp</p>
+						<ul class="edit-du-creux__wave-list">
+							{#each Object.entries(SURCIS_WAVE_STATUS) as [wave, info]}
+								<li class="edit-du-creux__wave-block">
+									<p class="edit-du-creux__wave-num">Vague {wave}</p>
+									{#if info.note}
+										<p class="edit-du-creux__wave-note">{info.note}</p>
+									{/if}
+									<ul class="edit-du-creux__camp-list">
+										{#each (['communaute', 'staff'] as const) as camp}
+											{@const slot = info[camp]}
+											<li class="edit-du-creux__camp-item edit-du-creux__camp-item--{slot.status}">
+												<span>{CREUX_CAMP_LABEL[camp]}</span>
+												<span>
+													{#if slot.status === 'available'}
+														Disponible — 1 invocation
+													{:else if slot.status === 'consumed'}
+														Consommé{slot.usedBy ? ` (${slot.usedBy})` : ''}
+													{:else}
+														Expiré
+													{/if}
+												</span>
+											</li>
+										{/each}
+									</ul>
+								</li>
+							{/each}
+						</ul>
+					</div>
+					<aside class="edit-du-creux__vigilance" role="note">
+						<p class="edit-du-creux__vigilance-title">{EVENT_VIGILANCE.title}</p>
+						<p>{EVENT_VIGILANCE.body}</p>
+						<p class="edit-du-creux__vigilance-ps"><strong>P.S.</strong> {EVENT_VIGILANCE.ps}</p>
+					</aside>
+				</div>
+			</CollapseSection>
+		{/if}
+
 		<CollapseSection title="Entraide et collaboration" open>
 			<ul>
 				{#each COLLABORATION_RULES as rule}

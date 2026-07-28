@@ -4,10 +4,11 @@
 	interface Props {
 		title: string;
 		open?: boolean;
+		id?: string;
 		children: Snippet;
 	}
 
-	let { title, open = false, children }: Props = $props();
+	let { title, open = false, id, children }: Props = $props();
 	let expanded = $state(false);
 
 	$effect(() => {
@@ -15,7 +16,7 @@
 	});
 </script>
 
-<div class="accordion__item" class:accordion__item--open={expanded}>
+<div class="accordion__item" class:accordion__item--open={expanded} {id}>
 	<button
 		type="button"
 		class="accordion__trigger"

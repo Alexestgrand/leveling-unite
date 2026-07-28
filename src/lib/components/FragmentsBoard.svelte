@@ -10,6 +10,11 @@
 		FRAGMENT_MODE_INTRO,
 		PHASES,
 		WAVE_DEADLINES,
+		CREUX_RESOLUTION,
+		isSursisAvailableForWave,
+		isSursisAvailableForCamp,
+		getSursisWaveNote,
+		CREUX_CAMP_LABEL,
 		type FragmentCamp,
 		type FragmentQuest,
 		type FragmentStatus
@@ -29,6 +34,10 @@
 
 	const currentWave = CURRENT_PHASE_INDEX >= 0 ? CURRENT_PHASE_INDEX + 1 : 1;
 	const waveName = PHASES[currentWave - 1]?.name ?? `Vague ${currentWave}`;
+	const sursisAvailable = $derived(isSursisAvailableForWave(currentWave));
+	const sursisCommunaute = $derived(isSursisAvailableForCamp(currentWave, 'communaute'));
+	const sursisStaff = $derived(isSursisAvailableForCamp(currentWave, 'staff'));
+	const sursisNote = $derived(getSursisWaveNote(currentWave));
 
 	let nowMs = $state(Date.now());
 
@@ -239,6 +248,33 @@
 
 <section class="fragments-board space-y-5 sm:space-y-6" data-tour="tour-fragmentes">
 	<PhraseTracker showBoardLink={false} />
+
+	{#if CREUX_RESOLUTION.resolved && CREUX_RESOLUTION.chosenRuleId === 'sursis'}
+		<div class="fragments-board__sursis" use:reveal role="note">
+			<p class="fragments-board__sursis-badge">
+				<span class="fragments-board__sursis-pulse" aria-hidden="true"></span>
+				Édit du Creux · Le Sursis
+			</p>
+			{#if sursisAvailable}
+				<p class="fragments-board__sursis-text">
+					Sur <strong>{waveName}</strong>, un Fragmenté par camp peut invoquer un
+					<strong>second essai</strong> après un premier refus :
+				</p>
+				<ul class="fragments-board__sursis-camps">
+					<li class:fragments-board__sursis-camp--ready={sursisCommunaute}>
+						<strong>{CREUX_CAMP_LABEL.communaute}</strong> —
+						{sursisCommunaute ? '1 Sursis disponible' : 'Sursis épuisé ou expiré'}
+					</li>
+					<li class:fragments-board__sursis-camp--ready={sursisStaff}>
+						<strong>{CREUX_CAMP_LABEL.staff}</strong> —
+						{sursisStaff ? '1 Sursis disponible' : 'Sursis épuisé ou expiré'}
+					</li>
+				</ul>
+			{:else if sursisNote}
+				<p class="fragments-board__sursis-text fragments-board__sursis-text--muted">{sursisNote}</p>
+			{/if}
+		</div>
+	{/if}
 
 	<div class="surface-card hud-panel clip-corners p-5 sm:p-6" use:reveal>
 		<p class="section-eyebrow">

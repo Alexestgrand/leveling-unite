@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import AmbientBackground from '$lib/components/AmbientBackground.svelte';
 	import SiteHeader from '$lib/components/SiteHeader.svelte';
+	import EventEdictBar from '$lib/components/EventEdictBar.svelte';
 	import TourGuide from '$lib/components/TourGuide.svelte';
 
 	let { children } = $props();
@@ -50,6 +51,7 @@
 <div class="app-shell relative min-h-screen overflow-x-hidden text-zinc-100 antialiased">
 	<AmbientBackground />
 	<SiteHeader />
+	<EventEdictBar />
 	<div id="main-content" class="relative z-10" tabindex="-1">
 		{#key $page.url.pathname}
 			<div class="page-enter">

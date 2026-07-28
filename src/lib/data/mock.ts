@@ -126,8 +126,10 @@ export const ENIGMA_SUMMARY = {
 	waveCount: 4,
 	submitAttempts: 2,
 	submitWindowHours: 24,
-	/** Essais de validation par Fragmenté (définitif). */
+	/** Essais de validation par Fragmenté (définitif, sauf édit du Creux). */
 	fragmentAttempts: 1,
+	/** Sursis actif : 1 second essai par vague et par camp (cf. CREUX_RESOLUTION). */
+	sursisPerWavePerCamp: 1,
 	/** Confirmations requises par d'autres Fragmentés du camp avant l'envoi. */
 	fragmentConfirmations: 2,
 	/** Délai pour valider son mot avant qu'il soit perdu. */
@@ -359,12 +361,22 @@ Date limite : 28/07 à 13h00.`
 
 export const FRAGMENT_MODE_INTRO = [
 	'Les porteurs et leurs énigmes sont publics. Tout le monde peut chercher.',
-	'Seul le Fragmenté désigné valide son mot en MP à @so_hakai — un essai, définitif.',
+	'Seul le Fragmenté désigné valide son mot en MP à @so_hakai — un essai par défaut, définitif.',
 	'Exactement 2 autres Fragmentés du même camp doivent confirmer l’essai. Pas les Enquêteurs, pas un ami hors rôle : uniquement des Fragmentés actifs de la vague. Sinon l’essai n’est pas traité.',
-	'72 heures par mot. Raté ou expiré : le mot est perdu, et seul un palier TikTok le fera réapparaître — pour les deux camps.'
+	'72 heures par mot. Raté ou expiré : le mot est perdu, et seul un palier TikTok le fera réapparaître — pour les deux camps.',
+	'Édit du Creux actif — Le Sursis : sur chaque vague, un Fragmenté par camp peut obtenir un second essai après un premier refus.'
 ] as const;
 
 export const ANNOUNCEMENTS: Announcement[] = [
+	{
+		id: 'edit-du-creux-sursis',
+		date: '2026-07-28T16:30:00+02:00',
+		tag: 'URGENT',
+		content:
+			'ÉNIGME DU CREUX — RÉSOLUE par la Communauté. Édit activé : II — Le Sursis. Un Fragmenté par vague et par camp obtient un second essai. Restez en alerte : de nouveaux signaux peuvent frapper sans annonce.',
+		href: '/regles#edit-du-creux',
+		linkLabel: 'Lire l’édit'
+	},
 	{
 		id: 'enigme-du-creux',
 		date: '2026-07-28T14:00:00+02:00',
@@ -540,7 +552,7 @@ export const CREUX_RULE_OPTIONS: CreuxRuleOption[] = [
 		id: 'sursis',
 		title: 'II — Le Sursis',
 		description:
-			'Un Fragmenté par vague obtient un second essai. Une erreur cesse d’être définitive. Une seule.'
+			'Un Fragmenté par vague et par camp obtient un second essai. Une erreur cesse d’être définitive. Une par camp.'
 	},
 	{
 		id: 'tribut',
@@ -550,10 +562,102 @@ export const CREUX_RULE_OPTIONS: CreuxRuleOption[] = [
 	}
 ];
 
+export type CreuxCampWinner = 'communaute' | 'staff';
+
+export interface CreuxResolution {
+	resolved: boolean;
+	winnerCamp: CreuxCampWinner;
+	chosenRuleId: string;
+	resolvedAt: string;
+	resolvedLabel: string;
+}
+
+/** Résultat de l'énigme du creux — règle active jusqu'à la fin de l'événement. */
+export const CREUX_RESOLUTION: CreuxResolution = {
+	resolved: true,
+	winnerCamp: 'communaute',
+	chosenRuleId: 'sursis',
+	resolvedAt: '2026-07-28T16:30:00+02:00',
+	resolvedLabel: '28 juillet 2026 · après-midi'
+};
+
+export const CREUX_CAMP_LABEL: Record<CreuxCampWinner, string> = {
+	communaute: 'Communauté Leveling',
+	staff: 'Staff Leveling'
+};
+
+export const ACTIVE_CREUX_RULE: CreuxRuleOption =
+	CREUX_RULE_OPTIONS.find((r) => r.id === CREUX_RESOLUTION.chosenRuleId) ?? CREUX_RULE_OPTIONS[1];
+
+/** Détail opérationnel de l'édit « Le Sursis » (règle II du creux). */
+export const SURCIS_RULE_DETAILS = [
+	'Chaque vague : un Fragmenté par camp (Communauté et Staff) peut obtenir un second essai de validation.',
+	'Le Sursis s’invoque après un premier essai refusé ou raté, avant la fin du délai de 72 h du mot concerné.',
+	'Une fois utilisé par un camp sur une vague, le Sursis est épuisé pour ce camp — l’autre camp conserve le sien.',
+	'Les 2 confirmations Fragmentés restent obligatoires à chaque essai, y compris au Sursis.',
+	'Un remplacement de porteur n’accorde pas de Sursis supplémentaire — l’édit ne se cumule pas au sein d’un camp.'
+] as const;
+
+export type SursisWaveStatus = 'expired' | 'available' | 'consumed';
+
+export interface SursisCampSlot {
+	status: SursisWaveStatus;
+	usedBy?: string;
+}
+
+export interface SursisWaveEntry {
+	communaute: SursisCampSlot;
+	staff: SursisCampSlot;
+	note?: string;
+}
+
+export const SURCIS_WAVE_STATUS: Record<number, SursisWaveEntry> = {
+	1: {
+		communaute: { status: 'expired' },
+		staff: { status: 'expired' },
+		note: 'Vague 1 close — aucun camp n’a invoqué le Sursis avant l’échéance.'
+	},
+	2: {
+		communaute: { status: 'available' },
+		staff: { status: 'available' }
+	},
+	3: {
+		communaute: { status: 'available' },
+		staff: { status: 'available' }
+	},
+	4: {
+		communaute: { status: 'available' },
+		staff: { status: 'available' }
+	}
+};
+
+/** Alerte veille — indices non annoncés peuvent tomber à tout moment. */
+export const EVENT_VIGILANCE = {
+	eyebrow: 'Protocole de veille',
+	title: 'Restez en alerte',
+	body:
+		'Des transmissions peuvent apparaître sur le site, dans le journal ou ailleurs — sans préavis et sans annonce Discord.',
+	ps: 'Soyez rapides : ils ne seront pas annoncés.'
+} as const;
+
+export function isSursisAvailableForWave(wave: number): boolean {
+	const entry = SURCIS_WAVE_STATUS[wave];
+	if (!entry) return false;
+	return entry.communaute.status === 'available' || entry.staff.status === 'available';
+}
+
+export function isSursisAvailableForCamp(wave: number, camp: CreuxCampWinner): boolean {
+	return SURCIS_WAVE_STATUS[wave]?.[camp]?.status === 'available';
+}
+
+export function getSursisWaveNote(wave: number): string | null {
+	return SURCIS_WAVE_STATUS[wave]?.note ?? null;
+}
+
 export const CONCEPT_INTRO = [
 	'Une phrase de quinze mots est cachée. Personne n’en détient assez pour la reconstituer seul.',
 	'À chaque vague, cinq Fragmentés sont désignés publiquement. Chacun porte un mot ; son énigme est publiée sur la page Fragmentés.',
-	'Tout le monde cherche. Seul le porteur valide son mot auprès de l’organisateur, @so_hakai — un essai, confirmé uniquement par 2 autres Fragmentés de son camp (pas les Enquêteurs), 72 heures. Un mot raté est perdu jusqu’au prochain palier TikTok.',
+	'Tout le monde cherche. Seul le porteur valide son mot auprès de l’organisateur, @so_hakai — un essai par défaut (deux si le Sursis est invoqué), confirmé uniquement par 2 autres Fragmentés de son camp (pas les Enquêteurs), 72 heures. Un mot raté est perdu jusqu’au prochain palier TikTok.',
 	'Deux camps s’affrontent : la Communauté Leveling et le Staff. L’organisateur, @so_hakai (Hakai), est neutre — il conçoit, observe et tranche.'
 ];
 
@@ -578,10 +682,11 @@ export const COLLABORATION_RULES = [
 
 export const CONFIDENTIALITY_RULES = [
 	'Les énigmes sont publiques ; les mots restent confidentiels jusqu’à la fin de l’événement.',
-	'Seul le Fragmenté nommé valide son mot en MP à @so_hakai (organisateur) — un essai, définitif.',
+	'Seul le Fragmenté nommé valide son mot en MP à @so_hakai (organisateur) — un essai par défaut, définitif.',
+	'Édit du Creux — Le Sursis (Communauté) : une fois par vague et par camp, un Fragmenté peut demander un second essai après un premier refus.',
 	'Avant l’envoi : exactement 2 confirmations d’autres Fragmentés du même camp (salon #fragmentes-membres ou #fragmentes-staff). Les Enquêteurs et les membres sans rôle Fragmenté ne peuvent pas confirmer — leurs messages ne comptent pas.',
 	'Les 2 confirmateurs écrivent aussi en MP à @so_hakai. Sans ces 2 confirmations Fragmentés, l’essai n’est pas traité.',
-	'72 h par mot. Raté ou expiré : perdu jusqu’au prochain palier TikTok, révélé aux deux camps.',
+	'72 h par mot. Raté ou expiré : perdu jusqu’au prochain palier TikTok, révélé aux deux camps — sauf si le Sursis du camp est encore disponible sur la vague.',
 	'Après validation, le porteur relaie des indices indirects — jamais le mot exact.',
 	'Pas de capture des MP de validation. Un mot fuité est invalidé et remplacé par un indice public.'
 ];
