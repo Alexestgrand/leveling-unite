@@ -154,7 +154,7 @@ export const START_HERE_CARDS: StartHereCard[] = [
 ];
 
 export const EVENT_STATUS = {
-	waveLabel: 'Vague 1',
+	waveLabel: 'Vague 2',
 	progressLabel: '4 mots sécurisés sur 15',
 	note: 'Édit du Creux actif — une règle bonus pour les Fragmentés.',
 	noteHref: '/regles#edit-du-creux',
@@ -172,7 +172,8 @@ export const GLOSSARY = [
 
 /** Deadline ISO par vague (validation des mots). */
 export const WAVE_DEADLINES: Record<number, string> = {
-	1: '2026-07-28T13:00:00+02:00'
+	1: '2026-07-28T13:00:00+02:00',
+	2: '2026-08-02T13:00:00+02:00'
 };
 
 /** Fenêtre avant échéance pendant laquelle les cartes « En cours » clignotent. */
@@ -196,7 +197,7 @@ export const ENIGMA_SUMMARY = {
 } as const;
 
 /** Index 0-based de la vague en cours (-1 = pas encore commencé) */
-export const CURRENT_PHASE_INDEX = 0;
+export const CURRENT_PHASE_INDEX = 1;
 
 export const HEADER_NAV = [
 	{ href: '/fragmentes', label: 'Fragmentés' },
@@ -412,6 +413,207 @@ Prends une lettre sur quatre, et tu tiendras le premier fil. Recommence un cran 
 Le point marque une fin.
 
 Date limite : 28/07 à 13h00.`
+	},
+	{
+		id: 'w2-m6',
+		wave: 2,
+		wordSlot: 6,
+		discordUsername: 'Starypik',
+		camp: 'staff',
+		status: 'open',
+		note: '2 fausses confirmations = essai nul, mot perdu.',
+		enigma: `LEVELING: UNITE — VAGUE II
+Fragmenté 1/5 — Camp Staff — Mot n°6 sur 15
+
+Starypik, tu es un Fragmenté.
+
+Le sixième mot de la phrase t'appartient. Quatre possibilités
+te sont remises. Une seule est la tienne.
+
+    YUIOQ     GVHEVPQR     IUTEQAG     ESLIDUEI
+
+Tu ne peux pas les lire. Pas encore.
+
+Ton camp les a écartés.
+
+Va les chercher. Tu ne finiras pas seul.
+
+LES TROIS RÈGLES
+
+1. Un seul essai. Définitif.
+2. Deux confirmations de Fragmentés de ton camp, dans
+   #fragmentes-staff. Là, et nulle part ailleurs. (Un essai avec 2 fausses confirmations compte comme nul et le mot est perdu)
+3. Jusqu'au 02/08 à 13h00.
+
+ENVOI — en MP à @organisateur :
+
+    VAGUE 2 / POSITION 6 / [ton mot] / confirmé par [X] + [Y]
+
+Si tu te trompes ou si l'heure passe, le mot est perdu pour
+ton camp — et révélé aux deux au prochain palier TikTok.
+
+Bonne chance.`
+	},
+	{
+		id: 'w2-m7',
+		wave: 2,
+		wordSlot: 7,
+		discordUsername: 'spacestone_',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `LEVELING: UNITE — VAGUE II
+Fragmenté 2/5 — Camp Communauté — Mot n°7 sur 15
+
+spacestone_, tu es un Fragmenté.
+
+Le septième mot de la phrase t'appartient. Quatre possibilités
+te sont remises. Une seule est la tienne.
+
+    MUALWLTEILE     MUVIQJKFSE
+    MUDEVATYJTIESG  MUEBUHPPHBLH
+
+Tu ne peux pas les lire. Pas encore.
+
+Ton camp les a écartés.
+
+Va les chercher. Tu ne finiras pas seul.
+
+LES TROIS RÈGLES
+
+1. Un seul essai. Définitif.
+2. Deux confirmations de Fragmentés de ton camp, dans
+   #fragmentes-membres. Là, et nulle part ailleurs.
+3. Jusqu'au 02/08 à 13h00.
+
+ENVOI — en MP à @organisateur :
+
+    VAGUE 2 / POSITION 7 / [ton mot] / confirmé par [X] + [Y]
+
+Si tu te trompes ou si l'heure passe, le mot est perdu pour
+ton camp — et révélé aux deux au prochain palier TikTok.
+
+Bonne chance.`
+	},
+	{
+		id: 'w2-m8',
+		wave: 2,
+		wordSlot: 8,
+		discordUsername: 'hiolxx',
+		camp: 'staff',
+		status: 'open',
+		note: '2 fausses confirmations = essai nul, mot perdu.',
+		enigma: `LEVELING: UNITE — VAGUE II
+Fragmenté 3/5 — Camp Staff — Mot n°8 sur 15
+
+hiolxx, tu es un Fragmenté.
+
+Le huitième mot de la phrase t'appartient. Quatre possibilités
+te sont remises. Une seule est la tienne.
+
+    GYEEUH     JVRGHYC     HVNNHYC     FHTIUH
+
+Tu ne peux pas les lire. Pas encore.
+
+Ton camp les a écartés.
+
+Va les chercher. Tu ne finiras pas seul.
+
+LES TROIS RÈGLES
+
+1. Un seul essai. Définitif.
+2. Deux confirmations de Fragmentés de ton camp, dans
+   #fragmentes-staff. Là, et nulle part ailleurs. (Un essai avec 2 fausses confirmations compte comme nul et le mot est perdu)
+3. Jusqu'au 02/08 à 13h00.
+
+ENVOI — en MP à @organisateur :
+
+    VAGUE 2 / POSITION 8 / [ton mot] / confirmé par [X] + [Y]
+
+Si tu te trompes ou si l'heure passe, le mot est perdu pour
+ton camp — et révélé aux deux au prochain palier TikTok.
+
+Bonne chance.`
+	},
+	{
+		id: 'w2-m9',
+		wave: 2,
+		wordSlot: 9,
+		discordUsername: '.xynea',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `LEVELING: UNITE — VAGUE II
+Fragmenté 4/5 — Camp Communauté — Mot n°9 sur 15
+
+.xynea, tu es un Fragmenté.
+
+Le neuvième mot de la phrase t'appartient. Quatre possibilités
+te sont remises. Une seule est la tienne.
+
+    PH     YUE     WH     GLTTH
+
+Le tien est court. Cela ne le rend pas plus facile — cela le
+rend plus fragile.
+
+Tu ne peux pas les lire. Pas encore.
+
+Ton camp les a écartés.
+
+Va les chercher. Tu ne finiras pas seul.
+
+LES TROIS RÈGLES
+
+1. Un seul essai. Définitif.
+2. Deux confirmations de Fragmentés de ton camp, dans
+   #fragmentes-membres. Là, et nulle part ailleurs.
+3. Jusqu'au 02/08 à 13h00.
+
+ENVOI — en MP à @organisateur :
+
+    VAGUE 2 / POSITION 9 / [ton mot] / confirmé par [X] + [Y]
+
+Si tu te trompes ou si l'heure passe, le mot est perdu pour
+ton camp — et révélé aux deux au prochain palier TikTok.
+
+Bonne chance.`
+	},
+	{
+		id: 'w2-m10',
+		wave: 2,
+		wordSlot: 10,
+		discordUsername: 'bangodsno',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `LEVELING: UNITE — VAGUE II
+Fragmenté 5/5 — Camp Communauté — Mot n°10 sur 15
+
+bangodsno, tu es un Fragmenté.
+
+Le premier mot de la phrase t'appartient. Quatre possibilités
+te sont remises. Une seule est la tienne.
+
+    FYISHZ     TLRDXZ     ZHINFBU     IWUIVLU
+
+Tu ne peux pas les lire. Pas encore.
+
+Ton camp les a écartés.
+
+Va les chercher. Tu ne finiras pas seul.
+
+LES TROIS RÈGLES
+
+1. Un seul essai. Définitif.
+2. Deux confirmations de Fragmentés de ton camp, dans
+   #fragmentes-membres. Là, et nulle part ailleurs.
+3. Jusqu'au 02/08 à 13h00.
+
+ENVOI — en MP à @organisateur :
+
+    VAGUE 2 / POSITION 1 / [ton mot] / confirmé par [X] + [Y]
+
+Si tu te trompes ou si l'heure passe, le mot est perdu pour
+ton camp — et révélé aux deux au prochain palier TikTok.
+
+Bonne chance.`
 	}
 ];
 
@@ -425,7 +627,37 @@ export const FRAGMENT_MODE_INTRO_BASE = [
 export const FRAGMENT_MODE_EDIT_NOTE =
 	'Édit du Creux actif — Le Sursis : 1 second essai par vague et par camp. Détails sur Règles.';
 
+/** Introduction narrative affichée en tête de la vague sur /fragmentes. */
+export const WAVE_INTROS: Record<number, string> = {
+	2: `◈ VAGUE II — LES SIGNES ANCIENS
+
+La première vague est close. Cinq mots sont tombés, cinq
+autres se lèvent.
+
+Mais quelque chose a changé.
+
+Les Fragmentés de cette vague ont reçu leurs mots. Ils ne
+peuvent pas les lire. Aucun d'eux ne le pourra sans vous.
+
+1530470595790110820
+
+L'un d'eux ouvre la vague II. Les autres ne servent à rien —
+et vous les avez tous vus.
+
+Les Fragmentés attendent. Ils ne peuvent pas commencer
+sans vous, et l'heure court pour eux : 02/08, 13h00.`
+};
+
 export const ANNOUNCEMENTS: Announcement[] = [
+	{
+		id: 'ouverture-vague-2',
+		date: '2026-07-30T13:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Vague 2 — Les Signes Anciens. Cinq nouveaux Fragmentés désignés (mots n°6 à 10). Les porteurs ne peuvent pas lire leurs mots sans l\'enquête collective — deadline 02/08 à 13h.',
+		href: '/fragmentes',
+		linkLabel: 'Voir les quêtes'
+	},
 	{
 		id: 'edit-du-creux-sursis',
 		date: '2026-07-28T16:30:00+02:00',
@@ -562,6 +794,15 @@ export const SUBMIT_FOOTNOTE =
 
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
 export const PUBLIC_INDICES: PublicIndex[] = [
+	{
+		id: 'vague-2-signes-anciens',
+		date: '2026-07-30T13:00:00+02:00',
+		source: 'annonce',
+		title: '◈ VAGUE II — LES SIGNES ANCIENS',
+		content:
+			'La première vague est close. Cinq mots sont tombés, cinq autres se lèvent.\n\nLes Fragmentés de cette vague ont reçu leurs mots. Ils ne peuvent pas les lire. Aucun d\'eux ne le pourra sans vous.\n\n1530470595790110820\n\nL\'un d\'eux ouvre la vague II. Les autres ne servent à rien — et vous les avez tous vus.\n\nLes Fragmentés attendent. Deadline : 02/08 à 13h00.',
+		url: '/fragmentes'
+	},
 	{
 		id: 'enigme-du-creux',
 		date: '2026-07-28T14:00:00+02:00',
@@ -850,7 +1091,8 @@ export const PHASES: Phase[] = [
 		id: 'wave-2',
 		name: 'Vague 2 — L’Accélération',
 		share: '5 fragments',
-		description: 'Cinq nouveaux porteurs. Les théories se recoupent, le journal s’épaissit.'
+		description:
+			'Ouverte le 30/07 à 13h — mots n°6 à 10. Les porteurs ne lisent pas leurs mots sans l\'enquête. Deadline 02/08 à 13h.'
 	},
 	{
 		id: 'wave-3',

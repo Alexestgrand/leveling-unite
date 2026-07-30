@@ -9,6 +9,7 @@
 		FRAGMENTS,
 		FRAGMENT_MODE_INTRO_BASE,
 		FRAGMENT_MODE_EDIT_NOTE,
+		WAVE_INTROS,
 		PHASES,
 		WAVE_DEADLINES,
 		CREUX_RESOLUTION,
@@ -35,6 +36,7 @@
 
 	const currentWave = CURRENT_PHASE_INDEX >= 0 ? CURRENT_PHASE_INDEX + 1 : 1;
 	const waveName = PHASES[currentWave - 1]?.name ?? `Vague ${currentWave}`;
+	const waveIntro = $derived(WAVE_INTROS[currentWave] ?? null);
 	const sursisAvailable = $derived(isSursisAvailableForWave(currentWave));
 	const sursisCommunaute = $derived(isSursisAvailableForCamp(currentWave, 'communaute'));
 	const sursisStaff = $derived(isSursisAvailableForCamp(currentWave, 'staff'));
@@ -313,6 +315,12 @@
 			(pas des Enquêteurs). Ils écrivent aussi de leur côté.
 		</p>
 	</div>
+
+	{#if waveIntro}
+		<div class="surface-card hud-panel clip-corners p-5 sm:p-6 fragments-board__wave-intro" use:reveal>
+			<p class="fragment-card__enigma-text whitespace-pre-line">{waveIntro}</p>
+		</div>
+	{/if}
 
 	{#if waveFragments.length === 0}
 		<div class="surface-card hud-panel clip-corners p-8 text-center" use:reveal>
