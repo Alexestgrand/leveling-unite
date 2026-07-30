@@ -3358,6 +3358,68 @@
 	color: rgba(252, 211, 77, 0.9);
 }
 
+.fragments-board__archive {
+	margin-top: 2.5rem;
+	padding-top: 1.75rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fragments-board__wave-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.85rem;
+}
+
+.fragments-board__wave-tab {
+	padding: 0.45rem 0.9rem;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 0.4rem;
+	background: rgba(15, 17, 24, 0.55);
+	color: rgba(212, 212, 216, 0.9);
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	cursor: pointer;
+	transition:
+		border-color 0.2s,
+		background 0.2s,
+		color 0.2s;
+}
+
+.fragments-board__wave-tab:hover {
+	border-color: rgba(70, 200, 255, 0.35);
+	color: #fff;
+}
+
+.fragments-board__wave-tab--active {
+	border-color: rgba(70, 200, 255, 0.55);
+	background: rgba(70, 200, 255, 0.12);
+	color: #e0f2fe;
+}
+
+.fragments-board__archive-panel {
+	margin-top: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.fragments-board__archive-title {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 1.1rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: #fff;
+}
+
+.fragments-board__archive-note {
+	margin: 0.25rem 0 0;
+	font-size: 0.8rem;
+	color: rgba(161, 161, 170, 0.95);
+}
+
 .fragment-card {
 	position: relative;
 	overflow: hidden;

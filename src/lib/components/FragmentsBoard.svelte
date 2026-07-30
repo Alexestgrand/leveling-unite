@@ -63,19 +63,45 @@
 		return nowMs >= end - windowMs;
 	});
 
-	const waveFragments = $derived(
-		FRAGMENTS.filter((f) => f.wave === currentWave).sort((a, b) => {
+	function sortFragments(list: FragmentQuest[]): FragmentQuest[] {
+		return [...list].sort((a, b) => {
 			const slotA = a.wordSlot ?? 99;
 			const slotB = b.wordSlot ?? 99;
 			if (slotA !== slotB) return slotA - slotB;
 			return a.discordUsername.localeCompare(b.discordUsername);
-		})
+		});
+	}
+
+	const waveFragments = $derived(
+		sortFragments(FRAGMENTS.filter((f) => f.wave === currentWave))
 	);
 
 	const members = $derived(waveFragments.filter((f) => f.camp === 'communaute'));
 	const staff = $derived(waveFragments.filter((f) => f.camp === 'staff'));
 
+	const pastWaves = $derived(
+		[...new Set(FRAGMENTS.map((f) => f.wave))]
+			.filter((w) => w < currentWave)
+			.sort((a, b) => b - a)
+	);
+
+	let archiveWave = $state<number | null>(null);
 	let focusedSlot = $state<number | null>(null);
+
+	const archiveFragments = $derived(
+		archiveWave === null
+			? []
+			: sortFragments(FRAGMENTS.filter((f) => f.wave === archiveWave))
+	);
+	const archiveMembers = $derived(archiveFragments.filter((f) => f.camp === 'communaute'));
+	const archiveStaff = $derived(archiveFragments.filter((f) => f.camp === 'staff'));
+	const archiveWaveName = $derived(
+		archiveWave === null ? '' : (PHASES[archiveWave - 1]?.name ?? `Vague ${archiveWave}`)
+	);
+
+	function toggleArchive(wave: number) {
+		archiveWave = archiveWave === wave ? null : wave;
+	}
 
 	function statusClass(status: FragmentStatus): string {
 		if (status === 'validated') return 'fragment-card--validated';
@@ -364,5 +390,63 @@
 				</div>
 			</div>
 		{/if}
+	{/if}
+
+	{#if pastWaves.length > 0}
+		<section class="fragments-board__archive" aria-label="Vagues précédentes">
+			<p class="section-eyebrow">
+				<span class="section-eyebrow__dot" aria-hidden="true"></span>
+				Archives
+			</p>
+			<div class="fragments-board__wave-tabs" role="tablist" aria-label="Vagues passées">
+				{#each pastWaves as wave}
+					<button
+						type="button"
+						role="tab"
+						class="fragments-board__wave-tab"
+						class:fragments-board__wave-tab--active={archiveWave === wave}
+						aria-selected={archiveWave === wave}
+						onclick={() => toggleArchive(wave)}
+					>
+						Vague {wave}
+					</button>
+				{/each}
+			</div>
+
+			{#if archiveWave !== null}
+				<div class="fragments-board__archive-panel" role="tabpanel">
+					<p class="fragments-board__archive-title">{archiveWaveName}</p>
+					<p class="fragments-board__archive-note">Vague close — énigmes et résultats conservés.</p>
+
+					{#if archiveMembers.length > 0}
+						<div>
+							<h3 class="fragments-board__camp-title fragments-board__camp-title--communaute">
+								<span aria-hidden="true">◆</span>
+								Camp Communauté
+							</h3>
+							<div class="fragments-grid">
+								{#each archiveMembers as fragment, index}
+									{@render fragmentCard(fragment, index)}
+								{/each}
+							</div>
+						</div>
+					{/if}
+
+					{#if archiveStaff.length > 0}
+						<div>
+							<h3 class="fragments-board__camp-title fragments-board__camp-title--staff">
+								<span aria-hidden="true">◇</span>
+								Camp Staff
+							</h3>
+							<div class="fragments-grid">
+								{#each archiveStaff as fragment, index}
+									{@render fragmentCard(fragment, index + archiveMembers.length)}
+								{/each}
+							</div>
+						</div>
+					{/if}
+				</div>
+			{/if}
+		</section>
 	{/if}
 </section>

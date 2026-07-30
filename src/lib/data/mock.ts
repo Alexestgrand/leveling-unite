@@ -422,37 +422,17 @@ Date limite : 28/07 à 13h00.`
 		camp: 'staff',
 		status: 'open',
 		note: '2 fausses confirmations = essai nul, mot perdu.',
-		enigma: `LEVELING: UNITE — VAGUE II
-Fragmenté 1/5 — Camp Staff — Mot n°6 sur 15
+		enigma: `LES SIGNES
 
-Starypik, tu es un Fragmenté.
-
-Le sixième mot de la phrase t'appartient. Quatre possibilités
-te sont remises. Une seule est la tienne.
+Quatre possibilités. Une seule est la tienne.
 
     YUIOQ     GVHEVPQR     IUTEQAG     ESLIDUEI
 
 Tu ne peux pas les lire. Pas encore.
-
 Ton camp les a écartés.
+Va les chercher.
 
-Va les chercher. Tu ne finiras pas seul.
-
-LES TROIS RÈGLES
-
-1. Un seul essai. Définitif.
-2. Deux confirmations de Fragmentés de ton camp, dans
-   #fragmentes-staff. Là, et nulle part ailleurs. (Un essai avec 2 fausses confirmations compte comme nul et le mot est perdu)
-3. Jusqu'au 02/08 à 13h00.
-
-ENVOI — en MP à @organisateur :
-
-    VAGUE 2 / POSITION 6 / [ton mot] / confirmé par [X] + [Y]
-
-Si tu te trompes ou si l'heure passe, le mot est perdu pour
-ton camp — et révélé aux deux au prochain palier TikTok.
-
-Bonne chance.`
+Date limite : 02/08 à 13h00.`
 	},
 	{
 		id: 'w2-m7',
@@ -461,38 +441,18 @@ Bonne chance.`
 		discordUsername: 'spacestone_',
 		camp: 'communaute',
 		status: 'open',
-		enigma: `LEVELING: UNITE — VAGUE II
-Fragmenté 2/5 — Camp Communauté — Mot n°7 sur 15
+		enigma: `LES SIGNES
 
-spacestone_, tu es un Fragmenté.
-
-Le septième mot de la phrase t'appartient. Quatre possibilités
-te sont remises. Une seule est la tienne.
+Quatre possibilités. Une seule est la tienne.
 
     MUALWLTEILE     MUVIQJKFSE
     MUDEVATYJTIESG  MUEBUHPPHBLH
 
 Tu ne peux pas les lire. Pas encore.
-
 Ton camp les a écartés.
+Va les chercher.
 
-Va les chercher. Tu ne finiras pas seul.
-
-LES TROIS RÈGLES
-
-1. Un seul essai. Définitif.
-2. Deux confirmations de Fragmentés de ton camp, dans
-   #fragmentes-membres. Là, et nulle part ailleurs.
-3. Jusqu'au 02/08 à 13h00.
-
-ENVOI — en MP à @organisateur :
-
-    VAGUE 2 / POSITION 7 / [ton mot] / confirmé par [X] + [Y]
-
-Si tu te trompes ou si l'heure passe, le mot est perdu pour
-ton camp — et révélé aux deux au prochain palier TikTok.
-
-Bonne chance.`
+Date limite : 02/08 à 13h00.`
 	},
 	{
 		id: 'w2-m8',
@@ -502,37 +462,17 @@ Bonne chance.`
 		camp: 'staff',
 		status: 'open',
 		note: '2 fausses confirmations = essai nul, mot perdu.',
-		enigma: `LEVELING: UNITE — VAGUE II
-Fragmenté 3/5 — Camp Staff — Mot n°8 sur 15
+		enigma: `LES SIGNES
 
-hiolxx, tu es un Fragmenté.
-
-Le huitième mot de la phrase t'appartient. Quatre possibilités
-te sont remises. Une seule est la tienne.
+Quatre possibilités. Une seule est la tienne.
 
     GYEEUH     JVRGHYC     HVNNHYC     FHTIUH
 
 Tu ne peux pas les lire. Pas encore.
-
 Ton camp les a écartés.
+Va les chercher.
 
-Va les chercher. Tu ne finiras pas seul.
-
-LES TROIS RÈGLES
-
-1. Un seul essai. Définitif.
-2. Deux confirmations de Fragmentés de ton camp, dans
-   #fragmentes-staff. Là, et nulle part ailleurs. (Un essai avec 2 fausses confirmations compte comme nul et le mot est perdu)
-3. Jusqu'au 02/08 à 13h00.
-
-ENVOI — en MP à @organisateur :
-
-    VAGUE 2 / POSITION 8 / [ton mot] / confirmé par [X] + [Y]
-
-Si tu te trompes ou si l'heure passe, le mot est perdu pour
-ton camp — et révélé aux deux au prochain palier TikTok.
-
-Bonne chance.`
+Date limite : 02/08 à 13h00.`
 	},
 	{
 		id: 'w2-m9',
@@ -541,13 +481,9 @@ Bonne chance.`
 		discordUsername: '.xynea',
 		camp: 'communaute',
 		status: 'open',
-		enigma: `LEVELING: UNITE — VAGUE II
-Fragmenté 4/5 — Camp Communauté — Mot n°9 sur 15
+		enigma: `LES SIGNES
 
-.xynea, tu es un Fragmenté.
-
-Le neuvième mot de la phrase t'appartient. Quatre possibilités
-te sont remises. Une seule est la tienne.
+Quatre possibilités. Une seule est la tienne.
 
     PH     YUE     WH     GLTTH
 
@@ -555,26 +491,10 @@ Le tien est court. Cela ne le rend pas plus facile — cela le
 rend plus fragile.
 
 Tu ne peux pas les lire. Pas encore.
-
 Ton camp les a écartés.
+Va les chercher.
 
-Va les chercher. Tu ne finiras pas seul.
-
-LES TROIS RÈGLES
-
-1. Un seul essai. Définitif.
-2. Deux confirmations de Fragmentés de ton camp, dans
-   #fragmentes-membres. Là, et nulle part ailleurs.
-3. Jusqu'au 02/08 à 13h00.
-
-ENVOI — en MP à @organisateur :
-
-    VAGUE 2 / POSITION 9 / [ton mot] / confirmé par [X] + [Y]
-
-Si tu te trompes ou si l'heure passe, le mot est perdu pour
-ton camp — et révélé aux deux au prochain palier TikTok.
-
-Bonne chance.`
+Date limite : 02/08 à 13h00.`
 	},
 	{
 		id: 'w2-m10',
@@ -583,37 +503,17 @@ Bonne chance.`
 		discordUsername: 'bangodsno',
 		camp: 'communaute',
 		status: 'open',
-		enigma: `LEVELING: UNITE — VAGUE II
-Fragmenté 5/5 — Camp Communauté — Mot n°10 sur 15
+		enigma: `LES SIGNES
 
-bangodsno, tu es un Fragmenté.
-
-Le premier mot de la phrase t'appartient. Quatre possibilités
-te sont remises. Une seule est la tienne.
+Quatre possibilités. Une seule est la tienne.
 
     FYISHZ     TLRDXZ     ZHINFBU     IWUIVLU
 
 Tu ne peux pas les lire. Pas encore.
-
 Ton camp les a écartés.
+Va les chercher.
 
-Va les chercher. Tu ne finiras pas seul.
-
-LES TROIS RÈGLES
-
-1. Un seul essai. Définitif.
-2. Deux confirmations de Fragmentés de ton camp, dans
-   #fragmentes-membres. Là, et nulle part ailleurs.
-3. Jusqu'au 02/08 à 13h00.
-
-ENVOI — en MP à @organisateur :
-
-    VAGUE 2 / POSITION 1 / [ton mot] / confirmé par [X] + [Y]
-
-Si tu te trompes ou si l'heure passe, le mot est perdu pour
-ton camp — et révélé aux deux au prochain palier TikTok.
-
-Bonne chance.`
+Date limite : 02/08 à 13h00.`
 	}
 ];
 
