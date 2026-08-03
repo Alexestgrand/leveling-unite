@@ -5,6 +5,7 @@
 		ACTIVE_CREUX_RULE,
 		CREUX_CAMP_LABEL,
 		CREUX_CHALLENGE,
+		CREUX_PENDING,
 		CREUX_RESOLUTION,
 		CREUX_RULE_OPTIONS,
 		SURCIS_RULE_DETAILS
@@ -14,15 +15,28 @@
 <PageShell
 	sectionLabel="Transmission"
 	title="Énigme du creux"
-	subtitle={CREUX_RESOLUTION.resolved
-		? 'Signal déchiffré. Un camp a parlé — l’édit est gravé.'
-		: 'Signal capté entre deux vagues. Une règle pour le camp qui résout le premier.'}
+	subtitle={CREUX_PENDING.active
+		? 'Entre deux vagues. Une nouvelle transmission est imminente.'
+		: CREUX_RESOLUTION.resolved
+			? 'Signal déchiffré. Un camp a parlé — l’édit est gravé.'
+			: 'Signal capté entre deux vagues. Une règle pour le camp qui résout le premier.'}
 >
+	{#if CREUX_PENDING.active}
+		<div class="creux-pending surface-card hud-panel clip-corners p-5 sm:p-8" role="status">
+			<p class="creux-pending__eyebrow">
+				<span class="creux-pending__pulse" aria-hidden="true"></span>
+				{CREUX_PENDING.betweenLabel}
+			</p>
+			<h2 class="creux-pending__title">{CREUX_PENDING.title}</h2>
+			<p class="creux-pending__body">{CREUX_PENDING.body}</p>
+		</div>
+	{/if}
+
 	{#if CREUX_RESOLUTION.resolved}
 		<div class="creux-resolved surface-card hud-panel clip-corners p-5 sm:p-8" role="status">
 			<p class="creux-resolved__eyebrow">
 				<span aria-hidden="true">✓</span>
-				Énigme résolue
+				Énigme résolue — premier Creux
 			</p>
 			<h2 class="creux-resolved__title">Le creux a parlé.</h2>
 			<p class="creux-resolved__lead">
@@ -47,7 +61,7 @@
 	<article id={CREUX_CHALLENGE.id} class="creux-vault surface-card hud-panel clip-corners p-5 sm:p-8">
 		<p class="creux-vault__eyebrow">
 			<span aria-hidden="true">◈</span>
-			{CREUX_RESOLUTION.resolved ? 'Archive — transmission du creux' : 'Transmission non identifiée'}
+			{CREUX_RESOLUTION.resolved ? 'Archive — transmission du premier Creux' : 'Transmission non identifiée'}
 		</p>
 
 		<p class="creux-vault__intro">

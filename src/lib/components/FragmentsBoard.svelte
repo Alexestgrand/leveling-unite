@@ -13,6 +13,7 @@
 		PHASES,
 		WAVE_DEADLINES,
 		CREUX_RESOLUTION,
+		CREUX_PENDING,
 		isSursisAvailableForWave,
 		isSursisAvailableForCamp,
 		getSursisWaveNote,
@@ -277,6 +278,17 @@
 
 <section class="fragments-board space-y-5 sm:space-y-6" data-tour="tour-fragmentes">
 	<PhraseTracker showBoardLink={false} />
+
+	{#if CREUX_PENDING.active}
+		<a href="/creux" class="fragments-board__creux-link surface-card" use:reveal>
+			<span class="fragments-board__creux-link-eyebrow">
+				<span class="fragments-board__sursis-pulse" aria-hidden="true"></span>
+				{CREUX_PENDING.betweenLabel}
+			</span>
+			<span class="fragments-board__creux-link-title">{CREUX_PENDING.title}</span>
+			<span class="fragments-board__creux-link-cta">Voir le Creux →</span>
+		</a>
+	{/if}
 
 	{#if CREUX_RESOLUTION.resolved && CREUX_RESOLUTION.chosenRuleId === 'sursis'}
 		<div class="fragments-board__sursis" use:reveal role="note">

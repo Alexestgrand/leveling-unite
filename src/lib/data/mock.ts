@@ -154,11 +154,11 @@ export const START_HERE_CARDS: StartHereCard[] = [
 ];
 
 export const EVENT_STATUS = {
-	waveLabel: 'Vague 2',
-	progressLabel: '4 mots sécurisés sur 15',
-	note: 'Édit du Creux actif — une règle bonus pour les Fragmentés.',
-	noteHref: '/regles#edit-du-creux',
-	noteLinkLabel: 'Lire l\'édit'
+	waveLabel: 'Entre-vagues · Creux',
+	progressLabel: '5 mots sécurisés sur 15',
+	note: 'Nouvelle transmission du Creux imminente.',
+	noteHref: '/creux',
+	noteLinkLabel: 'Ouvrir le Creux'
 } as const;
 
 export const GLOSSARY = [
@@ -242,7 +242,7 @@ export const NAV_LINKS: NavLink[] = [
 	{
 		href: '/creux',
 		title: 'Le Creux',
-		description: 'Transmission mystérieuse entre deux vagues. Une règle en jeu.',
+		description: 'Nouvelle transmission imminente — entre Vague 2 et Vague 3.',
 		icon: 'clues',
 		featured: true
 	},
@@ -420,8 +420,8 @@ Date limite : 28/07 à 13h00.`
 		wordSlot: 6,
 		discordUsername: 'Starypik',
 		camp: 'staff',
-		status: 'open',
-		note: '2 fausses confirmations = essai nul, mot perdu.',
+		status: 'lost',
+		note: 'Mot perdu — camp Staff. Sursis invoqué sur la vague, sans succès.',
 		enigma: `LES SIGNES
 
 Quatre possibilités. Une seule est la tienne.
@@ -440,7 +440,8 @@ Date limite : 02/08 à 13h00.`
 		wordSlot: 7,
 		discordUsername: 'spacestone_',
 		camp: 'communaute',
-		status: 'open',
+		status: 'lost',
+		note: 'Mot perdu — aucune réponse dans le temps imparti.',
 		enigma: `LES SIGNES
 
 Quatre possibilités. Une seule est la tienne.
@@ -460,8 +461,8 @@ Date limite : 02/08 à 13h00.`
 		wordSlot: 8,
 		discordUsername: 'hiolxx',
 		camp: 'staff',
-		status: 'open',
-		note: '2 fausses confirmations = essai nul, mot perdu.',
+		status: 'lost',
+		note: 'Mot perdu — camp Staff.',
 		enigma: `LES SIGNES
 
 Quatre possibilités. Une seule est la tienne.
@@ -480,7 +481,8 @@ Date limite : 02/08 à 13h00.`
 		wordSlot: 9,
 		discordUsername: '.xynea',
 		camp: 'communaute',
-		status: 'open',
+		status: 'lost',
+		note: 'Mot perdu.',
 		enigma: `LES SIGNES
 
 Quatre possibilités. Une seule est la tienne.
@@ -502,7 +504,8 @@ Date limite : 02/08 à 13h00.`
 		wordSlot: 10,
 		discordUsername: 'bangodsno',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le dixième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `LES SIGNES
 
 Quatre possibilités. Une seule est la tienne.
@@ -549,6 +552,38 @@ sans vous, et l'heure court pour eux : 02/08, 13h00.`
 };
 
 export const ANNOUNCEMENTS: Announcement[] = [
+	{
+		id: 'creux-imminent',
+		date: '2026-08-03T14:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Phase Creux — entre Vague 2 et Vague 3. Une nouvelle transmission est imminente. Restez en veille.',
+		href: '/creux',
+		linkLabel: 'Ouvrir le Creux'
+	},
+	{
+		id: 'cloture-vague-2',
+		date: '2026-08-02T13:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Vague 2 — échéance atteinte (02/08, 13h). Mot n°10 sécurisé (@bangodsno, Communauté). Mots n°6 et n°8 perdus (Staff — Sursis consommé). Mots n°7 (délai) et n°9 (essai refusé) perdus (Communauté).'
+	},
+	{
+		id: 'transmission-troisieme-signal',
+		date: '2026-08-01T17:16:00+02:00',
+		tag: 'INDICE',
+		content: 'Un troisième signal a été intercepté.',
+		href: '/indices#transmission-troisieme-signal',
+		linkLabel: 'Consulter l’indice'
+	},
+	{
+		id: 'transmission-second-signal',
+		date: '2026-07-31T15:13:00+02:00',
+		tag: 'INDICE',
+		content: 'Un second signal a été intercepté.',
+		href: '/indices#transmission-second-signal',
+		linkLabel: 'Consulter l’indice'
+	},
 	{
 		id: 'ouverture-vague-2',
 		date: '2026-07-30T13:00:00+02:00',
@@ -695,6 +730,22 @@ export const SUBMIT_FOOTNOTE =
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
 export const PUBLIC_INDICES: PublicIndex[] = [
 	{
+		id: 'transmission-troisieme-signal',
+		date: '2026-08-01T17:16:00+02:00',
+		source: 'annonce',
+		title: '◈ TRANSMISSION — TROISIÈME SIGNAL',
+		content:
+			'#  A · B · C · D · H\n\nCinq lettres. Cinq d\'entre vous.\nAucune n\'appartient à deux.'
+	},
+	{
+		id: 'transmission-second-signal',
+		date: '2026-07-31T15:13:00+02:00',
+		source: 'annonce',
+		title: '◈ TRANSMISSION — SECOND SIGNAL',
+		content:
+			'L\'échéance est proche.\nVoici le premier témoin.\nLe premier signal ne mentait pas. Il se taisait simplement.\nVoici ce qu\'il gardait :\n\nLe journal dit ce qu\'il est avant de dire ce qu\'il contient.\n\nLe reste ne s\'obtient pas seul.'
+	},
+	{
 		id: 'vague-2-signes-anciens',
 		date: '2026-07-30T13:00:00+02:00',
 		source: 'annonce',
@@ -730,6 +781,16 @@ export const PUBLIC_INDICES: PublicIndex[] = [
 			'Les cinq premiers mots de la phrase commencent, dans le désordre, par les lettres :\n\nC · I · M · N · N\n\nL’ordre n’est pas donné. Il ne le sera pas.'
 	}
 ];
+
+/** Seconde phase Creux (entre Vague 2 et Vague 3) — transmission pas encore publiée. */
+export const CREUX_PENDING = {
+	active: true,
+	betweenLabel: 'Entre Vague 2 et Vague 3',
+	title: 'Nouvelle transmission imminente',
+	body:
+		'La Vague 2 est close. Le Creux s’ouvre à nouveau. Une énigme est sur le point d’être captée — restez en veille, sans préavis.',
+	href: '/creux'
+} as const;
 
 export const CREUX_CHALLENGE: CreuxChallenge = {
 	id: 'enigme-du-creux',
@@ -818,8 +879,10 @@ export const SURCIS_WAVE_STATUS: Record<number, SursisWaveEntry> = {
 		note: 'Vague 1 close — aucun camp n’a invoqué le Sursis avant l’échéance.'
 	},
 	2: {
-		communaute: { status: 'available' },
-		staff: { status: 'available' }
+		communaute: { status: 'expired' },
+		staff: { status: 'consumed' },
+		note:
+			'Vague 2 close — Staff a invoqué le Sursis, puis perdu les mots n°6 et n°8. Communauté : n°10 sécurisé, n°7 et n°9 perdus (Sursis non utilisé).'
 	},
 	3: {
 		communaute: { status: 'available' },
@@ -992,7 +1055,7 @@ export const PHASES: Phase[] = [
 		name: 'Vague 2 — L’Accélération',
 		share: '5 fragments',
 		description:
-			'Ouverte le 30/07 à 13h — mots n°6 à 10. Les porteurs ne lisent pas leurs mots sans l\'enquête. Deadline 02/08 à 13h.'
+			'Clôturée le 02/08 à 13h — 1 fragment sécurisé (n°10), 4 mots perdus (n°6–9). Staff a consommé son Sursis.'
 	},
 	{
 		id: 'wave-3',

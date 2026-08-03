@@ -14,7 +14,12 @@
 
 	const STATS_POLL_MS = 8000;
 
-	const latestIndex = PUBLIC_INDICES.length > 0 ? PUBLIC_INDICES[PUBLIC_INDICES.length - 1] : null;
+	const latestIndex =
+		PUBLIC_INDICES.length > 0
+			? [...PUBLIC_INDICES].sort(
+					(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+				)[0]
+			: null;
 	const currentPhase = CURRENT_PHASE_INDEX >= 0 ? PHASES[CURRENT_PHASE_INDEX] : null;
 	const tiktokProgress = milestonePercent(TIKTOK_TRACKER.currentViews, TIKTOK_TRACKER.goal);
 	const phaseProgress =

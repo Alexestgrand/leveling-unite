@@ -3364,6 +3364,49 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.fragments-board__creux-link {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.35rem;
+	padding: 1rem 1.15rem;
+	text-decoration: none;
+	border: 1px solid rgba(251, 146, 60, 0.35);
+	background: linear-gradient(145deg, rgba(124, 45, 18, 0.22), rgba(15, 17, 24, 0.55));
+	transition:
+		border-color 0.25s,
+		transform 0.25s;
+}
+
+.fragments-board__creux-link:hover {
+	border-color: rgba(251, 146, 60, 0.55);
+	transform: translateY(-2px);
+}
+
+.fragments-board__creux-link-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #fdba74;
+}
+
+.fragments-board__creux-link-title {
+	font-family: var(--font-display);
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: #ffedd5;
+}
+
+.fragments-board__creux-link-cta {
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #fb923c;
+}
+
 .fragments-board__wave-tabs {
 	display: flex;
 	flex-wrap: wrap;
@@ -4526,6 +4569,61 @@
 	color: #6ee7b7 !important;
 }
 
+.creux-pending {
+	max-width: 42rem;
+	margin: 0 auto 1.25rem;
+	border-color: rgba(251, 146, 60, 0.4);
+	background:
+		linear-gradient(165deg, rgba(124, 45, 18, 0.28), transparent 55%),
+		rgba(12, 14, 20, 0.9);
+}
+
+.creux-pending__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	margin: 0;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: #fdba74;
+}
+
+.creux-pending__pulse {
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 50%;
+	background: #fb923c;
+	box-shadow: 0 0 10px rgba(251, 146, 60, 0.75);
+	animation: creux-pending-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes creux-pending-pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.35;
+	}
+}
+
+.creux-pending__title {
+	margin: 0.65rem 0 0;
+	font-family: var(--font-display);
+	font-size: clamp(1.35rem, 4vw, 1.75rem);
+	font-weight: 700;
+	color: #ffedd5;
+}
+
+.creux-pending__body {
+	margin: 0.75rem 0 0;
+	font-size: 0.92rem;
+	line-height: 1.65;
+	color: rgba(254, 215, 170, 0.92);
+}
+
 .creux-resolved {
 	max-width: 42rem;
 	margin: 0 auto 1.25rem;
@@ -4817,7 +4915,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.fragments-board__sursis-pulse {
+	.fragments-board__sursis-pulse,
+	.creux-pending__pulse {
 		animation: none !important;
 	}
 }
