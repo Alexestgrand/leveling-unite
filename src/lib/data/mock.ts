@@ -636,7 +636,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
 ];
 
 export const TIKTOK_TRACKER = {
-	currentViews: 0,
+	currentViews: 45,
 	goal: 500_000,
 	/** Mise à jour manuelle staff — affichée sur /objectif-tiktok. */
 	updatedAtLabel: 'Compteur mis à jour manuellement par le staff',
