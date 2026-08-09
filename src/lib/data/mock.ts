@@ -103,10 +103,10 @@ export const EVENT = {
 	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */
 	startDate: new Date('2026-07-25T13:00:00+02:00'),
 	startDateLabel: '25 juillet 2026 · 13h',
-	/** Fin = ouverture + 20 jours (4 vagues de 5 jours). */
-	endDate: new Date('2026-08-14T13:00:00+02:00'),
-	endDateLabel: '14 août 2026 · 13h',
-	duration: '20 jours (4 vagues de 5 fragments)',
+	/** Fin prolongée — Vague 4 jusqu'au 20 août 2026. */
+	endDate: new Date('2026-08-20T13:00:00+02:00'),
+	endDateLabel: '20 août 2026 · 13h',
+	duration: '26 jours (4 vagues · calendrier prolongé)',
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.com/invite/appleveling'
 };
@@ -154,11 +154,11 @@ export const START_HERE_CARDS: StartHereCard[] = [
 ];
 
 export const EVENT_STATUS = {
-	waveLabel: 'Entre-vagues · Creux',
+	waveLabel: 'Vague 3',
 	progressLabel: '5 mots sécurisés sur 15',
-	note: 'Nouvelle transmission du Creux imminente.',
-	noteHref: '/creux',
-	noteLinkLabel: 'Ouvrir le Creux'
+	note: 'Vague III — Salle 12. Deadline 15/08 à 13h.',
+	noteHref: '/fragmentes',
+	noteLinkLabel: 'Voir les quêtes'
 } as const;
 
 export const GLOSSARY = [
@@ -173,7 +173,9 @@ export const GLOSSARY = [
 /** Deadline ISO par vague (validation des mots). */
 export const WAVE_DEADLINES: Record<number, string> = {
 	1: '2026-07-28T13:00:00+02:00',
-	2: '2026-08-02T13:00:00+02:00'
+	2: '2026-08-02T13:00:00+02:00',
+	3: '2026-08-15T13:00:00+02:00',
+	4: '2026-08-20T13:00:00+02:00'
 };
 
 /** Fenêtre avant échéance pendant laquelle les cartes « En cours » clignotent. */
@@ -197,7 +199,7 @@ export const ENIGMA_SUMMARY = {
 } as const;
 
 /** Index 0-based de la vague en cours (-1 = pas encore commencé) */
-export const CURRENT_PHASE_INDEX = 1;
+export const CURRENT_PHASE_INDEX = 2;
 
 export const HEADER_NAV = [
 	{ href: '/fragmentes', label: 'Fragmentés' },
@@ -242,14 +244,14 @@ export const NAV_LINKS: NavLink[] = [
 	{
 		href: '/creux',
 		title: 'Le Creux',
-		description: 'Nouvelle transmission imminente — entre Vague 2 et Vague 3.',
+		description: 'Archive du premier Creux — édit Le Sursis toujours actif.',
 		icon: 'clues',
-		featured: true
+		featured: false
 	},
 	{
 		href: '/fragmentes',
 		title: 'Fragmentés',
-		description: 'Porteurs, énigmes publiques, validation.',
+		description: 'Vague III — Salle 12. Quêtes en cours.',
 		icon: 'fragments',
 		featured: true
 	},
@@ -517,6 +519,127 @@ Ton camp les a écartés.
 Va les chercher.
 
 Date limite : 02/08 à 13h00.`
+	},
+	{
+		id: 'w3-m11',
+		wave: 3,
+		wordSlot: 11,
+		discordUsername: 'swapygames',
+		camp: 'staff',
+		status: 'open',
+		enigma: `LE REDOUBLANT
+
+« Deux fois la même classe, alors le latin, je le connais.
+La version du jour commençait par " pro patria ". Le
+professeur nous l'a assez répété : devant ce qu'on défend,
+" pro " ne se traduit que d'une seule façon.
+
+Dans la cour, à la récréation, on ne parlait que du Mondial
+qui venait de commencer. Moi je parlais pas. Le surveillant
+m'avait confisqué ma montre — soi-disant qu'elle était trop
+près de la copie du voisin.
+
+La traduction de " pro " : c'est la tienne. »`
+	},
+	{
+		id: 'w3-m12',
+		wave: 3,
+		wordSlot: 12,
+		discordUsername: 'lacometeblanche',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `LA PREMIÈRE DE CLASSE
+
+« C'était le contrôle de mathématiques. L'exercice deux
+portait sur 220 et 284 — les nombres qui s'aiment, disait
+le professeur : chacun est la somme des diviseurs de
+l'autre. J'ai fini avant tout le monde, comme toujours.
+
+Le dernier exercice utilisait cette notation qu'on apprend
+en quatrième : un nombre coiffé d'un petit chiffre, en haut
+à droite. Le professeur répétait que tout tenait dans le
+nom de cette opération.
+
+En sortant, j'ai croisé l'infirmière qui remontait de la
+cour, et le surveillant faisait les cent pas près des
+fenêtres.
+
+Le nom de cette opération : c'est le tien. »`
+	},
+	{
+		id: 'w3-m13',
+		wave: 3,
+		wordSlot: 13,
+		discordUsername: 'l_inspecteur',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `LE SURVEILLANT
+
+« Je suis entré dans la salle 12 à 10h07, avec les sujets
+sous le bras. Au tableau, le professeur de philosophie
+avait laissé sa leçon de la veille, inachevée — la craie
+s'était brisée avant le dernier mot :
+
+    " Une condition peut être suffisante sans être… "
+
+Personne ne l'avait effacée. Les élèves ont composé dessous
+pendant une heure.
+
+Par la fenêtre, j'ai vu l'élève du fond regarder ailleurs,
+comme toujours. La première de classe a rendu sa copie
+avant tout le monde. Un redoublant a posé sa montre un peu
+trop près de la copie du voisin — je la lui ai confisquée.
+
+Le dernier mot du tableau, celui que la craie n'a jamais
+écrit : c'est le tien. »`
+	},
+	{
+		id: 'w3-m14',
+		wave: 3,
+		wordSlot: 14,
+		discordUsername: 'natsume.senpai',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `L'INFIRMIÈRE
+
+« L'infirmerie donne sur la cour. Pendant leur contrôle,
+je préparais les affiches de la campagne de vaccination
+contre la grippe H1N1 — encore des piqûres que personne
+ne viendra chercher.
+
+Au-dessus de ma porte, la maxime latine que le proviseur
+a fait graver : " salus populi suprema lex esto " — le
+salut du peuple est la loi suprême. Il en tirait toujours
+le même mot : celui qui ne s'incline devant rien, celui
+au-dessus duquel il n'y a plus rien.
+
+J'ai vu la première de classe sortir en avance, encore.
+
+Ce mot : c'est le tien. »`
+	},
+	{
+		id: 'w3-m15',
+		wave: 3,
+		wordSlot: 15,
+		discordUsername: 'mega061800',
+		camp: 'communaute',
+		status: 'open',
+		enigma: `L'ÉLÈVE DU FOND
+
+« Moi, du fond, on voit tout. Le contrôle de maths, je
+l'ai à peine regardé. Mais la courbe que le prof avait
+laissée au tableau, elle, je la connais : celle qui monte
+de plus en plus vite, qui double, puis redouble. Il
+répétait son nom à chaque cours — la croissance qui
+finit toujours par tout dépasser.
+
+Le soir, en rentrant, j'ai vérifié sur Wikipédia. J'avais
+bon. Pour une fois.
+
+Le surveillant m'a regardé par la fenêtre. Je regardais
+ailleurs. Comme toujours.
+
+Le nom de cette croissance : c'est le tien. »`
 	}
 ];
 
@@ -548,10 +671,44 @@ L'un d'eux ouvre la vague II. Les autres ne servent à rien —
 et vous les avez tous vus.
 
 Les Fragmentés attendent. Ils ne peuvent pas commencer
-sans vous, et l'heure court pour eux : 02/08, 13h00.`
+sans vous, et l'heure court pour eux : 02/08, 13h00.`,
+	3: `◈ VAGUE III — SALLE 12
+
+Le 16 juin 1998, à 10h07, quelque part en France, une heure
+de contrôle commence dans la salle 12 d'un lycée.
+
+Cinq personnes ont vu cette heure.
+Aucune ne l'a vue en entier.
+
+Leurs témoignages ont été recueillis. Chacun a été confié
+à un Fragmenté — un témoin par gardien.
+
+Chaque témoignage porte un mot. Le témoin sait ce qu'il a vu.
+
+C'est tout ce qu'on peut dire des témoins : ils savent
+ce qu'ils ont vu.
+
+Les Fragmentés de la vague III sont désignés. L'heure court :
+15/08 à 13h00.`
 };
 
 export const ANNOUNCEMENTS: Announcement[] = [
+	{
+		id: 'ouverture-vague-3',
+		date: '2026-08-09T20:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Vague 3 — Salle 12. Cinq nouveaux Fragmentés (mots n°11 à 15). Témoignages publics, un mot chacun. Deadline 15/08 à 13h. Calendrier prolongé : fin d\'événement le 20/08.',
+		href: '/fragmentes',
+		linkLabel: 'Voir les quêtes'
+	},
+	{
+		id: 'calendrier-prolonge',
+		date: '2026-08-09T19:30:00+02:00',
+		tag: 'RÈGLE',
+		content:
+			'Calendrier mis à jour. Vague 3 : 09/08 20h → 15/08 13h. Vague 4 : 15/08 → 20/08 13h. Fin de l\'événement : 20 août 2026 · 13h.'
+	},
 	{
 		id: 'creux-imminent',
 		date: '2026-08-03T14:00:00+02:00',
@@ -730,6 +887,15 @@ export const SUBMIT_FOOTNOTE =
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
 export const PUBLIC_INDICES: PublicIndex[] = [
 	{
+		id: 'vague-3-salle-12',
+		date: '2026-08-09T20:00:00+02:00',
+		source: 'annonce',
+		title: '◈ VAGUE III — SALLE 12',
+		content:
+			'Le 16 juin 1998, à 10h07, quelque part en France, une heure de contrôle commence dans la salle 12 d\'un lycée.\n\nCinq personnes ont vu cette heure. Aucune ne l\'a vue en entier.\n\nLeurs témoignages ont été recueillis. Chacun a été confié à un Fragmenté — un témoin par gardien.\n\nChaque témoignage porte un mot. Le témoin sait ce qu\'il a vu.\n\nDeadline : 15/08 à 13h00.',
+		url: '/fragmentes'
+	},
+	{
 		id: 'transmission-troisieme-signal',
 		date: '2026-08-01T17:16:00+02:00',
 		source: 'annonce',
@@ -782,9 +948,9 @@ export const PUBLIC_INDICES: PublicIndex[] = [
 	}
 ];
 
-/** Seconde phase Creux (entre Vague 2 et Vague 3) — transmission pas encore publiée. */
+/** Seconde phase Creux (entre Vague 2 et Vague 3) — non publiée ; Vague 3 ouverte. */
 export const CREUX_PENDING = {
-	active: true,
+	active: false,
 	betweenLabel: 'Entre Vague 2 et Vague 3',
 	title: 'Nouvelle transmission imminente',
 	body:
@@ -1059,15 +1225,16 @@ export const PHASES: Phase[] = [
 	},
 	{
 		id: 'wave-3',
-		name: 'Vague 3 — Le Chaos',
+		name: 'Vague 3 — Salle 12',
 		share: '5 fragments',
-		description: 'Les salons s’embrasent. TikTok peut faire basculer l’enquête.'
+		description:
+			'Ouverte le 09/08 à 20h — mots n°11 à 15. Deadline 15/08 à 13h.'
 	},
 	{
 		id: 'wave-4',
 		name: 'Vague 4 — La Résolution',
 		share: 'Sprint final',
-		description: 'Derniers mots, course à la soumission. Un seul camp validera.'
+		description: 'Du 15/08 au 20/08 · 13h. Dernière course à la soumission.'
 	}
 ];
 
