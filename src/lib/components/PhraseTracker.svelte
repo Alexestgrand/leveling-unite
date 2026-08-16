@@ -53,6 +53,15 @@
 	function slotHref(slot: Slot): string {
 		return slot.fragment ? `/fragmentes#mot-${slot.n}` : '/fragmentes';
 	}
+
+	/** Cinq plaques parasites sous les 15 cadres — le compte est le signal. */
+	const IMPOSTOR_PLAQUES = [
+		{ num: '0̸', glyph: '░' },
+		{ num: '??', glyph: '¤' },
+		{ num: '//', glyph: '■' },
+		{ num: '×', glyph: '?' },
+		{ num: '1̷5', glyph: '◆' }
+	] as const;
 </script>
 
 <div class="phrase-board surface-card" data-tour="tour-phrase" use:reveal>
@@ -78,6 +87,19 @@
 				<span class="phrase-slot__num">{slot.n}</span>
 				<span class="phrase-slot__glyph" aria-hidden="true">{glyphs[slot.status]}</span>
 			</a>
+		{/each}
+	</div>
+
+	<div class="phrase-board__impostors" aria-hidden="true">
+		{#each IMPOSTOR_PLAQUES as plaque, index (plaque.glyph)}
+			<span
+				class="phrase-slot phrase-slot--impostor"
+				style="--impostor-delay: {index * 0.37}s"
+			>
+				<span class="phrase-slot__num">{plaque.num}</span>
+				<span class="phrase-slot__glyph" data-text={plaque.glyph}>{plaque.glyph}</span>
+				<span class="phrase-slot__impostor-noise">{plaque.num}</span>
+			</span>
 		{/each}
 	</div>
 

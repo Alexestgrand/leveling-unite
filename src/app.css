@@ -3281,6 +3281,140 @@
 	color: #fca5a5;
 }
 
+.phrase-board__impostors {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 0.35rem;
+	width: min(100%, calc((100% - 14 * 0.35rem) / 15 * 5 + 4 * 0.35rem));
+	margin: 0.55rem auto 0;
+}
+
+@media (max-width: 767px) {
+	.phrase-board__impostors {
+		width: 100%;
+		gap: 0.45rem;
+	}
+}
+
+.phrase-slot--impostor {
+	pointer-events: none;
+	overflow: hidden;
+	border-color: rgba(244, 63, 94, 0.38);
+	border-style: dashed;
+	background:
+		repeating-linear-gradient(
+			180deg,
+			transparent 0 2px,
+			rgba(0, 0, 0, 0.18) 2px 3px
+		),
+		linear-gradient(165deg, rgba(127, 29, 29, 0.22), rgba(12, 14, 20, 0.55));
+	animation: impostor-jitter 3.2s steps(2, end) infinite;
+	animation-delay: var(--impostor-delay, 0s);
+	filter: contrast(1.15) saturate(1.2);
+}
+
+.phrase-slot--impostor .phrase-slot__num {
+	color: rgba(252, 165, 165, 0.55);
+	letter-spacing: 0.04em;
+	mix-blend-mode: plus-lighter;
+}
+
+.phrase-slot--impostor .phrase-slot__glyph {
+	position: relative;
+	color: #fda4af;
+	text-shadow:
+		-1px 0 #22d3ee,
+		1px 0 #fb7185;
+	animation: impostor-glyph 2.4s steps(3, end) infinite;
+	animation-delay: var(--impostor-delay, 0s);
+}
+
+.phrase-slot--impostor .phrase-slot__glyph::before,
+.phrase-slot--impostor .phrase-slot__glyph::after {
+	content: attr(data-text);
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.phrase-slot--impostor .phrase-slot__glyph::before {
+	color: #67e8f9;
+	transform: translate(-2px, 1px);
+	clip-path: inset(0 0 55% 0);
+	opacity: 0.75;
+}
+
+.phrase-slot--impostor .phrase-slot__glyph::after {
+	color: #fb7185;
+	transform: translate(2px, -1px);
+	clip-path: inset(50% 0 0 0);
+	opacity: 0.7;
+}
+
+.phrase-slot__impostor-noise {
+	position: absolute;
+	inset: auto 0.2rem 0.18rem;
+	font-size: 0.48rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	color: rgba(253, 164, 175, 0.35);
+	animation: impostor-noise 1.8s steps(2, end) infinite;
+	animation-delay: var(--impostor-delay, 0s);
+}
+
+@keyframes impostor-jitter {
+	0%,
+	86%,
+	100% {
+		transform: translate(0);
+		box-shadow: inset 0 0 10px rgba(244, 63, 94, 0.08);
+	}
+	88% {
+		transform: translate(-1px, 1px);
+		box-shadow: 2px 0 0 rgba(34, 211, 238, 0.35);
+	}
+	91% {
+		transform: translate(1px, -1px);
+		box-shadow: -2px 0 0 rgba(251, 113, 133, 0.4);
+	}
+	94% {
+		transform: translate(-1px, 0);
+	}
+}
+
+@keyframes impostor-glyph {
+	0%,
+	70%,
+	100% {
+		opacity: 0.85;
+		filter: none;
+	}
+	74% {
+		opacity: 0.2;
+	}
+	78% {
+		opacity: 1;
+		filter: hue-rotate(40deg);
+	}
+}
+
+@keyframes impostor-noise {
+	0%,
+	60%,
+	100% {
+		opacity: 0.25;
+		transform: translateX(0);
+	}
+	65% {
+		opacity: 0.7;
+		transform: translateX(2px);
+	}
+	70% {
+		opacity: 0.15;
+		transform: translateX(-2px);
+	}
+}
+
 .phrase-board__legend {
 	display: flex;
 	flex-wrap: wrap;
@@ -3806,6 +3940,9 @@
 @media (prefers-reduced-motion: reduce) {
 	.phrase-slot--open,
 	.phrase-slot--celebrate,
+	.phrase-slot--impostor,
+	.phrase-slot--impostor .phrase-slot__glyph,
+	.phrase-slot__impostor-noise,
 	.fragment-card--validated-pulse,
 	.fragment-card--deadline-urgent,
 	.fragment-card--focus,
