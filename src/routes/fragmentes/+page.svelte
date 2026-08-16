@@ -6,8 +6,8 @@
 <PageShell
 	sectionLabel="Fragmentés"
 	title="Fragmentés"
-	subtitle="Quêtes en cours : un porteur Discord, une énigme publique, un essai."
-	contextLine="Les énigmes sont ici. Toi tu cherches. Le Fragmenté envoie le mot."
+	subtitle="Vague 4 : plus d’énigmes individuelles. Le Cadran Creux est la seule quête."
+	contextLine="Un mot. Un essai par camp. Les vagues 1 à 3 sont en archive."
 >
 	<FragmentsBoard />
 </PageShell>

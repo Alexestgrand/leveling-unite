@@ -93,7 +93,7 @@
 		title="Où en est l'enquête ?"
 		description="La vague, les essais, les vues, les indices — en direct."
 		href="/fragmentes"
-		linkLabel="Voir les quêtes"
+		linkLabel="Ouvrir le Cadran"
 	/>
 
 	<div class="stat-grid">

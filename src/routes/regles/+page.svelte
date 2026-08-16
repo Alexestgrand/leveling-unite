@@ -11,6 +11,7 @@
 		VOTE_RULES,
 		CHEATING_CASES,
 		SANCTIONS,
+		CADRAN_CREUX,
 		CREUX_RESOLUTION,
 		CREUX_CAMP_LABEL,
 		ACTIVE_CREUX_RULE,
@@ -36,6 +37,25 @@
 	</div>
 
 	<div class="accordion">
+		{#if CADRAN_CREUX.active}
+			<CollapseSection title="Vague 4 — Le Cadran Creux" open id="cadran-creux">
+				<p class="text-zinc-400">
+					Dernière vague. Plus d’énigmes individuelles. Une seule épreuve, jusqu’au
+					<strong class="text-zinc-200"> {CADRAN_CREUX.deadlineLabel}</strong>.
+				</p>
+				<ul class="mt-4">
+					{#each CADRAN_CREUX.rules as rule}
+						<li>{rule}</li>
+					{/each}
+				</ul>
+				<p class="mt-4 text-zinc-300">
+					<strong>Récompense :</strong> {CADRAN_CREUX.reward}
+				</p>
+				<p class="mt-2 text-sm text-zinc-400">{CADRAN_CREUX.submitNote}</p>
+				<p class="mt-2 text-sm text-amber-200/90">{CADRAN_CREUX.hintNote}</p>
+			</CollapseSection>
+		{/if}
+
 		{#if CREUX_RESOLUTION.resolved}
 			<CollapseSection title="Édit du Creux — règle active" open id="edit-du-creux">
 				<div class="edit-du-creux">
@@ -43,7 +63,8 @@
 					<h3 class="edit-du-creux__title">{ACTIVE_CREUX_RULE.title}</h3>
 					<p class="edit-du-creux__lead">
 						Imposé par <strong>{CREUX_CAMP_LABEL[CREUX_RESOLUTION.winnerCamp]}</strong> après
-						résolution de la transmission. S'applique aux deux camps jusqu'à la fin de l'événement.
+						résolution de la transmission. S'applique aux deux camps jusqu'à la fin de l'événement
+						— sauf au Cadran Creux (Vague 4), où le Sursis est suspendu.
 					</p>
 					<p class="text-zinc-300">{ACTIVE_CREUX_RULE.description}</p>
 					<ul class="mt-4">
@@ -70,6 +91,8 @@
 														Disponible — 1 invocation
 													{:else if slot.status === 'consumed'}
 														Consommé{slot.usedBy ? ` (${slot.usedBy})` : ''}
+													{:else if slot.status === 'unavailable'}
+														Ne s’applique pas
 													{:else}
 														Expiré
 													{/if}

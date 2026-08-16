@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import PhraseTracker from '$lib/components/PhraseTracker.svelte';
+	import CadranChallenge from '$lib/components/CadranChallenge.svelte';
 	import {
 		CURRENT_PHASE_INDEX,
 		DEADLINE_URGENCY_HOURS,
@@ -14,6 +15,7 @@
 		WAVE_DEADLINES,
 		CREUX_RESOLUTION,
 		CREUX_PENDING,
+		CADRAN_CREUX,
 		isSursisAvailableForWave,
 		isSursisAvailableForCamp,
 		getSursisWaveNote,
@@ -38,7 +40,8 @@
 	const currentWave = CURRENT_PHASE_INDEX >= 0 ? CURRENT_PHASE_INDEX + 1 : 1;
 	const waveName = PHASES[currentWave - 1]?.name ?? `Vague ${currentWave}`;
 	const waveIntro = $derived(WAVE_INTROS[currentWave] ?? null);
-	const sursisAvailable = $derived(isSursisAvailableForWave(currentWave));
+	const cadranActive = CADRAN_CREUX.active && currentWave === 4;
+	const sursisAvailable = $derived(!cadranActive && isSursisAvailableForWave(currentWave));
 	const sursisCommunaute = $derived(isSursisAvailableForCamp(currentWave, 'communaute'));
 	const sursisStaff = $derived(isSursisAvailableForCamp(currentWave, 'staff'));
 	const sursisNote = $derived(getSursisWaveNote(currentWave));
@@ -86,7 +89,7 @@
 			.sort((a, b) => b - a)
 	);
 
-	let archiveWave = $state<number | null>(null);
+	let archiveWave = $state<number | null>(currentWave > 1 ? currentWave - 1 : null);
 	let focusedSlot = $state<number | null>(null);
 
 	const archiveFragments = $derived(
@@ -279,7 +282,9 @@
 <section class="fragments-board space-y-5 sm:space-y-6" data-tour="tour-fragmentes">
 	<PhraseTracker showBoardLink={false} />
 
-	{#if CREUX_PENDING.active}
+	{#if cadranActive}
+		<CadranChallenge />
+	{:else if CREUX_PENDING.active}
 		<a href="/creux" class="fragments-board__creux-link surface-card" use:reveal>
 			<span class="fragments-board__creux-link-eyebrow">
 				<span class="fragments-board__sursis-pulse" aria-hidden="true"></span>
@@ -290,7 +295,7 @@
 		</a>
 	{/if}
 
-	{#if CREUX_RESOLUTION.resolved && CREUX_RESOLUTION.chosenRuleId === 'sursis'}
+	{#if !cadranActive && CREUX_RESOLUTION.resolved && CREUX_RESOLUTION.chosenRuleId === 'sursis'}
 		<div class="fragments-board__sursis" use:reveal role="note">
 			<p class="fragments-board__sursis-badge">
 				<span class="fragments-board__sursis-pulse" aria-hidden="true"></span>
@@ -321,6 +326,7 @@
 		</div>
 	{/if}
 
+	{#if !cadranActive}
 	<div class="surface-card hud-panel clip-corners p-5 sm:p-6" use:reveal>
 		<p class="section-eyebrow">
 			<span class="section-eyebrow__dot" aria-hidden="true"></span>
@@ -353,14 +359,15 @@
 			(pas des Enquêteurs). Ils écrivent aussi de leur côté.
 		</p>
 	</div>
+	{/if}
 
-	{#if waveIntro}
+	{#if waveIntro && !cadranActive}
 		<div class="surface-card hud-panel clip-corners p-5 sm:p-6 fragments-board__wave-intro" use:reveal>
 			<p class="fragment-card__enigma-text whitespace-pre-line">{waveIntro}</p>
 		</div>
 	{/if}
 
-	{#if waveFragments.length === 0}
+	{#if !cadranActive && waveFragments.length === 0}
 		<div class="surface-card hud-panel clip-corners p-8 text-center" use:reveal>
 			<p class="font-display text-lg font-bold text-white">Aucun fragment publié pour l’instant</p>
 			<p class="mt-2 text-sm text-zinc-400">
@@ -374,7 +381,7 @@
 				</svg>
 			</a>
 		</div>
-	{:else}
+	{:else if !cadranActive}
 		{#if members.length > 0}
 			<div>
 				<h2 class="fragments-board__camp-title fragments-board__camp-title--communaute">
@@ -420,7 +427,7 @@
 						aria-selected={archiveWave === wave}
 						onclick={() => toggleArchive(wave)}
 					>
-						Vague {wave}
+						Vague {wave}{#if PHASES[wave - 1]?.name} — {PHASES[wave - 1].name.replace(/^Vague \d+ — /, '')}{/if}
 					</button>
 				{/each}
 			</div>
@@ -428,7 +435,13 @@
 			{#if archiveWave !== null}
 				<div class="fragments-board__archive-panel" role="tabpanel">
 					<p class="fragments-board__archive-title">{archiveWaveName}</p>
-					<p class="fragments-board__archive-note">Vague close — énigmes et résultats conservés.</p>
+					<p class="fragments-board__archive-note">
+						{#if archiveWave === 3}
+							Vague close — les cinq mots (n°11 à 15) ont été validés.
+						{:else}
+							Vague close — énigmes et résultats conservés.
+						{/if}
+					</p>
 
 					{#if archiveMembers.length > 0}
 						<div>

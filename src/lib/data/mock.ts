@@ -58,6 +58,29 @@ export interface NavLink {
 export type FragmentCamp = 'communaute' | 'staff';
 export type FragmentStatus = 'upcoming' | 'open' | 'validated' | 'lost';
 
+export interface CadranBearer {
+	discordUsername: string;
+	camp: FragmentCamp;
+}
+
+/** Vague 4 — énigme unique (pas de quêtes individuelles). */
+export interface CadranCreux {
+	active: boolean;
+	id: string;
+	title: string;
+	eyebrow: string;
+	verses: readonly string[];
+	opensAt: string;
+	opensAtLabel: string;
+	deadline: string;
+	deadlineLabel: string;
+	rules: readonly string[];
+	reward: string;
+	hintNote: string;
+	submitNote: string;
+	bearers: readonly CadranBearer[];
+}
+
 /** Quête / fragment publié sur le site (mode hybride). */
 export interface FragmentQuest {
 	id: string;
@@ -130,10 +153,10 @@ export const START_HERE_CARDS: StartHereCard[] = [
 	{
 		id: 'help',
 		step: '1',
-		title: 'Aide les Fragmentés',
-		body: 'Va sur Fragmentés. Lis l\'énigme. Trouve le mot avec les autres.',
+		title: 'Le Cadran Creux',
+		body: 'Vague 4 : une seule énigme. Un mot. Tous les mots manquants à la clé.',
 		href: '/fragmentes',
-		cta: 'Ouvrir les quêtes'
+		cta: 'Ouvrir le Cadran'
 	},
 	{
 		id: 'understand',
@@ -154,11 +177,11 @@ export const START_HERE_CARDS: StartHereCard[] = [
 ];
 
 export const EVENT_STATUS = {
-	waveLabel: 'Vague 3',
-	progressLabel: '5 mots sécurisés sur 15',
-	note: 'Vague III — Salle 12. Deadline 15/08 à 13h.',
+	waveLabel: 'Vague 4',
+	progressLabel: '10 mots sécurisés sur 15',
+	note: 'Le Cadran Creux — deadline 19/08 à 21h.',
 	noteHref: '/fragmentes',
-	noteLinkLabel: 'Voir les quêtes'
+	noteLinkLabel: 'Ouvrir l’énigme'
 } as const;
 
 export const GLOSSARY = [
@@ -166,7 +189,8 @@ export const GLOSSARY = [
 	{ term: 'Enquêteur', definition: 'Joueur qui cherche et aide, sans porter de mot.' },
 	{ term: 'Camp', definition: 'Communauté ou Staff — deux équipes qui s\'affrontent.' },
 	{ term: 'Hakai', definition: 'Organisateur neutre (@so_hakai). Il valide les mots en MP.' },
-	{ term: 'Sursis', definition: 'Second essai pour un Fragmenté (règle gagnée au Creux).' },
+	{ term: 'Sursis', definition: 'Second essai pour un Fragmenté (règle gagnée au Creux). Inactif sur le Cadran.' },
+	{ term: 'Cadran', definition: 'Énigme unique de la Vague 4. Un mot, un essai par camp — tous les mots manquants à la clé.' },
 	{ term: 'Phrase', definition: '15 mots à envoyer sur le site pour gagner l\'événement.' }
 ] as const;
 
@@ -175,7 +199,7 @@ export const WAVE_DEADLINES: Record<number, string> = {
 	1: '2026-07-28T13:00:00+02:00',
 	2: '2026-08-02T13:00:00+02:00',
 	3: '2026-08-15T13:00:00+02:00',
-	4: '2026-08-20T13:00:00+02:00'
+	4: '2026-08-19T21:00:00+02:00'
 };
 
 /** Fenêtre avant échéance pendant laquelle les cartes « En cours » clignotent. */
@@ -199,7 +223,7 @@ export const ENIGMA_SUMMARY = {
 } as const;
 
 /** Index 0-based de la vague en cours (-1 = pas encore commencé) */
-export const CURRENT_PHASE_INDEX = 2;
+export const CURRENT_PHASE_INDEX = 3;
 
 export const HEADER_NAV = [
 	{ href: '/fragmentes', label: 'Fragmentés' },
@@ -230,8 +254,8 @@ export const PARTICIPATION_STEPS = [
 	},
 	{
 		step: '02',
-		title: 'Aide les Fragmentés',
-		description: 'Leurs énigmes sont publiques. Tout le monde cherche — eux seuls envoient le mot.'
+		title: 'Le Cadran Creux',
+		description: 'Vague 4 : une seule énigme. Aide ton camp à trouver le mot — eux seuls l’envoient.'
 	},
 	{
 		step: '03',
@@ -242,18 +266,17 @@ export const PARTICIPATION_STEPS = [
 
 export const NAV_LINKS: NavLink[] = [
 	{
-		href: '/creux',
-		title: 'Le Creux',
-		description: 'Archive du premier Creux — édit Le Sursis toujours actif.',
-		icon: 'clues',
-		featured: false
-	},
-	{
 		href: '/fragmentes',
 		title: 'Fragmentés',
-		description: 'Vague III — Salle 12. Quêtes en cours.',
+		description: 'Vague 4 — Le Cadran Creux. 1 mot, tous les mots manquants.',
 		icon: 'fragments',
 		featured: true
+	},
+	{
+		href: '/creux',
+		title: 'Le Creux',
+		description: 'Archive du premier Creux — édit Le Sursis (inactif sur le Cadran).',
+		icon: 'clues'
 	},
 	{
 		href: '/indices',
@@ -276,7 +299,7 @@ export const NAV_LINKS: NavLink[] = [
 	{
 		href: '/deroule',
 		title: 'Déroulé',
-		description: 'Quatre vagues, vingt jours.',
+		description: 'Quatre vagues — dernière ligne droite.',
 		icon: 'schedule'
 	},
 	{
@@ -526,7 +549,8 @@ Date limite : 02/08 à 13h00.`
 		wordSlot: 11,
 		discordUsername: 'swapygames',
 		camp: 'staff',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le onzième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `LE REDOUBLANT
 
 « Deux fois la même classe, alors le latin, je le connais.
@@ -547,7 +571,8 @@ La traduction de " pro " : c'est la tienne. »`
 		wordSlot: 12,
 		discordUsername: 'lacometeblanche',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le douzième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `LA PREMIÈRE DE CLASSE
 
 « C'était le contrôle de mathématiques. L'exercice deux
@@ -572,7 +597,8 @@ Le nom de cette opération : c'est le tien. »`
 		wordSlot: 13,
 		discordUsername: 'l_inspecteur',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le treizième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `LE SURVEILLANT
 
 « Je suis entré dans la salle 12 à 10h07, avec les sujets
@@ -599,7 +625,8 @@ Le dernier mot du tableau, celui que la craie n'a jamais
 		wordSlot: 14,
 		discordUsername: 'natsume.senpai',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le quatorzième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `L'INFIRMIÈRE
 
 « L'infirmerie donne sur la cour. Pendant leur contrôle,
@@ -623,7 +650,8 @@ Ce mot : c'est le tien. »`
 		wordSlot: 15,
 		discordUsername: 'mega061800',
 		camp: 'communaute',
-		status: 'open',
+		status: 'validated',
+		metaHint: 'Le quinzième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
 		enigma: `L'ÉLÈVE DU FOND
 
 « Moi, du fond, on voit tout. Le contrôle de maths, je
@@ -689,10 +717,39 @@ C'est tout ce qu'on peut dire des témoins : ils savent
 ce qu'ils ont vu.
 
 Les Fragmentés de la vague III sont désignés. L'heure court :
-15/08 à 13h00.`
+15/08 à 13h00.`,
+	4: `◈ VAGUE IV — LE CADRAN CREUX
+
+La dernière vague. Plus d'énigmes individuelles.
+
+Un seul mot. Un seul essai par camp.
+Le Sursis ne s'applique pas.
+
+La première soumission d'un camp est définitive.
+Aucun résultat avant l'échéance.
+
+La récompense : tous les mots manquants.
+
+Deadline : 19/08 à 21h00.`
 };
 
 export const ANNOUNCEMENTS: Announcement[] = [
+	{
+		id: 'ouverture-vague-4',
+		date: '2026-08-16T13:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Vague 4 — Le Cadran Creux. Plus d’énigmes individuelles. Un mot, un essai par camp. Tous les Fragmentés (toutes vagues) peuvent soumettre. Le Sursis ne s’applique pas. Récompense : tous les mots manquants. Deadline 19/08 à 21h.',
+		href: '/fragmentes',
+		linkLabel: 'Ouvrir le Cadran'
+	},
+	{
+		id: 'cloture-vague-3',
+		date: '2026-08-15T13:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Vague 3 — Salle 12 close (15/08, 13h). Les cinq mots (n°11 à 15) sont sécurisés. 10 fragments tenus, 5 encore perdus. La Vague 4 ouvre le 16/08 à 13h.'
+	},
 	{
 		id: 'ouverture-vague-3',
 		date: '2026-08-09T20:00:00+02:00',
@@ -887,6 +944,15 @@ export const SUBMIT_FOOTNOTE =
 /** Indices publiés officiellement (annonces + paliers TikTok atteints). */
 export const PUBLIC_INDICES: PublicIndex[] = [
 	{
+		id: 'vague-4-cadran-creux',
+		date: '2026-08-16T13:00:00+02:00',
+		source: 'annonce',
+		title: '◈ VAGUE IV — LE CADRAN CREUX',
+		content:
+			'La dernière vague. Plus d\'énigmes individuelles.\n\nUn mot. Un essai par camp. Le Sursis ne s\'applique pas.\nTous les Fragmentés, toutes vagues confondues, peuvent soumettre.\nLa première soumission d\'un camp est définitive.\nAucun résultat ne sera annoncé avant l\'échéance.\n\nRécompense : tous les mots manquants de la phrase.\nDeadline : mercredi 19 août, 21h00.',
+		url: '/fragmentes'
+	},
+	{
 		id: 'vague-3-salle-12',
 		date: '2026-08-09T20:00:00+02:00',
 		source: 'annonce',
@@ -948,7 +1014,7 @@ export const PUBLIC_INDICES: PublicIndex[] = [
 	}
 ];
 
-/** Seconde phase Creux (entre Vague 2 et Vague 3) — non publiée ; Vague 3 ouverte. */
+/** Seconde phase Creux (entre Vague 2 et Vague 3) — close ; Vague 4 ouverte. */
 export const CREUX_PENDING = {
 	active: false,
 	betweenLabel: 'Entre Vague 2 et Vague 3',
@@ -957,6 +1023,43 @@ export const CREUX_PENDING = {
 		'La Vague 2 est close. Le Creux s’ouvre à nouveau. Une énigme est sur le point d’être captée — restez en veille, sans préavis.',
 	href: '/creux'
 } as const;
+
+/** Vague 4 — énigme unique. */
+export const CADRAN_CREUX: CadranCreux = {
+	active: true,
+	id: 'cadran-creux',
+	title: 'Le Cadran Creux',
+	eyebrow: 'Vague 4, la dernière.',
+	verses: [
+		'Ce marbre gris',
+		'À l’heure où plus rien ne se prononce',
+		'Douce nuit, rien ne bouge donc',
+		'Rien ne tient, et tout doit mourir',
+		'Autre rive, autre cendre, même promesse',
+		'Nulle main ne te tient'
+	],
+	opensAt: '2026-08-16T13:00:00+02:00',
+	opensAtLabel: 'dimanche 16 août · 13h',
+	deadline: '2026-08-19T21:00:00+02:00',
+	deadlineLabel: 'mercredi 19 août · 21h00',
+	rules: [
+		'1 mot. 1 seul essai par camp. Le Sursis ne s’applique pas.',
+		'Tous les Fragmentés, toutes vagues confondues, peuvent soumettre.',
+		'La première soumission d’un camp est définitive et engage tout le camp.',
+		'Aucun résultat ne sera annoncé avant l’échéance.'
+	],
+	reward: 'Tous les mots manquants de la phrase.',
+	hintNote: 'Un indice vous sera communiqué avant l’échéance. Soyez à l’heure.',
+	submitNote:
+		'Envoyez le mot en MP à @so_hakai. Un seul essai par camp — le premier message d’un camp compte.',
+	bearers: [
+		{ discordUsername: 'asterion_45', camp: 'staff' },
+		{ discordUsername: 'Starypik', camp: 'staff' },
+		{ discordUsername: 'hiolxx', camp: 'staff' },
+		{ discordUsername: '.xynea', camp: 'communaute' },
+		{ discordUsername: 'erwanglp', camp: 'communaute' }
+	]
+};
 
 export const CREUX_CHALLENGE: CreuxChallenge = {
 	id: 'enigme-du-creux',
@@ -1022,10 +1125,11 @@ export const SURCIS_RULE_DETAILS = [
 	'Une fois utilisé par un camp sur une vague, le Sursis est épuisé pour ce camp — l’autre camp conserve le sien.',
 	'Les Sursis ne sont pas cumulables : pas de report sur une vague suivante, pas de second Sursis pour un autre Fragmenté du même camp sur la même vague.',
 	'Les 2 confirmations Fragmentés restent obligatoires à chaque essai, y compris au Sursis.',
-	'Un remplacement de porteur n’accorde pas de Sursis supplémentaire.'
+	'Un remplacement de porteur n’accorde pas de Sursis supplémentaire.',
+	'Le Sursis ne s’applique pas au Cadran Creux (Vague 4) : un seul essai par camp, définitif.'
 ] as const;
 
-export type SursisWaveStatus = 'expired' | 'available' | 'consumed';
+export type SursisWaveStatus = 'expired' | 'available' | 'consumed' | 'unavailable';
 
 export interface SursisCampSlot {
 	status: SursisWaveStatus;
@@ -1051,12 +1155,14 @@ export const SURCIS_WAVE_STATUS: Record<number, SursisWaveEntry> = {
 			'Vague 2 close — Staff a invoqué le Sursis, puis perdu les mots n°6 et n°8. Communauté : n°10 sécurisé, n°7 et n°9 perdus (Sursis non utilisé).'
 	},
 	3: {
-		communaute: { status: 'available' },
-		staff: { status: 'available' }
+		communaute: { status: 'expired' },
+		staff: { status: 'expired' },
+		note: 'Vague 3 close — les cinq mots ont été validés. Aucun camp n’a invoqué le Sursis.'
 	},
 	4: {
-		communaute: { status: 'available' },
-		staff: { status: 'available' }
+		communaute: { status: 'unavailable' },
+		staff: { status: 'unavailable' },
+		note: 'Le Sursis ne s’applique pas au Cadran Creux. Un seul essai par camp, définitif.'
 	}
 };
 
@@ -1228,13 +1334,14 @@ export const PHASES: Phase[] = [
 		name: 'Vague 3 — Salle 12',
 		share: '5 fragments',
 		description:
-			'Ouverte le 09/08 à 20h — mots n°11 à 15. Deadline 15/08 à 13h.'
+			'Clôturée le 15/08 à 13h — les cinq mots (n°11 à 15) sont sécurisés.'
 	},
 	{
 		id: 'wave-4',
-		name: 'Vague 4 — La Résolution',
-		share: 'Sprint final',
-		description: 'Du 15/08 au 20/08 · 13h. Dernière course à la soumission.'
+		name: 'Vague 4 — Le Cadran Creux',
+		share: '1 énigme',
+		description:
+			'Ouverte le 16/08 à 13h. Une seule énigme, un mot, un essai par camp. Deadline 19/08 à 21h. Récompense : tous les mots manquants.'
 	}
 ];
 

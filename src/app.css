@@ -4885,6 +4885,12 @@
 	font-family: var(--font-display);
 }
 
+.edit-du-creux__camp-item--unavailable {
+	border: 1px solid rgba(161, 161, 170, 0.28);
+	color: #a1a1aa;
+	opacity: 0.85;
+}
+
 .edit-du-creux__vigilance {
 	margin-top: 1.25rem;
 	padding: 0.85rem 1rem;
@@ -4916,7 +4922,237 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.fragments-board__sursis-pulse,
-	.creux-pending__pulse {
+	.creux-pending__pulse,
+	.cadran__pulse {
 		animation: none !important;
 	}
+}
+
+/* =========== Vague 4 — Le Cadran Creux =========== */
+
+.cadran {
+	max-width: 42rem;
+	margin: 0 auto;
+	padding: 1.5rem 1.25rem 1.75rem;
+	border-color: rgba(161, 161, 170, 0.38);
+	background:
+		linear-gradient(165deg, rgba(63, 63, 70, 0.42), transparent 52%),
+		rgba(12, 14, 20, 0.92);
+}
+
+.cadran__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: #d4d4d8;
+}
+
+.cadran__pulse {
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 50%;
+	background: #a1a1aa;
+	box-shadow: 0 0 10px rgba(212, 212, 216, 0.7);
+	animation: creux-pending-pulse 1.8s ease-in-out infinite;
+}
+
+.cadran__title {
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+	margin: 0.7rem 0 0;
+	font-family: var(--font-display);
+	font-size: clamp(1.7rem, 5vw, 2.35rem);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #f4f4f5;
+}
+
+.cadran__hourglass {
+	font-size: 0.72em;
+	filter: grayscale(0.35);
+}
+
+.cadran__poem {
+	margin: 1.5rem 0 0;
+	padding: 1.35rem 1.1rem;
+	border: 1px solid rgba(161, 161, 170, 0.28);
+	border-radius: 0.65rem;
+	background: linear-gradient(180deg, rgba(24, 24, 27, 0.55), rgba(9, 9, 11, 0.7));
+	text-align: center;
+}
+
+.cadran__poem p {
+	margin: 0;
+	font-size: clamp(0.98rem, 2.4vw, 1.12rem);
+	font-style: italic;
+	line-height: 1.85;
+	color: #e4e4e7;
+}
+
+.cadran__poem p + p {
+	margin-top: 0.15rem;
+}
+
+.cadran__countdown {
+	margin-top: 1.35rem;
+	padding: 0.95rem 1rem;
+	border: 1px solid rgba(161, 161, 170, 0.22);
+	border-radius: 0.65rem;
+	background: rgba(0, 0, 0, 0.28);
+}
+
+.cadran__countdown-label,
+.cadran__expired {
+	margin: 0 0 0.75rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #a1a1aa;
+}
+
+.cadran__expired {
+	margin: 0;
+	color: #d4d4d8;
+}
+
+.cadran__countdown-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 0.5rem;
+}
+
+.cadran__countdown-cell {
+	padding: 0.55rem 0.2rem;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 0.4rem;
+	text-align: center;
+	background: rgba(24, 24, 27, 0.55);
+}
+
+.cadran__countdown-value {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 1.35rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: #fafafa;
+}
+
+.cadran__countdown-unit {
+	margin: 0.15rem 0 0;
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #71717a;
+}
+
+.cadran__block {
+	margin-top: 1.25rem;
+}
+
+.cadran__block h3,
+.cadran__bearers h3 {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #d4d4d8;
+}
+
+.cadran__block ul {
+	margin: 0.65rem 0 0;
+	padding-left: 1.1rem;
+}
+
+.cadran__block li,
+.cadran__block p,
+.cadran__submit {
+	font-size: 0.92rem;
+	line-height: 1.6;
+	color: rgba(228, 228, 231, 0.94);
+}
+
+.cadran__submit {
+	margin: 0.75rem 0 0;
+	font-size: 0.82rem;
+	color: #a1a1aa;
+}
+
+.cadran__block--reward p {
+	margin: 0.45rem 0 0;
+	font-weight: 600;
+	color: #fde68a;
+}
+
+.cadran__block--hint p {
+	margin: 0.45rem 0 0;
+	color: #e4e4e7;
+}
+
+.cadran__bearers {
+	margin-top: 1.4rem;
+	padding-top: 1.2rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cadran__bearers-note {
+	margin: 0.4rem 0 0.85rem;
+	font-size: 0.82rem;
+	line-height: 1.55;
+	color: #a1a1aa;
+}
+
+.cadran__roster {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 540px) {
+	.cadran {
+		padding: 1.85rem 1.75rem 2rem;
+	}
+
+	.cadran__roster {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.cadran__camp {
+	margin: 0 0 0.35rem;
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.cadran__camp--communaute {
+	color: #7dd3fc;
+}
+
+.cadran__camp--staff {
+	color: #fca5a5;
+}
+
+.cadran__roster ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cadran__roster li {
+	font-size: 0.92rem;
+	font-weight: 600;
+	color: #e4e4e7;
 }

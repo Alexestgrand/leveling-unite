@@ -4,7 +4,7 @@
 	import { EVENT, PARTICIPATION_STEPS } from '$lib/data/mock';
 
 	const stepHrefs = [EVENT.discordUrl, '/fragmentes', '/soumettre'] as const;
-	const stepCtas = ['Ouvrir Discord', 'Voir les quêtes', 'Ouvrir le portail'] as const;
+	const stepCtas = ['Ouvrir Discord', 'Ouvrir le Cadran', 'Ouvrir le portail'] as const;
 	const stepExternal = [true, false, false] as const;
 </script>
 

@@ -32,19 +32,27 @@ export const TOUR_STEPS: TourStep[] = [
 		pose: 'point'
 	},
 	{
+		id: 'cadran',
+		route: '/fragmentes',
+		target: 'tour-cadran',
+		title: 'Le Cadran Creux',
+		body: 'Vague 4 : une seule énigme. Un mot. Tous les mots manquants à la clé.',
+		pose: 'point'
+	},
+	{
 		id: 'fragmentes',
 		route: '/fragmentes',
 		target: 'tour-fragmentes',
-		title: 'Les énigmes',
-		body: 'Sur Fragmentés, tout le monde peut chercher. Discord et le site disent la même chose.',
-		pose: 'point'
+		title: 'Les porteurs',
+		body: 'Les Fragmentés de cette vague n’ont pas d’énigme individuelle. Tous peuvent soumettre le mot du Cadran.',
+		pose: 'think'
 	},
 	{
 		id: 'porteur',
 		route: '/fragmentes',
 		target: 'tour-porteur',
 		title: 'Qui envoie le mot ?',
-		body: 'Seul le Fragmenté envoie son mot à Hakai. Toi, tu l\'aides à le trouver.',
+		body: 'N’importe quel Fragmenté, toutes vagues confondues, peut envoyer le mot à Hakai. Un essai par camp.',
 		pose: 'think'
 	},
 	{

@@ -42,7 +42,7 @@
 			<p class="creux-resolved__lead">
 				<strong>{CREUX_CAMP_LABEL[CREUX_RESOLUTION.winnerCamp]}</strong> a été le premier à percer la
 				transmission. Ils ont activé l’édit suivant — il lie les deux camps jusqu’à la fin de
-				l’événement.
+				l’événement. <strong>Il ne s’applique pas au Cadran Creux (Vague 4).</strong>
 			</p>
 			<div class="creux-resolved__edict">
 				<p class="creux-resolved__edict-label">Édit gravé</p>
