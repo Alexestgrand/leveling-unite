@@ -178,7 +178,7 @@ export const START_HERE_CARDS: StartHereCard[] = [
 
 export const EVENT_STATUS = {
 	waveLabel: 'Vague 4',
-	progressLabel: '10 mots sécurisés sur 15',
+	progressLabel: '9 mots sécurisés sur 15',
 	note: 'Le Cadran Creux — deadline 19/08 à 21h.',
 	noteHref: '/fragmentes',
 	noteLinkLabel: 'Ouvrir l’énigme'
@@ -597,8 +597,8 @@ Le nom de cette opération : c'est le tien. »`
 		wordSlot: 13,
 		discordUsername: 'l_inspecteur',
 		camp: 'communaute',
-		status: 'validated',
-		metaHint: 'Le treizième fragment est sécurisé. Sa forme exacte reste confidentielle jusqu’à la fin.',
+		status: 'lost',
+		note: 'Mot perdu — camp Communauté.',
 		enigma: `LE SURVEILLANT
 
 « Je suis entré dans la salle 12 à 10h07, avec les sujets
@@ -748,7 +748,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
 		date: '2026-08-15T13:00:00+02:00',
 		tag: 'URGENT',
 		content:
-			'Vague 3 — Salle 12 close (15/08, 13h). Les cinq mots (n°11 à 15) sont sécurisés. 10 fragments tenus, 5 encore perdus. La Vague 4 ouvre le 16/08 à 13h.'
+			'Vague 3 — Salle 12 close (15/08, 13h). Quatre mots sécurisés (n°11, 12, 14, 15). Mot n°13 perdu (@l_inspecteur, Communauté). 9 fragments tenus, 6 encore perdus. La Vague 4 ouvre le 16/08 à 13h.'
 	},
 	{
 		id: 'ouverture-vague-3',
@@ -1157,7 +1157,7 @@ export const SURCIS_WAVE_STATUS: Record<number, SursisWaveEntry> = {
 	3: {
 		communaute: { status: 'expired' },
 		staff: { status: 'expired' },
-		note: 'Vague 3 close — les cinq mots ont été validés. Aucun camp n’a invoqué le Sursis.'
+		note: 'Vague 3 close — 4 mots sécurisés, mot n°13 perdu (Communauté). Aucun camp n’a invoqué le Sursis.'
 	},
 	4: {
 		communaute: { status: 'unavailable' },
@@ -1334,7 +1334,7 @@ export const PHASES: Phase[] = [
 		name: 'Vague 3 — Salle 12',
 		share: '5 fragments',
 		description:
-			'Clôturée le 15/08 à 13h — les cinq mots (n°11 à 15) sont sécurisés.'
+			'Clôturée le 15/08 à 13h — 4 fragments sécurisés, 1 mot perdu (n°13, Communauté).'
 	},
 	{
 		id: 'wave-4',

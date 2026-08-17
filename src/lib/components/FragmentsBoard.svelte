@@ -437,7 +437,7 @@
 					<p class="fragments-board__archive-title">{archiveWaveName}</p>
 					<p class="fragments-board__archive-note">
 						{#if archiveWave === 3}
-							Vague close — les cinq mots (n°11 à 15) ont été validés.
+							Vague close — 4 mots sécurisés, mot n°13 perdu.
 						{:else}
 							Vague close — énigmes et résultats conservés.
 						{/if}
