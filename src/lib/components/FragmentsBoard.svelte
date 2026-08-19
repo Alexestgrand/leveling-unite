@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import PhraseTracker from '$lib/components/PhraseTracker.svelte';
-	import CadranChallenge from '$lib/components/CadranChallenge.svelte';
 	import {
 		CURRENT_PHASE_INDEX,
 		DEADLINE_URGENCY_HOURS,
@@ -40,7 +39,7 @@
 	const currentWave = CURRENT_PHASE_INDEX >= 0 ? CURRENT_PHASE_INDEX + 1 : 1;
 	const waveName = PHASES[currentWave - 1]?.name ?? `Vague ${currentWave}`;
 	const waveIntro = $derived(WAVE_INTROS[currentWave] ?? null);
-	const cadranActive = CADRAN_CREUX.active && currentWave === 4;
+	const cadranActive = !CADRAN_CREUX.resolved && currentWave === 4;
 	const sursisAvailable = $derived(!cadranActive && isSursisAvailableForWave(currentWave));
 	const sursisCommunaute = $derived(isSursisAvailableForCamp(currentWave, 'communaute'));
 	const sursisStaff = $derived(isSursisAvailableForCamp(currentWave, 'staff'));
@@ -282,8 +281,15 @@
 <section class="fragments-board space-y-5 sm:space-y-6" data-tour="tour-fragmentes">
 	<PhraseTracker showBoardLink={false} />
 
-	{#if cadranActive}
-		<CadranChallenge />
+	{#if CADRAN_CREUX.resolved}
+		<a href="/creux#cadran-revelation" class="fragments-board__creux-link surface-card fragments-board__creux-link--cadran" use:reveal>
+			<span class="fragments-board__creux-link-eyebrow">
+				<span class="cadran-closure__pulse" aria-hidden="true"></span>
+				{CADRAN_CREUX.title} — révélation
+			</span>
+			<span class="fragments-board__creux-link-title">Le Cadran est résolu. Lire la vérité.</span>
+			<span class="fragments-board__creux-link-cta">Révélation →</span>
+		</a>
 	{:else if CREUX_PENDING.active}
 		<a href="/creux" class="fragments-board__creux-link surface-card" use:reveal>
 			<span class="fragments-board__creux-link-eyebrow">

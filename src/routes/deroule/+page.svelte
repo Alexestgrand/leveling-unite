@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
-	import { PHASES, FINAL_REVEAL, CURRENT_PHASE_INDEX } from '$lib/data/mock';
+	import { PHASES, CURRENT_PHASE_INDEX } from '$lib/data/mock';
 </script>
 
 <PageShell
@@ -11,7 +11,7 @@
 	<div class="relative space-y-0">
 		{#each PHASES as phase, index (phase.id)}
 			{@const isActive = index === CURRENT_PHASE_INDEX}
-			{@const isPast = index < CURRENT_PHASE_INDEX}
+			{@const isPast = index < CURRENT_PHASE_INDEX || CURRENT_PHASE_INDEX >= PHASES.length}
 			<div
 				class="phase-step relative flex gap-4 pb-10 last:pb-0 sm:gap-6"
 				class:phase-step--active={isActive}
@@ -43,13 +43,11 @@
 		{/each}
 	</div>
 
-	<div class="content-block hud-panel clip-corners glow-border mt-6 border-leveling-blue/30 glow-neon">
-		<h3>Révélation finale</h3>
-		<p class="text-zinc-400">Quand la phrase tombe, tout se débloque.</p>
-		<ul class="mt-4">
-			{#each FINAL_REVEAL as item}
-				<li>{item}</li>
-			{/each}
-		</ul>
+	<div class="content-block hud-panel clip-corners glow-border mt-6 border-leveling-blue/30 glow-neon cadran-deroule-reveal">
+		<h3>Révélation — Le Cadran Creux</h3>
+		<p class="text-zinc-400">La Vague 4 est close. Le Système a parlé.</p>
+		<a href="/creux#cadran-revelation" class="mt-4 inline-block text-sm font-semibold text-red-300 underline underline-offset-2">
+			Lire la révélation complète →
+		</a>
 	</div>
 </PageShell>

@@ -37,22 +37,18 @@
 	</div>
 
 	<div class="accordion">
-		{#if CADRAN_CREUX.active}
-			<CollapseSection title="Vague 4 — Le Cadran Creux" open id="cadran-creux">
+		{#if CADRAN_CREUX.resolved}
+			<CollapseSection title="Vague 4 — Le Cadran Creux (résolu)" open id="cadran-creux">
 				<p class="text-zinc-400">
-					Dernière vague. Plus d’énigmes individuelles. Une seule épreuve, jusqu’au
-					<strong class="text-zinc-200"> {CADRAN_CREUX.deadlineLabel}</strong>.
+					Énigme close le <strong class="text-zinc-200">{CADRAN_CREUX.resolvedLabel}</strong>.
+					Réponse : <strong class="text-red-300">{CADRAN_CREUX.answer}</strong>.
 				</p>
-				<ul class="mt-4">
-					{#each CADRAN_CREUX.rules as rule}
-						<li>{rule}</li>
-					{/each}
-				</ul>
 				<p class="mt-4 text-zinc-300">
-					<strong>Récompense :</strong> {CADRAN_CREUX.reward}
+					Soumettez vos phrases jusqu’au <strong>{CADRAN_CREUX.submitDeadlineLabel}</strong>.
 				</p>
-				<p class="mt-2 text-sm text-zinc-400">{CADRAN_CREUX.submitNote}</p>
-				<p class="mt-2 text-sm text-amber-200/90">{CADRAN_CREUX.hintNote}</p>
+				<p class="mt-2 text-sm text-zinc-400">
+					<a href="/creux#cadran-revelation" class="text-red-300 underline">Lire la révélation complète →</a>
+				</p>
 			</CollapseSection>
 		{/if}
 

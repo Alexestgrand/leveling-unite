@@ -4,6 +4,7 @@
 	import AmbientBackground from '$lib/components/AmbientBackground.svelte';
 	import SiteHeader from '$lib/components/SiteHeader.svelte';
 	import TourGuide from '$lib/components/TourGuide.svelte';
+	import { CADRAN_CREUX } from '$lib/data/mock';
 
 	let { children } = $props();
 
@@ -12,12 +13,13 @@
 	const ogDescription =
 		'Quinze mots. Deux camps. Énigmes publiques, phrase secrète — tableau de bord officiel de l’événement LEVELING: Unite.';
 	const ogImage = `${siteUrl}/og-image.png`;
+	const themeColor = CADRAN_CREUX.resolved ? '#1a0808' : '#080a10';
 </script>
 
 <svelte:head>
 	<title>{ogTitle}</title>
 	<meta name="description" content={ogDescription} />
-	<meta name="theme-color" content="#080a10" />
+	<meta name="theme-color" content={themeColor} />
 	<link rel="canonical" href={siteUrl} />
 
 	<meta property="og:type" content="website" />
@@ -47,7 +49,10 @@
 
 <a href="#main-content" class="skip-link">Aller au contenu</a>
 
-<div class="app-shell relative min-h-screen overflow-x-hidden text-zinc-100 antialiased">
+<div
+	class="app-shell relative min-h-screen overflow-x-hidden text-zinc-100 antialiased"
+	class:app-shell--cadran={CADRAN_CREUX.resolved}
+>
 	<AmbientBackground />
 	<SiteHeader />
 	<div id="main-content" class="relative z-10" tabindex="-1">

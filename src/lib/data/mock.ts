@@ -47,6 +47,32 @@ export interface CreuxChallenge {
 	audioHint: string;
 }
 
+/** Section de la révélation du Cadran Creux (vague 4). */
+export interface CadranSection {
+	id: string;
+	title: string;
+	paragraphs: string[];
+	/** Bloc monospace (comptages, tableaux). */
+	code?: string;
+	emphasis?: string;
+}
+
+export interface CadranCreux {
+	id: string;
+	title: string;
+	resolved: boolean;
+	resolvedLabel: string;
+	answer: string;
+	closingLines: readonly string[];
+	verses: readonly string[];
+	epigraph: string;
+	sections: readonly CadranSection[];
+	/** Dernière chance de soumettre la phrase des 15 mots. */
+	submitDeadline: Date;
+	submitDeadlineLabel: string;
+	rewardTeaser: string;
+}
+
 export interface NavLink {
 	href: string;
 	title: string;
@@ -57,29 +83,6 @@ export interface NavLink {
 
 export type FragmentCamp = 'communaute' | 'staff';
 export type FragmentStatus = 'upcoming' | 'open' | 'validated' | 'lost';
-
-export interface CadranBearer {
-	discordUsername: string;
-	camp: FragmentCamp;
-}
-
-/** Vague 4 — énigme unique (pas de quêtes individuelles). */
-export interface CadranCreux {
-	active: boolean;
-	id: string;
-	title: string;
-	eyebrow: string;
-	verses: readonly string[];
-	opensAt: string;
-	opensAtLabel: string;
-	deadline: string;
-	deadlineLabel: string;
-	rules: readonly string[];
-	reward: string;
-	hintNote: string;
-	submitNote: string;
-	bearers: readonly CadranBearer[];
-}
 
 /** Quête / fragment publié sur le site (mode hybride). */
 export interface FragmentQuest {
@@ -177,11 +180,11 @@ export const START_HERE_CARDS: StartHereCard[] = [
 ];
 
 export const EVENT_STATUS = {
-	waveLabel: 'Vague 4',
-	progressLabel: '9 mots sécurisés sur 15',
-	note: 'Le Cadran Creux — deadline 19/08 à 21h.',
-	noteHref: '/fragmentes',
-	noteLinkLabel: 'Ouvrir l’énigme'
+	waveLabel: 'Vague 4 — close',
+	progressLabel: 'Le Cadran Creux est résolu',
+	note: 'Soumettez vos phrases jusqu’au 21/08 à 21h. La révélation est en ligne.',
+	noteHref: '/creux#cadran-revelation',
+	noteLinkLabel: 'Lire la révélation'
 } as const;
 
 export const GLOSSARY = [
@@ -222,8 +225,8 @@ export const ENIGMA_SUMMARY = {
 	fragmentDeadlineHours: 72
 } as const;
 
-/** Index 0-based de la vague en cours (-1 = pas encore commencé) */
-export const CURRENT_PHASE_INDEX = 3;
+/** Index 0-based de la vague en cours (-1 = pas encore commencé, 4 = toutes closes) */
+export const CURRENT_PHASE_INDEX = 4;
 
 export const HEADER_NAV = [
 	{ href: '/fragmentes', label: 'Fragmentés' },
@@ -735,6 +738,15 @@ Deadline : 19/08 à 21h00.`
 
 export const ANNOUNCEMENTS: Announcement[] = [
 	{
+		id: 'cadran-creux-resolu',
+		date: '2026-08-19T21:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Le Cadran Creux est résolu — la Vague 4 est close. Deux camps, deux essais : aucun n\'a dépassé la troisième couche. Soumettez vos phrases sur le site jusqu\'au 21/08 à 21h.',
+		href: '/creux#cadran-revelation',
+		linkLabel: 'Lire la révélation'
+	},
+	{
 		id: 'ouverture-vague-4',
 		date: '2026-08-16T13:00:00+02:00',
 		tag: 'URGENT',
@@ -1014,51 +1026,91 @@ export const PUBLIC_INDICES: PublicIndex[] = [
 	}
 ];
 
-/** Seconde phase Creux (entre Vague 2 et Vague 3) — close ; Vague 4 ouverte. */
+/** Seconde phase Creux (entre Vague 3 et Vague 4) — Le Cadran Creux, résolu. */
 export const CREUX_PENDING = {
 	active: false,
-	betweenLabel: 'Entre Vague 2 et Vague 3',
-	title: 'Nouvelle transmission imminente',
+	betweenLabel: 'Entre Vague 3 et Vague 4',
+	title: 'Le Cadran Creux',
 	body:
-		'La Vague 2 est close. Le Creux s’ouvre à nouveau. Une énigme est sur le point d’être captée — restez en veille, sans préavis.',
-	href: '/creux'
+		'La Vague 3 est close. Une nouvelle transmission a été captée — Le Cadran Creux. Elle est désormais résolue ; la révélation est publiée.',
+	href: '/creux#cadran-revelation'
 } as const;
 
-/** Vague 4 — énigme unique. */
+/** Le Cadran Creux — énigme entre Vague 3 et Vague 4, révélée le 19/08. */
 export const CADRAN_CREUX: CadranCreux = {
-	active: true,
 	id: 'cadran-creux',
-	title: 'Le Cadran Creux',
-	eyebrow: 'Vague 4, la dernière.',
+	title: 'LE CADRAN CREUX',
+	resolved: true,
+	resolvedLabel: '19 août 2026',
+	answer: 'MENTOR',
+	closingLines: [
+		'Deux camps. Deux essais. Aucun n\'a dépassé la troisième couche.',
+		'Les mots manquants restent manquants.',
+		'Le journal vous donnera le vrai dénouement'
+	],
 	verses: [
 		'Ce marbre gris',
-		'À l’heure où plus rien ne se prononce',
+		'À l\'heure où plus rien ne se prononce',
 		'Douce nuit, rien ne bouge donc',
 		'Rien ne tient, et tout doit mourir',
 		'Autre rive, autre cendre, même promesse',
 		'Nulle main ne te tient'
 	],
-	opensAt: '2026-08-16T13:00:00+02:00',
-	opensAtLabel: 'dimanche 16 août · 13h',
-	deadline: '2026-08-19T21:00:00+02:00',
-	deadlineLabel: 'mercredi 19 août · 21h00',
-	rules: [
-		'1 mot. 1 seul essai par camp. Le Sursis ne s’applique pas.',
-		'Tous les Fragmentés, toutes vagues confondues, peuvent soumettre.',
-		'La première soumission d’un camp est définitive et engage tout le camp.',
-		'Aucun résultat ne sera annoncé avant l’échéance.'
+	epigraph: 'Rien n\'est à sa place, et tout est à sa mesure.',
+	sections: [
+		{
+			id: 'facade',
+			title: 'I. LA FAÇADE',
+			paragraphs: [
+				'Vous l\'avez vue en premier. Les initiales de chaque vers : C · A · D · R · A · N',
+				'CADRAN. Le titre le disait déjà. Vous avez cru à une confirmation. C\'était une porte peinte sur un mur.'
+			]
+		},
+		{
+			id: 'secret',
+			title: 'II. CE QUI ÉTAIT DISSIMULÉ',
+			paragraphs: [
+				'Certains ont douté de la façade et ont regardé de l\'autre côté. Les dernières lettres : griS · prononcE · donC · mouriR · promessE · tienT — S · E · C · R · E · T',
+				'SECRET. Un deuxième mot, plus profond, trouvé par la méfiance. Vous avez été récompensés d\'avoir douté. C\'est exactement pour ça que vous avez cessé de douter.'
+			]
+		},
+		{
+			id: 'montre',
+			title: 'III. CE QUI SEMBLAIT PARFAIT',
+			paragraphs: [
+				'Il fallait compter. Dans chaque vers, le nombre de mots donne le rang d\'une lettre.',
+				'Un cadran. Une montre. Deux couches indépendantes qui se confirment l\'une l\'autre. Aucune raison d\'aller plus loin — c\'est le propre d\'un piège réussi : il ressemble à une fin.'
+			],
+			code: `Ce marbre gris                            3 mots  →  M
+À l'heure où plus rien ne se prononce     8 mots  →  O
+Douce nuit, rien ne bouge donc            6 mots  →  N
+Rien ne tient, et tout doit mourir        7 mots  →  T
+Autre rive, autre cendre, même promesse   6 mots  →  R
+Nulle main ne te tient                    5 mots  →  E`,
+			emphasis: 'MONTRE.'
+		},
+		{
+			id: 'reponse',
+			title: 'IV. LA RÉPONSE',
+			paragraphs: [
+				'« Rien n\'est à sa place, et tout est à sa mesure. »',
+				'Les six lettres étaient bonnes. L\'ordre était faux. La mesure d\'un vers, ce n\'est pas ses mots — c\'est ses lettres.',
+				'Le mot contient MENT.',
+				'Vous avez cherché une horloge. On vous en a montré une, deux fois, pour que vous arrêtiez de chercher. Le Cadran n\'a jamais mesuré le temps — il mesurait votre confiance.',
+				'Et la réponse n\'était pas une chose. C\'était quelqu\'un.'
+			],
+			code: `Ce marbre gris                            12 lettres  →  1er   M
+Nulle main ne te tient                    18 lettres  →  2e    E
+Douce nuit, rien ne bouge donc            24 lettres  →  3e    N
+Rien ne tient, et tout doit mourir        27 lettres  →  4e    T
+À l'heure où plus rien ne se prononce     29 lettres  →  5e    O
+Autre rive, autre cendre, même promesse   32 lettres  →  6e    R`,
+			emphasis: 'MENTOR'
+		}
 	],
-	reward: 'Tous les mots manquants de la phrase.',
-	hintNote: 'Un indice vous sera communiqué avant l’échéance. Soyez à l’heure.',
-	submitNote:
-		'Envoyez le mot en MP à @so_hakai. Un seul essai par camp — le premier message d’un camp compte.',
-	bearers: [
-		{ discordUsername: 'asterion_45', camp: 'staff' },
-		{ discordUsername: 'Starypik', camp: 'staff' },
-		{ discordUsername: 'hiolxx', camp: 'staff' },
-		{ discordUsername: '.xynea', camp: 'communaute' },
-		{ discordUsername: 'erwanglp', camp: 'communaute' }
-	]
+	submitDeadline: new Date('2026-08-21T21:00:00+02:00'),
+	submitDeadlineLabel: '21 août 2026 · 21h',
+	rewardTeaser: 'Demain une récompense vous attend !'
 };
 
 export const CREUX_CHALLENGE: CreuxChallenge = {
@@ -1338,10 +1390,10 @@ export const PHASES: Phase[] = [
 	},
 	{
 		id: 'wave-4',
-		name: 'Vague 4 — Le Cadran Creux',
-		share: '1 énigme',
+		name: 'Vague 4 — La Résolution',
+		share: 'Sprint final',
 		description:
-			'Ouverte le 16/08 à 13h. Une seule énigme, un mot, un essai par camp. Deadline 19/08 à 21h. Récompense : tous les mots manquants.'
+			'Clôturée le 19/08 — Le Cadran Creux résolu. Aucun camp n\'a dépassé la troisième couche. Soumission des phrases jusqu\'au 21/08 à 21h.'
 	}
 ];
 

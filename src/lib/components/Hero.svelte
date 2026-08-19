@@ -4,6 +4,7 @@
 	import {
 		EVENT,
 		NEWCOMER_BRIEF,
+		CADRAN_CREUX,
 		MAX_SUBMIT_ATTEMPTS,
 		RATE_LIMIT_WINDOW_HOURS
 	} from '$lib/data/mock';
@@ -41,7 +42,9 @@
 
 	const CTA_HOLD_MS = 900;
 
-	let remaining = $state<TimeRemaining>(getTimeRemaining(EVENT.endDate));
+	let remaining = $state<TimeRemaining>(
+		getTimeRemaining(CADRAN_CREUX.resolved ? CADRAN_CREUX.submitDeadline : EVENT.endDate),
+	);
 	let apiHealth = $state<ApiHealthStatus | null>(null);
 	let ctaProgress = $state(0);
 	let ctaLaunching = $state(false);
@@ -53,7 +56,17 @@
 	const showColdStartNotice = $derived(apiReady && apiHealth !== null && apiHealth !== 'ok');
 	const eventEnded = $derived(remaining.expired);
 	const portalBadge = $derived(
-		eventEnded ? 'Système — le portail est fermé' : 'Système — le portail est ouvert'
+		CADRAN_CREUX.resolved
+			? 'Système — le Cadran est résolu'
+			: eventEnded
+				? 'Système — le portail est fermé'
+				: 'Système — le portail est ouvert',
+	);
+	const countdownTitle = $derived(
+		CADRAN_CREUX.resolved ? 'Soumission des phrases — il reste' : "L'énigme se termine dans",
+	);
+	const countdownDateLabel = $derived(
+		CADRAN_CREUX.resolved ? CADRAN_CREUX.submitDeadlineLabel : EVENT.endDateLabel,
 	);
 	const ctaLabel = $derived(
 		eventEnded
@@ -66,9 +79,10 @@
 	);
 
 	onMount(() => {
-		remaining = getTimeRemaining(EVENT.endDate);
+		const deadline = CADRAN_CREUX.resolved ? CADRAN_CREUX.submitDeadline : EVENT.endDate;
+		remaining = getTimeRemaining(deadline);
 		const intervalId = setInterval(() => {
-			remaining = getTimeRemaining(EVENT.endDate);
+			remaining = getTimeRemaining(deadline);
 		}, 1000);
 
 		if (apiReady) {
@@ -183,8 +197,8 @@
 
 			<div class="hero__countdown hero__countdown--portal hero-fade hero-fade-3" use:reveal={{ delay: 120 }}>
 				<div class="hero__countdown-head">
-					<p class="hero__countdown-title">L'énigme se termine dans</p>
-					<p class="hero__countdown-date">{EVENT.endDateLabel}</p>
+					<p class="hero__countdown-title">{countdownTitle}</p>
+					<p class="hero__countdown-date">{countdownDateLabel}</p>
 				</div>
 
 				{#if eventEnded}

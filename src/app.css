@@ -3535,6 +3535,23 @@
 	color: #ffedd5;
 }
 
+.fragments-board__creux-link--cadran {
+	border-color: rgba(200, 60, 60, 0.35);
+	background: linear-gradient(135deg, rgba(35, 10, 10, 0.9), rgba(18, 6, 6, 0.85));
+}
+
+.fragments-board__creux-link--cadran:hover {
+	border-color: rgba(255, 100, 100, 0.45);
+}
+
+.fragments-board__creux-link--cadran .fragments-board__creux-link-eyebrow {
+	color: #ff9999;
+}
+
+.fragments-board__creux-link--cadran .fragments-board__creux-link-title {
+	color: #ffe0e0;
+}
+
 .fragments-board__creux-link-cta {
 	font-size: 0.78rem;
 	font-weight: 700;
@@ -5060,236 +5077,279 @@
 @media (prefers-reduced-motion: reduce) {
 	.fragments-board__sursis-pulse,
 	.creux-pending__pulse,
-	.cadran__pulse {
+	.cadran-closure__pulse {
 		animation: none !important;
 	}
 }
 
-/* =========== Vague 4 — Le Cadran Creux =========== */
+/* =========== Cadran Creux — clôture & teinte rougeâtre =========== */
 
-.cadran {
-	max-width: 42rem;
-	margin: 0 auto;
-	padding: 1.5rem 1.25rem 1.75rem;
-	border-color: rgba(161, 161, 170, 0.38);
+.app-shell--cadran {
+	--color-accent-cyan: #f07878;
+	--color-leveling-blue: #e04545;
+	--color-leveling-blue-light: #ff8a8a;
+	--color-leveling-blue-dark: #a82828;
+	--color-neon-blue: #ff6b6b;
+}
+
+.app-shell--cadran .ambient__base {
 	background:
-		linear-gradient(165deg, rgba(63, 63, 70, 0.42), transparent 52%),
-		rgba(12, 14, 20, 0.92);
+		radial-gradient(ellipse 80% 50% at 50% -10%, rgba(180, 40, 40, 0.22), transparent 55%),
+		radial-gradient(ellipse 60% 40% at 100% 50%, rgba(120, 20, 20, 0.14), transparent 50%),
+		linear-gradient(180deg, #0a0606 0%, #120808 45%, #0a0606 100%);
 }
 
-.cadran__eyebrow {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.45rem;
-	margin: 0;
-	font-size: 0.72rem;
-	font-weight: 700;
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	color: #d4d4d8;
+.app-shell--cadran .ambient__mesh {
+	background-image:
+		radial-gradient(at 20% 30%, rgba(200, 50, 50, 0.14) 0, transparent 50%),
+		radial-gradient(at 80% 20%, rgba(255, 100, 80, 0.1) 0, transparent 45%),
+		radial-gradient(at 60% 80%, rgba(140, 30, 30, 0.1) 0, transparent 50%);
 }
 
-.cadran__pulse {
-	width: 0.4rem;
-	height: 0.4rem;
-	border-radius: 50%;
-	background: #a1a1aa;
-	box-shadow: 0 0 10px rgba(212, 212, 216, 0.7);
-	animation: creux-pending-pulse 1.8s ease-in-out infinite;
+.app-shell--cadran .ambient__orb--1 {
+	background: rgba(200, 50, 50, 0.24);
 }
 
-.cadran__title {
+.app-shell--cadran .ambient__orb--2 {
+	background: rgba(120, 20, 30, 0.18);
+}
+
+.app-shell--cadran .ambient__orb--3 {
+	background: rgba(255, 90, 70, 0.14);
+}
+
+.app-shell--cadran .ambient__beam {
+	background: linear-gradient(180deg, transparent, rgba(255, 100, 90, 0.22), transparent);
+}
+
+.cadran-closure {
+	margin-bottom: 1.5rem;
+	padding: 1.25rem 1.5rem;
+	border: 1px solid rgba(220, 80, 80, 0.35);
+	background: linear-gradient(135deg, rgba(40, 12, 12, 0.92), rgba(20, 8, 8, 0.88));
+	box-shadow: 0 0 40px rgba(180, 40, 40, 0.12);
+}
+
+.cadran-closure__eyebrow {
 	display: flex;
 	align-items: center;
-	gap: 0.55rem;
-	margin: 0.7rem 0 0;
-	font-family: var(--font-display);
-	font-size: clamp(1.7rem, 5vw, 2.35rem);
-	font-weight: 700;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-	color: #f4f4f5;
-}
-
-.cadran__hourglass {
-	font-size: 0.72em;
-	filter: grayscale(0.35);
-}
-
-.cadran__poem {
-	margin: 1.5rem 0 0;
-	padding: 1.35rem 1.1rem;
-	border: 1px solid rgba(161, 161, 170, 0.28);
-	border-radius: 0.65rem;
-	background: linear-gradient(180deg, rgba(24, 24, 27, 0.55), rgba(9, 9, 11, 0.7));
-	text-align: center;
-}
-
-.cadran__poem p {
-	margin: 0;
-	font-size: clamp(0.98rem, 2.4vw, 1.12rem);
-	font-style: italic;
-	line-height: 1.85;
-	color: #e4e4e7;
-}
-
-.cadran__poem p + p {
-	margin-top: 0.15rem;
-}
-
-.cadran__countdown {
-	margin-top: 1.35rem;
-	padding: 0.95rem 1rem;
-	border: 1px solid rgba(161, 161, 170, 0.22);
-	border-radius: 0.65rem;
-	background: rgba(0, 0, 0, 0.28);
-}
-
-.cadran__countdown-label,
-.cadran__expired {
-	margin: 0 0 0.75rem;
-	font-size: 0.78rem;
-	font-weight: 700;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-	color: #a1a1aa;
-}
-
-.cadran__expired {
-	margin: 0;
-	color: #d4d4d8;
-}
-
-.cadran__countdown-grid {
-	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
 	gap: 0.5rem;
-}
-
-.cadran__countdown-cell {
-	padding: 0.55rem 0.2rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	border-radius: 0.4rem;
-	text-align: center;
-	background: rgba(24, 24, 27, 0.55);
-}
-
-.cadran__countdown-value {
-	margin: 0;
-	font-family: var(--font-display);
-	font-size: 1.35rem;
+	font-size: 0.72rem;
 	font-weight: 700;
-	font-variant-numeric: tabular-nums;
-	color: #fafafa;
-}
-
-.cadran__countdown-unit {
-	margin: 0.15rem 0 0;
-	font-size: 0.62rem;
-	font-weight: 700;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.14em;
 	text-transform: uppercase;
-	color: #71717a;
+	color: #ff9a9a;
+	margin-bottom: 0.75rem;
 }
 
-.cadran__block {
-	margin-top: 1.25rem;
+.cadran-closure__pulse {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #ff5555;
+	box-shadow: 0 0 12px rgba(255, 80, 80, 0.8);
+	animation: cadran-pulse 1.6s ease-in-out infinite;
 }
 
-.cadran__block h3,
-.cadran__bearers h3 {
-	margin: 0;
+@keyframes cadran-pulse {
+	0%,
+	100% {
+		opacity: 0.5;
+		transform: scale(0.9);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.15);
+	}
+}
+
+.cadran-closure__title {
+	font-family: var(--font-display);
+	font-size: clamp(1.1rem, 3vw, 1.45rem);
+	color: #ffeaea;
+	margin-bottom: 0.75rem;
+}
+
+.cadran-closure__epilogue p {
+	color: #f0c4c4;
+	font-size: 0.95rem;
+	line-height: 1.55;
+	margin-bottom: 0.35rem;
+}
+
+.cadran-closure__submit {
+	margin-top: 1rem;
+	color: #ffd0d0;
+	font-size: 0.92rem;
+}
+
+.cadran-closure__countdown {
+	display: flex;
+	gap: 0.5rem;
+	margin: 0.75rem 0 1rem;
+}
+
+.cadran-closure__countdown-cell {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 2.75rem;
+	padding: 0.35rem 0.5rem;
+	border: 1px solid rgba(220, 80, 80, 0.3);
+	background: rgba(0, 0, 0, 0.25);
+}
+
+.cadran-closure__countdown-value {
+	font-family: var(--font-display);
+	font-size: 1.1rem;
+	color: #fff;
+}
+
+.cadran-closure__countdown-label {
+	font-size: 0.65rem;
+	color: #ffaaaa;
+	letter-spacing: 0.08em;
+}
+
+.cadran-closure__teaser {
+	margin-top: 0.5rem;
+}
+
+.cadran-closure__spoiler {
+	display: inline-block;
+	padding: 0.2rem 0.55rem;
+	background: repeating-linear-gradient(
+		-45deg,
+		rgba(80, 20, 20, 0.9),
+		rgba(80, 20, 20, 0.9) 4px,
+		rgba(50, 10, 10, 0.95) 4px,
+		rgba(50, 10, 10, 0.95) 8px
+	);
+	color: transparent;
+	user-select: none;
+	border-radius: 2px;
+	cursor: help;
+}
+
+.cadran-closure__spoiler:hover,
+.cadran-closure__spoiler:focus-visible {
+	color: #ffd0d0;
+	background: rgba(60, 15, 15, 0.95);
+	user-select: text;
+}
+
+.cadran-closure__cta {
+	display: inline-block;
+	margin-top: 0.75rem;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #ffaaaa;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.cadran-closure__cta:hover {
+	color: #ffe0e0;
+}
+
+.cadran-revelation {
+	margin-bottom: 2rem;
+	padding: 1.5rem 1.25rem;
+	border: 1px solid rgba(200, 60, 60, 0.28);
+	background: linear-gradient(180deg, rgba(30, 10, 10, 0.95), rgba(12, 6, 6, 0.98));
+}
+
+@media (min-width: 640px) {
+	.cadran-revelation {
+		padding: 2rem 2.25rem;
+	}
+}
+
+.cadran-revelation__eyebrow {
+	font-family: var(--font-display);
+	font-size: clamp(1rem, 2.5vw, 1.35rem);
+	color: #ffb0b0;
+	margin-bottom: 0.35rem;
+}
+
+.cadran-revelation__date {
+	font-size: 0.75rem;
+	color: #a87070;
+	letter-spacing: 0.06em;
+	margin-bottom: 1.25rem;
+}
+
+.cadran-revelation__verses {
+	margin: 0 0 1rem;
+	padding: 0 0 0 1rem;
+	border-left: 2px solid rgba(220, 80, 80, 0.35);
+	color: #e8b8b8;
+	font-style: italic;
+	line-height: 1.65;
+}
+
+.cadran-revelation__verses p {
+	margin-bottom: 0.35rem;
+}
+
+.cadran-revelation__divider {
+	text-align: center;
+	color: rgba(200, 100, 100, 0.45);
+	margin: 1.25rem 0;
+	letter-spacing: 0.3em;
+}
+
+.cadran-revelation__section h2 {
 	font-family: var(--font-display);
 	font-size: 0.95rem;
-	font-weight: 700;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: #d4d4d8;
+	color: #ffcccc;
+	letter-spacing: 0.08em;
+	margin-bottom: 0.75rem;
 }
 
-.cadran__block ul {
-	margin: 0.65rem 0 0;
-	padding-left: 1.1rem;
+.cadran-revelation__section p {
+	color: #e8cccc;
+	line-height: 1.65;
+	margin-bottom: 0.65rem;
+	font-size: 0.95rem;
 }
 
-.cadran__block li,
-.cadran__block p,
-.cadran__submit {
-	font-size: 0.92rem;
-	line-height: 1.6;
-	color: rgba(228, 228, 231, 0.94);
-}
-
-.cadran__submit {
-	margin: 0.75rem 0 0;
-	font-size: 0.82rem;
-	color: #a1a1aa;
-}
-
-.cadran__block--reward p {
-	margin: 0.45rem 0 0;
-	font-weight: 600;
-	color: #fde68a;
-}
-
-.cadran__block--hint p {
-	margin: 0.45rem 0 0;
-	color: #e4e4e7;
-}
-
-.cadran__bearers {
-	margin-top: 1.4rem;
-	padding-top: 1.2rem;
-	border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cadran__bearers-note {
-	margin: 0.4rem 0 0.85rem;
-	font-size: 0.82rem;
+.cadran-revelation__code {
+	margin: 0.75rem 0 1rem;
+	padding: 1rem;
+	overflow-x: auto;
+	font-size: 0.72rem;
 	line-height: 1.55;
-	color: #a1a1aa;
+	color: #ffc8c8;
+	background: rgba(0, 0, 0, 0.35);
+	border: 1px solid rgba(180, 60, 60, 0.25);
+	white-space: pre;
 }
 
-.cadran__roster {
-	display: grid;
-	gap: 1rem;
-	grid-template-columns: 1fr;
+.cadran-revelation__answer {
+	font-family: var(--font-display);
+	font-size: clamp(1.4rem, 4vw, 2rem) !important;
+	color: #ff6666 !important;
+	letter-spacing: 0.2em;
+	margin: 0.75rem 0 0 !important;
 }
 
-@media (min-width: 540px) {
-	.cadran {
-		padding: 1.85rem 1.75rem 2rem;
-	}
-
-	.cadran__roster {
-		grid-template-columns: 1fr 1fr;
-	}
+.cadran-revelation__foot {
+	margin-top: 0.5rem;
 }
 
-.cadran__camp {
-	margin: 0 0 0.35rem;
-	font-size: 0.68rem;
-	font-weight: 700;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
+.cadran-revelation__epigraph {
+	font-style: italic;
+	color: #d8a0a0;
+	margin-bottom: 0.75rem;
 }
 
-.cadran__camp--communaute {
-	color: #7dd3fc;
+.cadran-revelation__system {
+	font-size: 0.88rem;
+	color: #c89090;
+	line-height: 1.55;
 }
 
-.cadran__camp--staff {
-	color: #fca5a5;
-}
-
-.cadran__roster ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.cadran__roster li {
-	font-size: 0.92rem;
-	font-weight: 600;
-	color: #e4e4e7;
+.cadran-revelation__system strong {
+	color: #ff8888;
 }

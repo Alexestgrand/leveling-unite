@@ -1,8 +1,11 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
 	import TransmissionPlayer from '$lib/components/TransmissionPlayer.svelte';
+	import CadranRevelation from '$lib/components/CadranRevelation.svelte';
+	import CadranClosureBanner from '$lib/components/CadranClosureBanner.svelte';
 	import {
 		ACTIVE_CREUX_RULE,
+		CADRAN_CREUX,
 		CREUX_CAMP_LABEL,
 		CREUX_CHALLENGE,
 		CREUX_PENDING,
@@ -14,13 +17,20 @@
 
 <PageShell
 	sectionLabel="Transmission"
-	title="Énigme du creux"
-	subtitle={CREUX_PENDING.active
-		? 'Entre deux vagues. Une nouvelle transmission est imminente.'
-		: CREUX_RESOLUTION.resolved
-			? 'Signal déchiffré. Un camp a parlé — l’édit est gravé.'
-			: 'Signal capté entre deux vagues. Une règle pour le camp qui résout le premier.'}
+	title={CADRAN_CREUX.resolved ? CADRAN_CREUX.title : 'Énigme du creux'}
+	subtitle={CADRAN_CREUX.resolved
+		? 'Le Cadran est résolu. Le Système parle.'
+		: CREUX_PENDING.active
+			? 'Entre deux vagues. Une nouvelle transmission est imminente.'
+			: CREUX_RESOLUTION.resolved
+				? 'Signal déchiffré. Un camp a parlé — l’édit est gravé.'
+				: 'Signal capté entre deux vagues. Une règle pour le camp qui résout le premier.'}
 >
+	{#if CADRAN_CREUX.resolved}
+		<CadranClosureBanner />
+		<CadranRevelation />
+	{/if}
+
 	{#if CREUX_PENDING.active}
 		<div class="creux-pending surface-card hud-panel clip-corners p-5 sm:p-8" role="status">
 			<p class="creux-pending__eyebrow">
