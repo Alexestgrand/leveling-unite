@@ -6,7 +6,9 @@
 		ACCOUNT_TOO_YOUNG: 'Votre compte Discord doit avoir au moins 5 jours.',
 		OAUTH_DENIED: 'Autorisation Discord refusée.',
 		INVALID_STATE: 'Session OAuth invalide. Réessayez.',
-		OAUTH_FAILED: 'La connexion Discord a échoué. Réessayez.'
+		OAUTH_FAILED: 'La connexion Discord a échoué. Réessayez.',
+		DISCORD_RATE_LIMITED:
+			'Discord limite temporairement les connexions (surcharge côté serveur). Attendez 1–2 minutes puis réessayez.'
 	};
 
 	const code = $derived($page.url.searchParams.get('code') ?? '');
