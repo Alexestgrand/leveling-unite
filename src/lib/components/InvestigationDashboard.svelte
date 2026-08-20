@@ -6,6 +6,8 @@
 		PUBLIC_INDICES,
 		PHASES,
 		CURRENT_PHASE_INDEX,
+		CADRAN_CREUX,
+		EVENT_STATUS,
 		TIKTOK_TRACKER,
 		ANNOUNCEMENTS
 	} from '$lib/data/mock';
@@ -20,10 +22,18 @@
 					(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 				)[0]
 			: null;
-	const currentPhase = CURRENT_PHASE_INDEX >= 0 ? PHASES[CURRENT_PHASE_INDEX] : null;
+	const allWavesClosed = CADRAN_CREUX.resolved;
+	const currentPhase = allWavesClosed
+		? null
+		: CURRENT_PHASE_INDEX >= 0
+			? PHASES[CURRENT_PHASE_INDEX]
+			: null;
 	const tiktokProgress = milestonePercent(TIKTOK_TRACKER.currentViews, TIKTOK_TRACKER.goal);
-	const phaseProgress =
-		CURRENT_PHASE_INDEX >= 0 ? ((CURRENT_PHASE_INDEX + 1) / PHASES.length) * 100 : 0;
+	const phaseProgress = allWavesClosed
+		? 100
+		: CURRENT_PHASE_INDEX >= 0
+			? ((CURRENT_PHASE_INDEX + 1) / PHASES.length) * 100
+			: 0;
 
 	let uniqueTesters = $state<number | null>(null);
 	let totalAttempts = $state<number | null>(null);
@@ -46,12 +56,16 @@
 
 	const stats = $derived([
 		{
-			label: 'Vague active',
-			value: currentPhase?.name ?? 'À venir',
-			sub: currentPhase ? `${currentPhase.share} cette semaine` : 'Lancement prochain',
+			label: allWavesClosed ? 'Événement' : 'Vague active',
+			value: allWavesClosed ? EVENT_STATUS.waveLabel : (currentPhase?.name ?? 'À venir'),
+			sub: allWavesClosed
+				? EVENT_STATUS.progressLabel
+				: currentPhase
+					? `${currentPhase.share} cette semaine`
+					: 'Lancement prochain',
 			progress: phaseProgress,
-			href: '/deroule',
-			link: 'Voir le déroulé'
+			href: allWavesClosed ? '/soumettre' : '/deroule',
+			link: allWavesClosed ? 'Soumettre une phrase' : 'Voir le déroulé'
 		},
 		{
 			label: 'Phrases testées',
@@ -91,9 +105,9 @@
 	<SectionIntro
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
-		description="La vague, les essais, les vues, les indices — en direct."
+		description="Les vagues sont closes — soumettez vos phrases avant le 21/08 à 21h."
 		href="/fragmentes"
-		linkLabel="Ouvrir le Cadran"
+		linkLabel="Voir les archives"
 	/>
 
 	<div class="stat-grid">

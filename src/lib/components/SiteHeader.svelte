@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { EVENT, HEADER_NAV, PHASES, CURRENT_PHASE_INDEX } from '$lib/data/mock';
+	import { EVENT, HEADER_NAV, PHASES, CURRENT_PHASE_INDEX, CADRAN_CREUX, EVENT_STATUS } from '$lib/data/mock';
 	import { tour } from '$lib/tour/tour.svelte';
 
 	let menuOpen = $state(false);
 
-	const currentPhase = CURRENT_PHASE_INDEX >= 0 ? PHASES[CURRENT_PHASE_INDEX] : null;
+	const currentPhase = CADRAN_CREUX.resolved
+		? null
+		: CURRENT_PHASE_INDEX >= 0
+			? PHASES[CURRENT_PHASE_INDEX]
+			: null;
+	const phaseLabel = CADRAN_CREUX.resolved ? EVENT_STATUS.waveLabel : (currentPhase?.name ?? 'À venir');
 
 	function isActive(href: string, pathname: string): boolean {
 		return href === '/' ? pathname === '/' : pathname.startsWith(href);
@@ -57,10 +62,10 @@
 				Guide
 			</button>
 
-			<span class="site-header__phase" title={currentPhase?.name ?? 'Événement à venir'}>
+			<span class="site-header__phase" title={phaseLabel}>
 				<span class="site-header__phase-dot" aria-hidden="true"></span>
-				<span class="hidden sm:inline">{currentPhase?.name ?? 'À venir'}</span>
-				<span class="sm:hidden">{currentPhase ? `P${CURRENT_PHASE_INDEX + 1}` : '—'}</span>
+				<span class="hidden sm:inline">{phaseLabel}</span>
+				<span class="sm:hidden">{CADRAN_CREUX.resolved ? 'Fin' : currentPhase ? `P${CURRENT_PHASE_INDEX + 1}` : '—'}</span>
 			</span>
 
 			<button

@@ -129,9 +129,9 @@ export const EVENT = {
 	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */
 	startDate: new Date('2026-07-25T13:00:00+02:00'),
 	startDateLabel: '25 juillet 2026 · 13h',
-	/** Fin prolongée — Vague 4 jusqu'au 20 août 2026. */
-	endDate: new Date('2026-08-20T13:00:00+02:00'),
-	endDateLabel: '20 août 2026 · 13h',
+	/** Fin — soumission des phrases jusqu'au 21/08 · 21h. */
+	endDate: new Date('2026-08-21T21:00:00+02:00'),
+	endDateLabel: '21 août 2026 · 21h',
 	duration: '26 jours (4 vagues · calendrier prolongé)',
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.com/invite/appleveling'
@@ -156,10 +156,10 @@ export const START_HERE_CARDS: StartHereCard[] = [
 	{
 		id: 'help',
 		step: '1',
-		title: 'Le Cadran Creux',
-		body: 'Vague 4 : une seule énigme. Un mot. Tous les mots manquants à la clé.',
-		href: '/fragmentes',
-		cta: 'Ouvrir le Cadran'
+		title: 'Lire la révélation',
+		body: 'Le Cadran Creux est résolu. Lis la vérité, puis soumets ta phrase.',
+		href: '/creux#cadran-revelation',
+		cta: 'Ouvrir la révélation'
 	},
 	{
 		id: 'understand',
@@ -180,11 +180,11 @@ export const START_HERE_CARDS: StartHereCard[] = [
 ];
 
 export const EVENT_STATUS = {
-	waveLabel: 'Vague 4 — close',
-	progressLabel: 'Le Cadran Creux est résolu',
-	note: 'Soumettez vos phrases jusqu’au 21/08 à 21h. La révélation est en ligne.',
-	noteHref: '/creux#cadran-revelation',
-	noteLinkLabel: 'Lire la révélation'
+	waveLabel: 'Finale',
+	progressLabel: '9 mots sécurisés sur 15',
+	note: 'Soumettez vos phrases jusqu’au 21/08 à 21h.',
+	noteHref: '/soumettre',
+	noteLinkLabel: 'Soumettre'
 } as const;
 
 export const GLOSSARY = [
@@ -225,8 +225,8 @@ export const ENIGMA_SUMMARY = {
 	fragmentDeadlineHours: 72
 } as const;
 
-/** Index 0-based de la vague en cours (-1 = pas encore commencé, 4 = toutes closes) */
-export const CURRENT_PHASE_INDEX = 4;
+/** Index 0-based de la vague en cours (3 = Vague 4 · Cadran Creux, close si résolu). */
+export const CURRENT_PHASE_INDEX = 3;
 
 export const HEADER_NAV = [
 	{ href: '/fragmentes', label: 'Fragmentés' },
@@ -257,8 +257,8 @@ export const PARTICIPATION_STEPS = [
 	},
 	{
 		step: '02',
-		title: 'Le Cadran Creux',
-		description: 'Vague 4 : une seule énigme. Aide ton camp à trouver le mot — eux seuls l’envoient.'
+		title: 'Lire la révélation',
+		description: 'Le Cadran Creux est résolu. Recoupe les indices avant de soumettre.'
 	},
 	{
 		step: '03',
@@ -271,15 +271,16 @@ export const NAV_LINKS: NavLink[] = [
 	{
 		href: '/fragmentes',
 		title: 'Fragmentés',
-		description: 'Vague 4 — Le Cadran Creux. 1 mot, tous les mots manquants.',
+		description: 'Archives des vagues 1 à 3 et du Cadran Creux.',
 		icon: 'fragments',
 		featured: true
 	},
 	{
 		href: '/creux',
 		title: 'Le Creux',
-		description: 'Archive du premier Creux — édit Le Sursis (inactif sur le Cadran).',
-		icon: 'clues'
+		description: 'Révélation du Cadran Creux — édit Le Sursis (archives).',
+		icon: 'clues',
+		featured: true
 	},
 	{
 		href: '/indices',
@@ -1390,8 +1391,8 @@ export const PHASES: Phase[] = [
 	},
 	{
 		id: 'wave-4',
-		name: 'Vague 4 — La Résolution',
-		share: 'Sprint final',
+		name: 'Vague 4 — Le Cadran Creux',
+		share: 'Énigme unique',
 		description:
 			'Clôturée le 19/08 — Le Cadran Creux résolu. Aucun camp n\'a dépassé la troisième couche. Soumission des phrases jusqu\'au 21/08 à 21h.'
 	}

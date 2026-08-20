@@ -1,17 +1,17 @@
 <script lang="ts">
 	import PageShell from '$lib/components/PageShell.svelte';
-	import { PHASES, CURRENT_PHASE_INDEX } from '$lib/data/mock';
+	import { PHASES, CURRENT_PHASE_INDEX, CADRAN_CREUX } from '$lib/data/mock';
 </script>
 
 <PageShell
 	sectionLabel="Déroulement"
 	title="Déroulé"
-	subtitle="Quatre vagues — du 25 juillet au 20 août. Dernière ligne droite."
+	subtitle="Quatre vagues — du 25 juillet au 21 août. Toutes closes."
 >
 	<div class="relative space-y-0">
 		{#each PHASES as phase, index (phase.id)}
-			{@const isActive = index === CURRENT_PHASE_INDEX}
-			{@const isPast = index < CURRENT_PHASE_INDEX || CURRENT_PHASE_INDEX >= PHASES.length}
+			{@const isActive = !CADRAN_CREUX.resolved && index === CURRENT_PHASE_INDEX}
+			{@const isPast = CADRAN_CREUX.resolved || index < CURRENT_PHASE_INDEX}
 			<div
 				class="phase-step relative flex gap-4 pb-10 last:pb-0 sm:gap-6"
 				class:phase-step--active={isActive}

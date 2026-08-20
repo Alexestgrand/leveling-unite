@@ -5,7 +5,6 @@
 	import {
 		CURRENT_PHASE_INDEX,
 		DEADLINE_URGENCY_HOURS,
-		EVENT,
 		FRAGMENTS,
 		FRAGMENT_MODE_INTRO_BASE,
 		FRAGMENT_MODE_EDIT_NOTE,
@@ -36,18 +35,32 @@
 		lost: 'Mot perdu'
 	};
 
-	const currentWave = CURRENT_PHASE_INDEX >= 0 ? CURRENT_PHASE_INDEX + 1 : 1;
-	const waveName = PHASES[currentWave - 1]?.name ?? `Vague ${currentWave}`;
-	const waveIntro = $derived(WAVE_INTROS[currentWave] ?? null);
+	const allWavesClosed = CADRAN_CREUX.resolved;
+	const currentWave: number | null = allWavesClosed
+		? null
+		: CURRENT_PHASE_INDEX >= 0
+			? CURRENT_PHASE_INDEX + 1
+			: 1;
+	const waveName = $derived(
+		currentWave === null ? '' : (PHASES[currentWave - 1]?.name ?? `Vague ${currentWave}`)
+	);
+	const waveIntro = $derived(currentWave === null ? null : (WAVE_INTROS[currentWave] ?? null));
 	const cadranActive = !CADRAN_CREUX.resolved && currentWave === 4;
-	const sursisAvailable = $derived(!cadranActive && isSursisAvailableForWave(currentWave));
-	const sursisCommunaute = $derived(isSursisAvailableForCamp(currentWave, 'communaute'));
-	const sursisStaff = $derived(isSursisAvailableForCamp(currentWave, 'staff'));
-	const sursisNote = $derived(getSursisWaveNote(currentWave));
+	const sursisAvailable = $derived(
+		currentWave !== null && !cadranActive && isSursisAvailableForWave(currentWave)
+	);
+	const sursisCommunaute = $derived(
+		currentWave !== null ? isSursisAvailableForCamp(currentWave, 'communaute') : false
+	);
+	const sursisStaff = $derived(
+		currentWave !== null ? isSursisAvailableForCamp(currentWave, 'staff') : false
+	);
+	const sursisNote = $derived(currentWave !== null ? getSursisWaveNote(currentWave) : null);
 
 	let nowMs = $state(Date.now());
 
 	const waveDeadlineLabel = $derived.by(() => {
+		if (currentWave === null) return null;
 		const iso = WAVE_DEADLINES[currentWave];
 		if (!iso) return null;
 		return new Intl.DateTimeFormat('fr-FR', {
@@ -59,6 +72,7 @@
 	});
 
 	const deadlineUrgent = $derived.by(() => {
+		if (currentWave === null) return false;
 		const iso = WAVE_DEADLINES[currentWave];
 		if (!iso) return false;
 		const end = new Date(iso).getTime();
@@ -76,19 +90,25 @@
 	}
 
 	const waveFragments = $derived(
-		sortFragments(FRAGMENTS.filter((f) => f.wave === currentWave))
+		currentWave === null
+			? []
+			: sortFragments(FRAGMENTS.filter((f) => f.wave === currentWave))
 	);
 
 	const members = $derived(waveFragments.filter((f) => f.camp === 'communaute'));
 	const staff = $derived(waveFragments.filter((f) => f.camp === 'staff'));
 
 	const pastWaves = $derived(
-		[...new Set(FRAGMENTS.map((f) => f.wave))]
-			.filter((w) => w < currentWave)
-			.sort((a, b) => b - a)
+		allWavesClosed
+			? [4, 3, 2, 1]
+			: [...new Set(FRAGMENTS.map((f) => f.wave))]
+					.filter((w) => currentWave !== null && w < currentWave)
+					.sort((a, b) => b - a)
 	);
 
-	let archiveWave = $state<number | null>(currentWave > 1 ? currentWave - 1 : null);
+	let archiveWave = $state<number | null>(
+		allWavesClosed ? 4 : currentWave !== null && currentWave > 1 ? currentWave - 1 : null
+	);
 	let focusedSlot = $state<number | null>(null);
 
 	const archiveFragments = $derived(
@@ -301,7 +321,7 @@
 		</a>
 	{/if}
 
-	{#if !cadranActive && CREUX_RESOLUTION.resolved && CREUX_RESOLUTION.chosenRuleId === 'sursis'}
+	{#if !allWavesClosed && !cadranActive && CREUX_RESOLUTION.resolved && CREUX_RESOLUTION.chosenRuleId === 'sursis'}
 		<div class="fragments-board__sursis" use:reveal role="note">
 			<p class="fragments-board__sursis-badge">
 				<span class="fragments-board__sursis-pulse" aria-hidden="true"></span>
@@ -332,7 +352,7 @@
 		</div>
 	{/if}
 
-	{#if !cadranActive}
+	{#if !allWavesClosed && !cadranActive}
 	<div class="surface-card hud-panel clip-corners p-5 sm:p-6" use:reveal>
 		<p class="section-eyebrow">
 			<span class="section-eyebrow__dot" aria-hidden="true"></span>
@@ -367,27 +387,13 @@
 	</div>
 	{/if}
 
-	{#if waveIntro && !cadranActive}
+	{#if !allWavesClosed && waveIntro && !cadranActive}
 		<div class="surface-card hud-panel clip-corners p-5 sm:p-6 fragments-board__wave-intro" use:reveal>
 			<p class="fragment-card__enigma-text whitespace-pre-line">{waveIntro}</p>
 		</div>
 	{/if}
 
-	{#if !cadranActive && waveFragments.length === 0}
-		<div class="surface-card hud-panel clip-corners p-8 text-center" use:reveal>
-			<p class="font-display text-lg font-bold text-white">Aucun fragment publié pour l’instant</p>
-			<p class="mt-2 text-sm text-zinc-400">
-				Les porteurs Discord et leurs énigmes apparaîtront ici à l’ouverture de la vague
-				(samedi 12h). En attendant, le journal vit sur le serveur.
-			</p>
-			<a href={EVENT.discordUrl} class="section-intro__link mt-5 justify-center" rel="noopener noreferrer" target="_blank">
-				Rejoindre le Discord
-				<svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-				</svg>
-			</a>
-		</div>
-	{:else if !cadranActive}
+	{#if !allWavesClosed && !cadranActive && waveFragments.length > 0}
 		{#if members.length > 0}
 			<div>
 				<h2 class="fragments-board__camp-title fragments-board__camp-title--communaute">
@@ -442,39 +448,58 @@
 				<div class="fragments-board__archive-panel" role="tabpanel">
 					<p class="fragments-board__archive-title">{archiveWaveName}</p>
 					<p class="fragments-board__archive-note">
-						{#if archiveWave === 3}
+						{#if archiveWave === 4}
+							Vague close le 19/08 — Le Cadran Creux résolu. Aucun camp n'a dépassé la troisième couche.
+						{:else if archiveWave === 3}
 							Vague close — 4 mots sécurisés, mot n°13 perdu.
 						{:else}
 							Vague close — énigmes et résultats conservés.
 						{/if}
 					</p>
 
-					{#if archiveMembers.length > 0}
-						<div>
-							<h3 class="fragments-board__camp-title fragments-board__camp-title--communaute">
-								<span aria-hidden="true">◆</span>
-								Camp Communauté
-							</h3>
-							<div class="fragments-grid">
-								{#each archiveMembers as fragment, index}
-									{@render fragmentCard(fragment, index)}
-								{/each}
-							</div>
+					{#if archiveWave === 4}
+						<div class="surface-card hud-panel clip-corners p-5 sm:p-6 fragments-board__wave-intro" use:reveal>
+							<p class="fragment-card__enigma-text whitespace-pre-line">{WAVE_INTROS[4]}</p>
 						</div>
-					{/if}
+						<a
+							href="/creux#cadran-revelation"
+							class="fragments-board__creux-link surface-card fragments-board__creux-link--cadran mt-4"
+						>
+							<span class="fragments-board__creux-link-eyebrow">
+								<span class="cadran-closure__pulse" aria-hidden="true"></span>
+								{CADRAN_CREUX.title} — archive
+							</span>
+							<span class="fragments-board__creux-link-title">Lire la révélation complète du Cadran Creux</span>
+							<span class="fragments-board__creux-link-cta">Révélation →</span>
+						</a>
+					{:else}
+						{#if archiveMembers.length > 0}
+							<div>
+								<h3 class="fragments-board__camp-title fragments-board__camp-title--communaute">
+									<span aria-hidden="true">◆</span>
+									Camp Communauté
+								</h3>
+								<div class="fragments-grid">
+									{#each archiveMembers as fragment, index}
+										{@render fragmentCard(fragment, index)}
+									{/each}
+								</div>
+							</div>
+						{/if}
 
-					{#if archiveStaff.length > 0}
-						<div>
-							<h3 class="fragments-board__camp-title fragments-board__camp-title--staff">
-								<span aria-hidden="true">◇</span>
-								Camp Staff
-							</h3>
-							<div class="fragments-grid">
-								{#each archiveStaff as fragment, index}
-									{@render fragmentCard(fragment, index + archiveMembers.length)}
-								{/each}
+						{#if archiveStaff.length > 0}
+							<div>
+								<h3 class="fragments-board__camp-title fragments-board__camp-title--staff">
+									<span aria-hidden="true">◇</span>
+									Camp Staff
+								</h3>
+								<div class="fragments-grid">
+									{#each archiveStaff as fragment, index}
+										{@render fragmentCard(fragment, index + archiveMembers.length)}
+									{/each}
+								</div>
 							</div>
-						</div>
+						{/if}
 					{/if}
 				</div>
 			{/if}
