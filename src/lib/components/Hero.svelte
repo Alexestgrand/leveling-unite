@@ -14,7 +14,13 @@
 		isApiConfigured,
 		type ApiHealthStatus
 	} from '$lib/api/validate';
-	import { getTimeRemaining, padTime, type TimeRemaining } from '$lib/utils/countdown';
+	import {
+		getSubmissionCountdownTarget,
+		getSubmissionPhase,
+		getTimeRemaining,
+		padTime,
+		type TimeRemaining
+	} from '$lib/utils/countdown';
 	import { reveal } from '$lib/actions/reveal';
 
 	const units = [
@@ -42,9 +48,7 @@
 
 	const CTA_HOLD_MS = 900;
 
-	let remaining = $state<TimeRemaining>(
-		getTimeRemaining(CADRAN_CREUX.resolved ? CADRAN_CREUX.submitDeadline : EVENT.endDate),
-	);
+	let remaining = $state<TimeRemaining>(getTimeRemaining(EVENT.endDate));
 	let apiHealth = $state<ApiHealthStatus | null>(null);
 	let ctaProgress = $state(0);
 	let ctaLaunching = $state(false);
@@ -52,25 +56,55 @@
 	let holdRaf = 0;
 	let holdStartedAt = 0;
 
+	const submitPhase = $derived(
+		CADRAN_CREUX.resolved
+			? getSubmissionPhase(CADRAN_CREUX.submitOpenDate, CADRAN_CREUX.submitDeadline)
+			: null
+	);
+	const submitWindowOpen = $derived(submitPhase === 'open');
+	const submitWindowUpcoming = $derived(submitPhase === 'upcoming');
+	const submitWindowClosed = $derived(submitPhase === 'closed');
+
 	const apiReady = isApiConfigured();
 	const showColdStartNotice = $derived(apiReady && apiHealth !== null && apiHealth !== 'ok');
-	const eventEnded = $derived(remaining.expired);
+	const eventEnded = $derived(
+		CADRAN_CREUX.resolved ? submitWindowClosed : remaining.expired
+	);
+	const portalDisabled = $derived(
+		CADRAN_CREUX.resolved ? submitPhase !== 'open' : remaining.expired
+	);
 	const portalBadge = $derived(
 		CADRAN_CREUX.resolved
-			? 'Système — le Cadran est résolu'
+			? submitWindowOpen
+				? 'Système — soumission rouverte'
+				: submitWindowUpcoming
+					? 'Système — réouverture imminente'
+					: 'Système — le Cadran est résolu'
 			: eventEnded
 				? 'Système — le portail est fermé'
-				: 'Système — le portail est ouvert',
+				: 'Système — le portail est ouvert'
 	);
 	const countdownTitle = $derived(
-		CADRAN_CREUX.resolved ? 'Soumission des phrases — il reste' : "L'énigme se termine dans",
+		CADRAN_CREUX.resolved
+			? submitWindowUpcoming
+				? 'Réouverture de la soumission dans'
+				: submitWindowOpen
+					? 'Soumission rouverte — il reste'
+					: 'Soumission close'
+			: "L'énigme se termine dans"
 	);
 	const countdownDateLabel = $derived(
-		CADRAN_CREUX.resolved ? CADRAN_CREUX.submitDeadlineLabel : EVENT.endDateLabel,
+		CADRAN_CREUX.resolved
+			? submitWindowUpcoming
+				? CADRAN_CREUX.submitOpenDateLabel
+				: CADRAN_CREUX.submitDeadlineLabel
+			: EVENT.endDateLabel
 	);
 	const ctaLabel = $derived(
-		eventEnded
-			? 'Énigme close'
+		portalDisabled
+			? submitWindowUpcoming
+				? 'Ouverture demain 13h'
+				: 'Énigme close'
 			: ctaComplete
 				? 'Portail ouvert'
 				: ctaLaunching
@@ -78,12 +112,16 @@
 					: 'Maintenir pour tester une phrase'
 	);
 
+	function tickCountdown() {
+		const target = CADRAN_CREUX.resolved
+			? getSubmissionCountdownTarget(CADRAN_CREUX.submitOpenDate, CADRAN_CREUX.submitDeadline)
+			: EVENT.endDate;
+		remaining = getTimeRemaining(target);
+	}
+
 	onMount(() => {
-		const deadline = CADRAN_CREUX.resolved ? CADRAN_CREUX.submitDeadline : EVENT.endDate;
-		remaining = getTimeRemaining(deadline);
-		const intervalId = setInterval(() => {
-			remaining = getTimeRemaining(deadline);
-		}, 1000);
+		tickCountdown();
+		const intervalId = setInterval(tickCountdown, 1000);
 
 		if (apiReady) {
 			fetchApiHealth().then((status) => {
@@ -132,7 +170,7 @@
 	}
 
 	function startHold(event: PointerEvent) {
-		if (eventEnded || ctaComplete || ctaLaunching) return;
+		if (portalDisabled || ctaComplete || ctaLaunching) return;
 		if (event.pointerType === 'mouse' && event.button !== 0) return;
 
 		ctaLaunching = true;
@@ -201,9 +239,24 @@
 					<p class="hero__countdown-date">{countdownDateLabel}</p>
 				</div>
 
-				{#if eventEnded}
+				{#if portalDisabled && !submitWindowUpcoming}
 					<div class="hero__countdown-cell hero__expired-portal">
 						<p class="hero__expired-text">L'énigme est close</p>
+					</div>
+				{:else if submitWindowUpcoming}
+					<div class="hero__countdown-grid hero__countdown-grid--portal">
+						{#each units as unit}
+							<div class="hero__countdown-cell clip-corner-sm">
+								{#if unit.key === 'seconds'}
+									{#key remaining.seconds}
+										<p class="hero__countdown-value count-tick">{padTime(remaining[unit.key])}</p>
+									{/key}
+								{:else}
+									<p class="hero__countdown-value">{padTime(remaining[unit.key])}</p>
+								{/if}
+								<p class="hero__countdown-label">{unit.label}</p>
+							</div>
+						{/each}
 					</div>
 				{:else}
 					<div class="hero__countdown-grid hero__countdown-grid--portal">
@@ -230,7 +283,7 @@
 					class:hero__cta-discord--launching={ctaLaunching}
 					class:hero__cta-discord--complete={ctaComplete}
 					title="Maintenir pour ouvrir le portail de soumission"
-					disabled={eventEnded || ctaComplete}
+					disabled={portalDisabled || ctaComplete}
 					aria-busy={ctaLaunching}
 					aria-describedby="hero-cta-hint"
 					onpointerdown={startHold}

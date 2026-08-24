@@ -15,12 +15,19 @@
 	} from '$lib/api/validate';
 	import type { AuthMeResponse } from '$lib/types/validate';
 	import {
+		CADRAN_CREUX,
 		EXPECTED_PHRASE_WORDS,
 		MAX_SUBMIT_ATTEMPTS,
 		RATE_LIMIT_WINDOW_HOURS,
 		SUBMIT_CRITERIA,
 		SUBMIT_FOOTNOTE
 	} from '$lib/data/mock';
+	import {
+		getSubmissionCountdownTarget,
+		getSubmissionPhase,
+		getTimeRemaining,
+		padTime
+	} from '$lib/utils/countdown';
 	import { formatViews } from '$lib/utils/format';
 
 	type ViewState = 'loading' | 'unavailable' | 'guest' | 'ready' | 'success' | 'already_won' | 'rate_limited';
@@ -42,9 +49,18 @@
 	let totalAttempts = $state<number | null>(null);
 
 	const wordCount = $derived(countWords(phrase));
+	const submitPhase = $derived(
+		CADRAN_CREUX.resolved
+			? getSubmissionPhase(CADRAN_CREUX.submitOpenDate, CADRAN_CREUX.submitDeadline)
+			: 'open'
+	);
+	const submitWindowOpen = $derived(submitPhase === 'open');
+	let submitCountdown = $state(getTimeRemaining(CADRAN_CREUX.submitDeadline));
+
 	const remainingAttempts = $derived(user?.remaining_attempts ?? 0);
 	const canSubmit = $derived(
-		viewState === 'ready' &&
+		submitWindowOpen &&
+			viewState === 'ready' &&
 			!submitting &&
 			phrase.trim().length > 0 &&
 			remainingAttempts > 0
@@ -182,10 +198,25 @@
 
 	onMount(() => {
 		loadSession();
-		if (!isApiConfigured()) return;
-		refreshStats();
-		const intervalId = setInterval(refreshStats, STATS_POLL_MS);
-		return () => clearInterval(intervalId);
+
+		const tickSubmitCountdown = () => {
+			submitCountdown = getTimeRemaining(
+				getSubmissionCountdownTarget(CADRAN_CREUX.submitOpenDate, CADRAN_CREUX.submitDeadline)
+			);
+		};
+		tickSubmitCountdown();
+		const countdownIntervalId = setInterval(tickSubmitCountdown, 1000);
+
+		let statsIntervalId: ReturnType<typeof setInterval> | undefined;
+		if (isApiConfigured()) {
+			refreshStats();
+			statsIntervalId = setInterval(refreshStats, STATS_POLL_MS);
+		}
+
+		return () => {
+			clearInterval(countdownIntervalId);
+			if (statsIntervalId) clearInterval(statsIntervalId);
+		};
 	});
 </script>
 
@@ -193,9 +224,41 @@
 	sectionLabel="Soumission"
 	title="Soumettre la phrase"
 	subtitle="Teste la phrase reconstituée par ton camp."
-	contextLine="15 mots. 2 essais par 24 h. Le premier camp qui valide gagne."
+	contextLine="15 mots. 2 essais par 24 h. Soumission rouverte du 25/08 13h au 27/08 13h."
 >
 	<div data-tour="tour-soumettre">
+	{#if CADRAN_CREUX.resolved && submitPhase === 'upcoming'}
+		<div
+			class="surface-card hud-panel clip-corners border-amber-500/30 mb-6 p-5 sm:p-6"
+			use:reveal
+			role="status"
+		>
+			<p class="section-eyebrow">
+				<span class="section-eyebrow__dot" aria-hidden="true"></span>
+				Ouverture imminente
+			</p>
+			<p class="mt-3 text-sm leading-relaxed text-zinc-300">
+				La soumission rouvre le <strong>{CADRAN_CREUX.submitOpenDateLabel}</strong> — dans
+				<strong>{padTime(submitCountdown.days)}j {padTime(submitCountdown.hours)}h {padTime(submitCountdown.minutes)}m</strong>.
+				Fenêtre de 48 h jusqu’au {CADRAN_CREUX.submitDeadlineLabel}.
+			</p>
+		</div>
+	{:else if CADRAN_CREUX.resolved && submitPhase === 'closed'}
+		<div
+			class="surface-card hud-panel clip-corners border-red-500/30 mb-6 p-5 sm:p-6"
+			use:reveal
+			role="alert"
+		>
+			<p class="font-display text-lg font-bold text-red-300">Soumission close</p>
+			<p class="mt-2 text-sm text-zinc-400">La fenêtre de soumission est terminée.</p>
+		</div>
+	{:else if CADRAN_CREUX.resolved && submitPhase === 'open'}
+		<p class="submit-live-stats mb-4" use:reveal role="status">
+			Soumission rouverte — il reste
+			<strong>{padTime(submitCountdown.days)}j {padTime(submitCountdown.hours)}h {padTime(submitCountdown.minutes)}m</strong>
+			(jusqu’au {CADRAN_CREUX.submitDeadlineLabel})
+		</p>
+	{/if}
 	{#if uniqueTesters !== null}
 		<p class="submit-live-stats" use:reveal role="status" aria-live="polite">
 			<span class="stat-card__live-dot" aria-hidden="true"></span>
@@ -253,7 +316,12 @@
 			</ul>
 
 			<div class="mt-8 flex flex-wrap gap-3">
-				<button type="button" class="btn-pill btn-pill--primary" onclick={connectDiscord}>
+				<button
+					type="button"
+					class="btn-pill btn-pill--primary"
+					onclick={connectDiscord}
+					disabled={!submitWindowOpen}
+				>
 					Se connecter avec Discord
 				</button>
 				<a href="/regles" class="btn-pill">Lire les règles</a>

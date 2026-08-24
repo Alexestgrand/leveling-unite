@@ -105,7 +105,7 @@
 	<SectionIntro
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
-		description="Les vagues sont closes — soumettez vos phrases avant le 21/08 à 21h."
+		description="Soumission rouverte 48 h — du 25/08 à 13h au 27/08 à 13h."
 		href="/fragmentes"
 		linkLabel="Voir les archives"
 	/>

@@ -5183,6 +5183,11 @@
 	font-size: 0.92rem;
 }
 
+.cadran-closure__submit--muted {
+	color: rgba(255, 208, 208, 0.72);
+	font-size: 0.85rem;
+}
+
 .cadran-closure__countdown {
 	display: flex;
 	gap: 0.5rem;
@@ -5250,6 +5255,11 @@
 
 .cadran-closure__cta:hover {
 	color: #ffe0e0;
+}
+
+.cadran-closure__cta--submit {
+	margin-top: 0.25rem;
+	margin-bottom: 0.25rem;
 }
 
 .cadran-revelation {

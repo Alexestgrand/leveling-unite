@@ -67,6 +67,9 @@ export interface CadranCreux {
 	verses: readonly string[];
 	epigraph: string;
 	sections: readonly CadranSection[];
+	/** Réouverture de la soumission (fenêtre finale). */
+	submitOpenDate: Date;
+	submitOpenDateLabel: string;
 	/** Dernière chance de soumettre la phrase des 15 mots. */
 	submitDeadline: Date;
 	submitDeadlineLabel: string;
@@ -129,9 +132,9 @@ export const EVENT = {
 	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */
 	startDate: new Date('2026-07-25T13:00:00+02:00'),
 	startDateLabel: '25 juillet 2026 · 13h',
-	/** Fin — soumission des phrases jusqu'au 21/08 · 21h. */
-	endDate: new Date('2026-08-21T21:00:00+02:00'),
-	endDateLabel: '21 août 2026 · 21h',
+	/** Fin — soumission rouverte 48 h · jusqu'au 27/08 · 13h. */
+	endDate: new Date('2026-08-27T13:00:00+02:00'),
+	endDateLabel: '27 août 2026 · 13h',
 	duration: '26 jours (4 vagues · calendrier prolongé)',
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.com/invite/appleveling'
@@ -182,7 +185,7 @@ export const START_HERE_CARDS: StartHereCard[] = [
 export const EVENT_STATUS = {
 	waveLabel: 'Finale',
 	progressLabel: '9 mots sécurisés sur 15',
-	note: 'Soumettez vos phrases jusqu’au 21/08 à 21h.',
+	note: 'Soumission rouverte 48 h — du 25/08 à 13h au 27/08 à 13h.',
 	noteHref: '/soumettre',
 	noteLinkLabel: 'Soumettre'
 } as const;
@@ -739,6 +742,15 @@ Deadline : 19/08 à 21h00.`
 
 export const ANNOUNCEMENTS: Announcement[] = [
 	{
+		id: 'reouverture-soumission',
+		date: '2026-08-24T22:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Soumission rouverte 48 h — du 25/08 à 13h au 27/08 à 13h. Connectez-vous avec Discord sur le site pour tester votre phrase.',
+		href: '/soumettre',
+		linkLabel: 'Soumettre une phrase'
+	},
+	{
 		id: 'cadran-creux-resolu',
 		date: '2026-08-19T21:00:00+02:00',
 		tag: 'URGENT',
@@ -1109,8 +1121,10 @@ Autre rive, autre cendre, même promesse   32 lettres  →  6e    R`,
 			emphasis: 'MENTOR'
 		}
 	],
-	submitDeadline: new Date('2026-08-21T21:00:00+02:00'),
-	submitDeadlineLabel: '21 août 2026 · 21h',
+	submitOpenDate: new Date('2026-08-25T13:00:00+02:00'),
+	submitOpenDateLabel: '25 août 2026 · 13h',
+	submitDeadline: new Date('2026-08-27T13:00:00+02:00'),
+	submitDeadlineLabel: '27 août 2026 · 13h',
 	rewardTeaser: 'Demain une récompense vous attend !'
 };
 
@@ -1394,7 +1408,7 @@ export const PHASES: Phase[] = [
 		name: 'Vague 4 — Le Cadran Creux',
 		share: 'Énigme unique',
 		description:
-			'Clôturée le 19/08 — Le Cadran Creux résolu. Aucun camp n\'a dépassé la troisième couche. Soumission des phrases jusqu\'au 21/08 à 21h.'
+			'Clôturée le 19/08 — Le Cadran Creux résolu. Soumission rouverte 48 h du 25/08 à 13h au 27/08 à 13h.'
 	}
 ];
 
