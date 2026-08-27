@@ -132,9 +132,9 @@ export const EVENT = {
 	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */
 	startDate: new Date('2026-07-25T13:00:00+02:00'),
 	startDateLabel: '25 juillet 2026 · 13h',
-	/** Fin — soumission rouverte 48 h · jusqu'au 27/08 · 13h. */
-	endDate: new Date('2026-08-27T13:00:00+02:00'),
-	endDateLabel: '27 août 2026 · 13h',
+	/** Fin — soumission prolongée jusqu'au 28/08 · 21h. */
+	endDate: new Date('2026-08-28T21:00:00+02:00'),
+	endDateLabel: '28 août 2026 · 21h',
 	duration: '26 jours (4 vagues · calendrier prolongé)',
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.com/invite/appleveling'
@@ -185,7 +185,7 @@ export const START_HERE_CARDS: StartHereCard[] = [
 export const EVENT_STATUS = {
 	waveLabel: 'Finale',
 	progressLabel: '9 mots sécurisés sur 15',
-	note: 'Soumission rouverte 48 h — du 25/08 à 13h au 27/08 à 13h.',
+	note: 'Soumission prolongée jusqu’au 28/08 à 21h.',
 	noteHref: '/soumettre',
 	noteLinkLabel: 'Soumettre'
 } as const;
@@ -742,6 +742,15 @@ Deadline : 19/08 à 21h00.`
 
 export const ANNOUNCEMENTS: Announcement[] = [
 	{
+		id: 'prolongation-soumission',
+		date: '2026-08-27T16:00:00+02:00',
+		tag: 'URGENT',
+		content:
+			'Soumission prolongée jusqu’au 28/08 à 21h. Connectez-vous avec Discord sur le site pour tester votre phrase.',
+		href: '/soumettre',
+		linkLabel: 'Soumettre une phrase'
+	},
+	{
 		id: 'reouverture-soumission',
 		date: '2026-08-24T22:00:00+02:00',
 		tag: 'URGENT',
@@ -1123,8 +1132,8 @@ Autre rive, autre cendre, même promesse   32 lettres  →  6e    R`,
 	],
 	submitOpenDate: new Date('2026-08-25T13:00:00+02:00'),
 	submitOpenDateLabel: '25 août 2026 · 13h',
-	submitDeadline: new Date('2026-08-27T13:00:00+02:00'),
-	submitDeadlineLabel: '27 août 2026 · 13h',
+	submitDeadline: new Date('2026-08-28T21:00:00+02:00'),
+	submitDeadlineLabel: '28 août 2026 · 21h',
 	rewardTeaser: 'Demain une récompense vous attend !'
 };
 
@@ -1408,7 +1417,7 @@ export const PHASES: Phase[] = [
 		name: 'Vague 4 — Le Cadran Creux',
 		share: 'Énigme unique',
 		description:
-			'Clôturée le 19/08 — Le Cadran Creux résolu. Soumission rouverte 48 h du 25/08 à 13h au 27/08 à 13h.'
+			'Clôturée le 19/08 — Le Cadran Creux résolu. Soumission prolongée jusqu’au 28/08 à 21h.'
 	}
 ];
 

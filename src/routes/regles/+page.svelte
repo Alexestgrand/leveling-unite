@@ -44,8 +44,7 @@
 					Réponse : <strong class="text-red-300">{CADRAN_CREUX.answer}</strong>.
 				</p>
 				<p class="mt-4 text-zinc-300">
-					Soumission rouverte du <strong>{CADRAN_CREUX.submitOpenDateLabel}</strong> au
-					<strong>{CADRAN_CREUX.submitDeadlineLabel}</strong> (48 h).
+					Soumission prolongée jusqu’au <strong>{CADRAN_CREUX.submitDeadlineLabel}</strong>.
 				</p>
 				<p class="mt-2 text-sm text-zinc-400">
 					<a href="/creux#cadran-revelation" class="text-red-300 underline">Lire la révélation complète →</a>

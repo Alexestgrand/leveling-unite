@@ -76,7 +76,7 @@
 	const portalBadge = $derived(
 		CADRAN_CREUX.resolved
 			? submitWindowOpen
-				? 'Système — soumission rouverte'
+				? 'Système — soumission ouverte'
 				: submitWindowUpcoming
 					? 'Système — réouverture imminente'
 					: 'Système — le Cadran est résolu'
@@ -89,7 +89,7 @@
 			? submitWindowUpcoming
 				? 'Réouverture de la soumission dans'
 				: submitWindowOpen
-					? 'Soumission rouverte — il reste'
+					? 'Soumission prolongée — il reste'
 					: 'Soumission close'
 			: "L'énigme se termine dans"
 	);

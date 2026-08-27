@@ -66,11 +66,11 @@
 			{/each}
 		</div>
 		<p class="cadran-closure__submit cadran-closure__submit--muted">
-			Fenêtre de 48 h · jusqu’au {CADRAN_CREUX.submitDeadlineLabel}
+			Jusqu’au {CADRAN_CREUX.submitDeadlineLabel}
 		</p>
 	{:else if submitPhase === 'open'}
 		<p class="cadran-closure__submit">
-			Soumission rouverte — vous avez jusqu’à <strong>{CADRAN_CREUX.submitDeadlineLabel}</strong> pour
+			Soumission prolongée — vous avez jusqu’à <strong>{CADRAN_CREUX.submitDeadlineLabel}</strong> pour
 			tester vos phrases sur le site.
 		</p>
 		<div class="cadran-closure__countdown" aria-live="polite">

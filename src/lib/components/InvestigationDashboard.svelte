@@ -105,7 +105,7 @@
 	<SectionIntro
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
-		description="Soumission rouverte 48 h — du 25/08 à 13h au 27/08 à 13h."
+		description="Soumission prolongée jusqu’au 28/08 à 21h."
 		href="/fragmentes"
 		linkLabel="Voir les archives"
 	/>

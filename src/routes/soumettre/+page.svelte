@@ -224,7 +224,7 @@
 	sectionLabel="Soumission"
 	title="Soumettre la phrase"
 	subtitle="Teste la phrase reconstituée par ton camp."
-	contextLine="15 mots. 2 essais par 24 h. Soumission rouverte du 25/08 13h au 27/08 13h."
+	contextLine="15 mots. 2 essais par 24 h. Soumission prolongée jusqu’au 28/08 à 21h."
 >
 	<div data-tour="tour-soumettre">
 	{#if CADRAN_CREUX.resolved && submitPhase === 'upcoming'}
@@ -254,7 +254,7 @@
 		</div>
 	{:else if CADRAN_CREUX.resolved && submitPhase === 'open'}
 		<p class="submit-live-stats mb-4" use:reveal role="status">
-			Soumission rouverte — il reste
+			Soumission prolongée — il reste
 			<strong>{padTime(submitCountdown.days)}j {padTime(submitCountdown.hours)}h {padTime(submitCountdown.minutes)}m</strong>
 			(jusqu’au {CADRAN_CREUX.submitDeadlineLabel})
 		</p>
