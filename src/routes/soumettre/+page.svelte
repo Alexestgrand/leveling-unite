@@ -266,7 +266,7 @@
 	sectionLabel="Soumission"
 	title="Soumettre la phrase"
 	subtitle="Teste la phrase reconstituée par ton camp."
-	contextLine="15 mots. 2 essais par 24 h. Soumission prolongée jusqu’au 28/08 à 21h06."
+	contextLine="15 mots. 2 essais par 24 h. Soumission prolongée jusqu’au 28/08 à 21h10."
 >
 	<div data-tour="tour-soumettre">
 	{#if viewState === 'closed' || (CADRAN_CREUX.resolved && submitPhase === 'closed')}

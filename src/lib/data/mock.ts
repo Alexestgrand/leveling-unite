@@ -132,9 +132,9 @@ export const EVENT = {
 	/** Ouverture officielle — samedi 25 juillet 2026 à 13h (heure de Paris). */
 	startDate: new Date('2026-07-25T13:00:00+02:00'),
 	startDateLabel: '25 juillet 2026 · 13h',
-	/** Fin — soumission prolongée jusqu'au 28/08 · 21h06. */
-	endDate: new Date('2026-08-28T21:06:00+02:00'),
-	endDateLabel: '28 août 2026 · 21h06',
+	/** Fin — soumission prolongée jusqu'au 28/08 · 21h10. */
+	endDate: new Date('2026-08-28T21:10:00+02:00'),
+	endDateLabel: '28 août 2026 · 21h10',
 	duration: '26 jours (4 vagues · calendrier prolongé)',
 	discordLabel: 'Serveur Discord Leveling',
 	discordUrl: 'https://discord.com/invite/appleveling'
@@ -185,7 +185,7 @@ export const START_HERE_CARDS: StartHereCard[] = [
 export const EVENT_STATUS = {
 	waveLabel: 'Finale',
 	progressLabel: '9 mots sécurisés sur 15',
-	note: 'Soumission prolongée jusqu’au 28/08 à 21h06.',
+	note: 'Soumission prolongée jusqu’au 28/08 à 21h10.',
 	noteHref: '/soumettre',
 	noteLinkLabel: 'Soumettre'
 } as const;
@@ -753,7 +753,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
 		date: '2026-08-27T16:00:00+02:00',
 		tag: 'URGENT',
 		content:
-			'Soumission prolongée jusqu’au 28/08 à 21h06. Connectez-vous avec Discord sur le site pour tester votre phrase.',
+			'Soumission prolongée jusqu’au 28/08 à 21h10. Connectez-vous avec Discord sur le site pour tester votre phrase.',
 		href: '/soumettre',
 		linkLabel: 'Soumettre une phrase'
 	},
@@ -1139,8 +1139,8 @@ Autre rive, autre cendre, même promesse   32 lettres  →  6e    R`,
 	],
 	submitOpenDate: new Date('2026-08-25T13:00:00+02:00'),
 	submitOpenDateLabel: '25 août 2026 · 13h',
-	submitDeadline: new Date('2026-08-28T21:06:00+02:00'),
-	submitDeadlineLabel: '28 août 2026 · 21h06',
+	submitDeadline: new Date('2026-08-28T21:10:00+02:00'),
+	submitDeadlineLabel: '28 août 2026 · 21h10',
 	rewardTeaser: 'Demain une récompense vous attend !'
 };
 
@@ -1424,7 +1424,7 @@ export const PHASES: Phase[] = [
 		name: 'Vague 4 — Le Cadran Creux',
 		share: 'Énigme unique',
 		description:
-			'Clôturée le 19/08 — Le Cadran Creux résolu. Soumission prolongée jusqu’au 28/08 à 21h06.'
+			'Clôturée le 19/08 — Le Cadran Creux résolu. Soumission prolongée jusqu’au 28/08 à 21h10.'
 	}
 ];
 
