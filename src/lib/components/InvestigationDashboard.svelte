@@ -122,7 +122,7 @@
 	<SectionIntro
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
-		description="Soumission prolongée jusqu’au 28/08 à 21h10."
+		description="Soumission prolongée jusqu’au 28/08 à 21h15."
 		href="/fragmentes"
 		linkLabel="Voir les archives"
 	/>
