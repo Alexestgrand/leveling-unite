@@ -84,6 +84,7 @@
 		<a href="/soumettre" class="cadran-closure__cta cadran-closure__cta--submit">Soumettre une phrase →</a>
 	{:else}
 		<p class="cadran-closure__submit">La fenêtre de soumission est close.</p>
+		<a href="/avis" class="cadran-closure__cta cadran-closure__cta--submit">Laisser un avis →</a>
 	{/if}
 
 	<p class="cadran-closure__teaser">

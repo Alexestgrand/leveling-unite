@@ -7,6 +7,7 @@
 		API_COLD_START_MESSAGE,
 		fetchApiHealth,
 		fetchAuthMe,
+		fetchEventStatus,
 		fetchSubmissionStats,
 		getDiscordLoginUrl,
 		isApiConfigured,
@@ -28,9 +29,10 @@
 		getTimeRemaining,
 		padTime
 	} from '$lib/utils/countdown';
+	import { getWinnerLabel, isSubmissionClosedLocally } from '$lib/utils/event-status';
 	import { formatViews } from '$lib/utils/format';
 
-	type ViewState = 'loading' | 'unavailable' | 'guest' | 'ready' | 'success' | 'already_won' | 'rate_limited';
+	type ViewState = 'loading' | 'unavailable' | 'guest' | 'ready' | 'success' | 'already_won' | 'rate_limited' | 'closed';
 
 	const STATS_POLL_MS = 8000;
 
@@ -47,6 +49,7 @@
 	let showColdStartNotice = $state(false);
 	let uniqueTesters = $state<number | null>(null);
 	let totalAttempts = $state<number | null>(null);
+	let closedReason = $state<'deadline' | 'winner' | 'staff' | null>(null);
 
 	const wordCount = $derived(countWords(phrase));
 	const submitPhase = $derived(
@@ -54,10 +57,37 @@
 			? getSubmissionPhase(CADRAN_CREUX.submitOpenDate, CADRAN_CREUX.submitDeadline)
 			: 'open'
 	);
-	const submitWindowOpen = $derived(submitPhase === 'open');
+	const submissionClosed = $derived(
+		isSubmissionClosedLocally() || closedReason !== null || viewState === 'closed'
+	);
+	const submitWindowOpen = $derived(submitPhase === 'open' && !submissionClosed);
 	let submitCountdown = $state(getTimeRemaining(CADRAN_CREUX.submitDeadline));
 
 	const remainingAttempts = $derived(user?.remaining_attempts ?? 0);
+	const winnerLabel = $derived(getWinnerLabel());
+
+	function resolveClosedReason(): 'deadline' | 'winner' | 'staff' | null {
+		if (getWinnerLabel()) return 'staff';
+		if (isSubmissionClosedLocally() && submitPhase === 'closed') return 'deadline';
+		return null;
+	}
+
+	async function checkSubmissionClosed() {
+		const localReason = resolveClosedReason();
+		if (localReason) {
+			closedReason = localReason;
+			viewState = 'closed';
+			return true;
+		}
+
+		const status = await fetchEventStatus();
+		if (status && !status.submission_open) {
+			closedReason = status.closed_reason ?? 'winner';
+			viewState = 'closed';
+			return true;
+		}
+		return false;
+	}
 	const canSubmit = $derived(
 		submitWindowOpen &&
 			viewState === 'ready' &&
@@ -74,6 +104,8 @@
 	}
 
 	async function loadSession() {
+		if (await checkSubmissionClosed()) return;
+
 		viewState = 'loading';
 		statusMessage = '';
 		statusTone = 'neutral';
@@ -127,7 +159,7 @@
 	}
 
 	function connectDiscord() {
-		if (!isApiConfigured()) return;
+		if (!isApiConfigured() || !submitWindowOpen) return;
 		// Full-page redirect required: OAuth callback sets httpOnly cookie on API domain.
 		window.location.href = getDiscordLoginUrl();
 	}
@@ -169,6 +201,13 @@
 				statusTone = 'success';
 				statusMessage = result.message;
 				if (user) user = { ...user, already_won: true, remaining_attempts: result.remaining_attempts ?? 0 };
+				closedReason = 'winner';
+				break;
+			case 'SUBMISSION_CLOSED':
+				viewState = 'closed';
+				closedReason = 'winner';
+				statusTone = 'error';
+				statusMessage = result.message;
 				break;
 			case 'ALREADY_WON':
 				viewState = 'already_won';
@@ -203,6 +242,9 @@
 			submitCountdown = getTimeRemaining(
 				getSubmissionCountdownTarget(CADRAN_CREUX.submitOpenDate, CADRAN_CREUX.submitDeadline)
 			);
+			if (submitPhase === 'closed' && viewState !== 'closed' && viewState !== 'success') {
+				checkSubmissionClosed();
+			}
 		};
 		tickSubmitCountdown();
 		const countdownIntervalId = setInterval(tickSubmitCountdown, 1000);
@@ -224,10 +266,28 @@
 	sectionLabel="Soumission"
 	title="Soumettre la phrase"
 	subtitle="Teste la phrase reconstituée par ton camp."
-	contextLine="15 mots. 2 essais par 24 h. Soumission prolongée jusqu’au 28/08 à 21h."
+	contextLine="15 mots. 2 essais par 24 h. Soumission prolongée jusqu’au 28/08 à 21h06."
 >
 	<div data-tour="tour-soumettre">
-	{#if CADRAN_CREUX.resolved && submitPhase === 'upcoming'}
+	{#if viewState === 'closed' || (CADRAN_CREUX.resolved && submitPhase === 'closed')}
+		<div
+			class="surface-card hud-panel clip-corners border-red-500/30 mb-6 p-5 sm:p-6"
+			use:reveal
+			role="alert"
+		>
+			<p class="font-display text-lg font-bold text-red-300">Soumission close</p>
+			<p class="mt-2 text-sm text-zinc-400">
+				{#if winnerLabel}
+					Le camp <strong class="text-zinc-200">{winnerLabel}</strong> a remporté l’événement.
+				{:else if closedReason === 'winner'}
+					Un camp a validé la phrase en premier. La soumission est terminée.
+				{:else}
+					La fenêtre de soumission est terminée (deadline {CADRAN_CREUX.submitDeadlineLabel}).
+				{/if}
+			</p>
+			<a href="/avis" class="btn-pill btn-pill--primary mt-6 inline-flex">Laisser un avis →</a>
+		</div>
+	{:else if CADRAN_CREUX.resolved && submitPhase === 'upcoming'}
 		<div
 			class="surface-card hud-panel clip-corners border-amber-500/30 mb-6 p-5 sm:p-6"
 			use:reveal
@@ -243,15 +303,6 @@
 				Fenêtre de 48 h jusqu’au {CADRAN_CREUX.submitDeadlineLabel}.
 			</p>
 		</div>
-	{:else if CADRAN_CREUX.resolved && submitPhase === 'closed'}
-		<div
-			class="surface-card hud-panel clip-corners border-red-500/30 mb-6 p-5 sm:p-6"
-			use:reveal
-			role="alert"
-		>
-			<p class="font-display text-lg font-bold text-red-300">Soumission close</p>
-			<p class="mt-2 text-sm text-zinc-400">La fenêtre de soumission est terminée.</p>
-		</div>
 	{:else if CADRAN_CREUX.resolved && submitPhase === 'open'}
 		<p class="submit-live-stats mb-4" use:reveal role="status">
 			Soumission prolongée — il reste
@@ -259,7 +310,7 @@
 			(jusqu’au {CADRAN_CREUX.submitDeadlineLabel})
 		</p>
 	{/if}
-	{#if uniqueTesters !== null}
+	{#if viewState !== 'closed' && uniqueTesters !== null}
 		<p class="submit-live-stats" use:reveal role="status" aria-live="polite">
 			<span class="stat-card__live-dot" aria-hidden="true"></span>
 			<strong>{formatViews(uniqueTesters)}</strong> personne{uniqueTesters === 1 ? '' : 's'} ont déjà
@@ -269,7 +320,7 @@
 			{/if}
 		</p>
 	{/if}
-	{#if showColdStartNotice && viewState !== 'loading' && viewState !== 'unavailable'}
+	{#if showColdStartNotice && viewState !== 'loading' && viewState !== 'unavailable' && viewState !== 'closed'}
 		<p class="mb-4 text-center text-sm leading-relaxed text-zinc-500" role="status">
 			{API_COLD_START_MESSAGE}
 		</p>
@@ -299,6 +350,8 @@
 				</button>
 			</div>
 		</div>
+	{:else if viewState === 'closed'}
+		<!-- bannière close affichée ci-dessus -->
 	{:else if viewState === 'guest'}
 		<div class="surface-card hud-panel clip-corners glow-border p-6 sm:p-8" use:reveal>
 			<h2 class="font-display text-lg font-bold text-white">Identification requise</h2>
@@ -344,6 +397,7 @@
 			<p class="mt-3 text-sm leading-relaxed text-zinc-300">
 				{statusMessage || 'Votre phrase a été acceptée. Consultez Discord pour la suite de l\'événement.'}
 			</p>
+			<a href="/avis" class="btn-pill mt-6 inline-flex">Laisser un avis →</a>
 		</div>
 	{:else if viewState === 'already_won'}
 		<div class="surface-card hud-panel clip-corners p-6 sm:p-8" use:reveal role="status" aria-live="polite">
@@ -416,7 +470,7 @@
 					placeholder="Saisissez les 15 mots de la phrase…"
 					bind:value={phrase}
 					aria-describedby="phrase-hint word-counter"
-					disabled={submitting}
+					disabled={submitting || !submitWindowOpen}
 				></textarea>
 
 				<p

@@ -1,6 +1,19 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/reveal';
-	import { EVENT, HEADER_NAV } from '$lib/data/mock';
+	import { EVENT } from '$lib/data/mock';
+	import { fetchEventStatus } from '$lib/api/validate';
+	import type { EventStatus } from '$lib/types/validate';
+	import { getHeaderNav } from '$lib/utils/nav';
+
+	let eventStatus = $state<EventStatus | null>(null);
+	const headerNav = $derived(getHeaderNav(Date.now(), eventStatus));
+
+	onMount(() => {
+		fetchEventStatus().then((status) => {
+			eventStatus = status;
+		});
+	});
 </script>
 
 <footer class="site-footer" use:reveal>
@@ -19,7 +32,7 @@
 			<p class="site-footer__nav-title">Navigation</p>
 			<ul>
 				<li><a href="/">Accueil</a></li>
-				{#each HEADER_NAV as link}
+				{#each headerNav as link}
 					<li><a href={link.href}>{link.label}</a></li>
 				{/each}
 				<li><a href="/concept">Concept</a></li>

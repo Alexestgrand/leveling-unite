@@ -7,7 +7,7 @@
 	sectionLabel="Fragmentés"
 	title="Fragmentés"
 	subtitle="Archives des vagues 1 à 3 et du Cadran Creux (Vague 4)."
-	contextLine="Soumission prolongée jusqu’au 28/08 à 21h."
+	contextLine="Soumission prolongée jusqu’au 28/08 à 21h06."
 >
 	<FragmentsBoard />
 </PageShell>

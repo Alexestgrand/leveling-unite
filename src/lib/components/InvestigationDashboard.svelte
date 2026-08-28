@@ -11,7 +11,10 @@
 		TIKTOK_TRACKER,
 		ANNOUNCEMENTS
 	} from '$lib/data/mock';
-	import { fetchSubmissionStats, isApiConfigured } from '$lib/api/validate';
+	import { fetchSubmissionStats, fetchEventStatus, isApiConfigured } from '$lib/api/validate';
+	import type { EventStatus } from '$lib/types/validate';
+	import { isEventFinished } from '$lib/utils/event-status';
+	import { getSubmissionPhase } from '$lib/utils/countdown';
 	import { formatViews, milestonePercent } from '$lib/utils/format';
 
 	const STATS_POLL_MS = 8000;
@@ -38,6 +41,12 @@
 	let uniqueTesters = $state<number | null>(null);
 	let totalAttempts = $state<number | null>(null);
 	let statsReady = $state(false);
+	let eventStatus = $state<EventStatus | null>(null);
+
+	const submissionClosed = $derived(
+		isEventFinished(eventStatus) ||
+			getSubmissionPhase(CADRAN_CREUX.submitOpenDate, CADRAN_CREUX.submitDeadline) === 'closed'
+	);
 
 	async function refreshStats() {
 		const data = await fetchSubmissionStats();
@@ -48,10 +57,14 @@
 	}
 
 	onMount(() => {
-		if (!isApiConfigured()) return;
-		refreshStats();
-		const intervalId = setInterval(refreshStats, STATS_POLL_MS);
-		return () => clearInterval(intervalId);
+		if (isApiConfigured()) {
+			fetchEventStatus().then((status) => {
+				eventStatus = status;
+			});
+			refreshStats();
+			const intervalId = setInterval(refreshStats, STATS_POLL_MS);
+			return () => clearInterval(intervalId);
+		}
 	});
 
 	const stats = $derived([
@@ -64,8 +77,12 @@
 					? `${currentPhase.share} cette semaine`
 					: 'Lancement prochain',
 			progress: phaseProgress,
-			href: allWavesClosed ? '/soumettre' : '/deroule',
-			link: allWavesClosed ? 'Soumettre une phrase' : 'Voir le déroulé'
+			href: allWavesClosed ? (submissionClosed ? '/avis' : '/soumettre') : '/deroule',
+			link: allWavesClosed
+				? submissionClosed
+					? 'Laisser un avis'
+					: 'Soumettre une phrase'
+				: 'Voir le déroulé'
 		},
 		{
 			label: 'Phrases testées',
@@ -75,8 +92,8 @@
 					? `${formatViews(totalAttempts)} essais au total · live`
 					: 'compteur en direct',
 			progress: uniqueTesters !== null ? Math.min((uniqueTesters / 500) * 100, 100) : 0,
-			href: '/soumettre',
-			link: 'Tester une phrase',
+			href: submissionClosed ? '/avis' : '/soumettre',
+			link: submissionClosed ? 'Laisser un avis' : 'Tester une phrase',
 			live: true
 		},
 		{
@@ -105,7 +122,7 @@
 	<SectionIntro
 		eyebrow="Vue d'ensemble"
 		title="Où en est l'enquête ?"
-		description="Soumission prolongée jusqu’au 28/08 à 21h."
+		description="Soumission prolongée jusqu’au 28/08 à 21h06."
 		href="/fragmentes"
 		linkLabel="Voir les archives"
 	/>

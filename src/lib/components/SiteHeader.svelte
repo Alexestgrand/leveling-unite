@@ -1,10 +1,17 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { EVENT, HEADER_NAV, PHASES, CURRENT_PHASE_INDEX, CADRAN_CREUX, EVENT_STATUS } from '$lib/data/mock';
+	import { EVENT, PHASES, CURRENT_PHASE_INDEX, CADRAN_CREUX, EVENT_STATUS } from '$lib/data/mock';
+	import { fetchEventStatus } from '$lib/api/validate';
+	import type { EventStatus } from '$lib/types/validate';
+	import { getHeaderNav } from '$lib/utils/nav';
 	import { tour } from '$lib/tour/tour.svelte';
 
 	let menuOpen = $state(false);
+	let eventStatus = $state<EventStatus | null>(null);
+
+	const headerNav = $derived(getHeaderNav(Date.now(), eventStatus));
 
 	const currentPhase = CADRAN_CREUX.resolved
 		? null
@@ -28,6 +35,12 @@
 		}
 		tour.start();
 	}
+
+	onMount(() => {
+		fetchEventStatus().then((status) => {
+			eventStatus = status;
+		});
+	});
 </script>
 
 <header class="site-header">
@@ -41,7 +54,7 @@
 		</a>
 
 		<nav class="site-header__nav" aria-label="Navigation principale">
-			{#each HEADER_NAV as link}
+			{#each headerNav as link}
 				<a
 					href={link.href}
 					class="site-header__link"
@@ -92,7 +105,7 @@
 			<button type="button" class="site-header__mobile-link site-header__mobile-guide" onclick={openGuide}>
 				Comment ça marche ?
 			</button>
-			{#each HEADER_NAV as link}
+			{#each headerNav as link}
 				<a
 					href={link.href}
 					class="site-header__mobile-link"

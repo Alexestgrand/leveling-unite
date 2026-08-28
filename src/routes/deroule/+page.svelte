@@ -6,7 +6,7 @@
 <PageShell
 	sectionLabel="Déroulement"
 	title="Déroulé"
-	subtitle="Quatre vagues — du 25 juillet au 28 août. Soumission prolongée jusqu’au 28/08 à 21h."
+	subtitle="Quatre vagues — du 25 juillet au 28 août. Soumission prolongée jusqu’au 28/08 à 21h06."
 >
 	<div class="relative space-y-0">
 		{#each PHASES as phase, index (phase.id)}

@@ -1,5 +1,13 @@
 import { PUBLIC_API_URL } from '$env/static/public';
-import type { AuthMeResponse, SubmissionStats, ValidateResponse } from '$lib/types/validate';
+import type {
+	AuthMeResponse,
+	EventStatus,
+	FeedbackListResponse,
+	FeedbackSubmitResponse,
+	SubmissionStats,
+	ValidateResponse,
+	FeedbackEntry
+} from '$lib/types/validate';
 
 const HEALTH_TIMEOUT_MS = 8000;
 const HEALTH_SLOW_MS = 3000;
@@ -142,6 +150,60 @@ export async function submitPhrase(phrase: string): Promise<ValidateResponse> {
 		});
 
 		return (await res.json()) as ValidateResponse;
+	} catch {
+		return {
+			success: false,
+			message: 'Impossible de contacter le serveur. Réessayez plus tard.',
+			code: 'BAD_REQUEST'
+		};
+	}
+}
+
+export async function fetchEventStatus(fetchFn: typeof fetch = fetch): Promise<EventStatus | null> {
+	const apiUrl = resolveApiUrl();
+	if (!isApiConfigured()) return null;
+
+	try {
+		const res = await fetchFn(`${apiUrl}/event/status`);
+		if (!res.ok) return null;
+		return (await res.json()) as EventStatus;
+	} catch {
+		return null;
+	}
+}
+
+export async function fetchFeedbackList(fetchFn: typeof fetch = fetch): Promise<FeedbackEntry[]> {
+	const apiUrl = resolveApiUrl();
+	if (!isApiConfigured()) return [];
+
+	try {
+		const res = await fetchFn(`${apiUrl}/feedback`);
+		if (!res.ok) return [];
+		const data = (await res.json()) as FeedbackListResponse;
+		return data.entries ?? [];
+	} catch {
+		return [];
+	}
+}
+
+export async function submitFeedback(message: string): Promise<FeedbackSubmitResponse> {
+	const apiUrl = resolveApiUrl();
+	if (!isApiConfigured()) {
+		return {
+			success: false,
+			message: 'Service indisponible.',
+			code: 'BAD_REQUEST'
+		};
+	}
+
+	try {
+		const res = await fetch(`${apiUrl}/feedback`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ message })
+		});
+
+		return (await res.json()) as FeedbackSubmitResponse;
 	} catch {
 		return {
 			success: false,

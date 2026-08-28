@@ -11,9 +11,11 @@
 	import {
 		API_COLD_START_MESSAGE,
 		fetchApiHealth,
+		fetchEventStatus,
 		isApiConfigured,
 		type ApiHealthStatus
 	} from '$lib/api/validate';
+	import type { EventStatus } from '$lib/types/validate';
 	import {
 		getSubmissionCountdownTarget,
 		getSubmissionPhase,
@@ -21,6 +23,7 @@
 		padTime,
 		type TimeRemaining
 	} from '$lib/utils/countdown';
+	import { isEventFinished } from '$lib/utils/event-status';
 	import { reveal } from '$lib/actions/reveal';
 
 	const units = [
@@ -30,11 +33,21 @@
 		{ key: 'seconds', label: 'Secondes' }
 	] as const;
 
-	const playLinks = [
+	const playLinksBase = [
 		{ href: '/fragmentes', label: 'Fragmentés' },
 		{ href: '/soumettre', label: 'Soumettre' },
 		{ href: '/indices', label: 'Indices' }
 	] as const;
+
+	let eventStatus = $state<EventStatus | null>(null);
+	const eventFinished = $derived(isEventFinished(eventStatus));
+	const playLinks = $derived(
+		eventFinished
+			? playLinksBase.map((link) =>
+					link.href === '/soumettre' ? { href: '/avis', label: 'Avis' } : link
+				)
+			: playLinksBase
+	);
 
 	const discoverLinks = [
 		{ href: '/regles', label: 'Règles' },
@@ -127,6 +140,9 @@
 			fetchApiHealth().then((status) => {
 				apiHealth = status;
 			});
+			fetchEventStatus().then((status) => {
+				eventStatus = status;
+			});
 		}
 
 		return () => {
@@ -151,7 +167,7 @@
 		ctaProgress = 100;
 		ctaLaunching = false;
 		window.setTimeout(() => {
-			goto('/soumettre');
+			goto(eventFinished ? '/avis' : '/soumettre');
 		}, 320);
 	}
 
